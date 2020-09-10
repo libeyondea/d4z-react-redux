@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../layouts/Header';
-import FetchPost from '../posts/fetch/FetchPost';
+import Header from '../Layouts/Header';
+import FetchPost from '../Posts/FetchPost';
 
 const Home = () => {
     return (

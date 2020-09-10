@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createPostAction } from '../../../actions/postAction';
+import { createPostAction } from '../../actions/postAction';
 import classnames from 'classnames';
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";

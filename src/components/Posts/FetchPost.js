@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchPostAction } from "../../../actions/postAction";
-import LoadingFetchPost from '../../loading/posts/LoadingFetchPost';
+import { fetchPostAction } from "../../actions/postAction";
+import LoadingFetchPost from '../Loading/LoadingFetchPost';
 import EmptyFetchPost from './EmptyFetchPost';
 import Posts from './Posts';
 

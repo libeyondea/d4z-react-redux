@@ -5,13 +5,13 @@ import jwt_decode from 'jwt-decode';
 import store from './stores/store';
 import setAuthToken from './functions/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authAction';
-import Navbar from './components/layouts/Navbar';
-import Home from './components/pages/Home';
-import Footer from './components/layouts/Footer';
-import Register from './components/auth/Register';
-import Login from './components/auth/Login';
-import CreatePost from './components/posts/create/CreatePost';
-import DetailPost from './components/posts/detail/DetailPost';
+import Navbar from './components/Layouts/Navbar';
+import Home from './components/Pages/Home';
+import Footer from './components/Layouts/Footer';
+import Register from './components/Auth/Register';
+import Login from './components/Auth/Login';
+import CreatePost from './components/Posts/CreatePost';
+import DetailPost from './components/Posts/DetailPost';
 
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);

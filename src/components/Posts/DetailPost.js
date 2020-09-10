@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { detailPostAction } from "../../../actions/postAction";
-import LoadingTitlePost from '../../loading/posts/LoadingTitlePost';
-import LoadingContentPost from '../../loading/posts/LoadingContentPost';
+import { detailPostAction } from "../../actions/postAction";
+import LoadingTitlePost from '../Loading/LoadingTitlePost';
+import LoadingContentPost from '../Loading/LoadingContentPost';
 
 const propTypes = {
     detailPostAction: PropTypes.func.isRequired,
