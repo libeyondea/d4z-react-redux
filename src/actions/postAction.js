@@ -7,7 +7,16 @@ import {
     CREATE_POST_FAILED,
     DETAIL_POST_REQUESTED,
     DETAIL_POST_SUCCEED,
-    DETAIL_POST_FAILED
+    DETAIL_POST_FAILED,
+    EDIT_POST_REQUESTED,
+	EDIT_POST_SUCCEED,
+	EDIT_POST_FAILED,
+	UPDATE_POST_REQUESTED,
+	UPDATE_POST_SUCCEED,
+    UPDATE_POST_FAILED,
+    DELETE_POST_REQUESTED,
+	DELETE_POST_SUCCEED,
+	DELETE_POST_FAILED
 } from '../constants/postConstant';
 import axios from 'axios';
 
@@ -54,22 +63,6 @@ const createPostAction = (post) => async (dispatch) => {
     }
 }
 
-const updatePostAction = (post) => async (dispatch) => {
-    try {
-
-    } catch (error) {
-
-    }
-}
-
-const deletePostAction = (post) => async (dispatch) => {
-    try {
-
-    } catch (error) {
-
-    }
-}
-
 const detailPostAction = (slug) => async (dispatch) => {
     try {
         dispatch({
@@ -88,8 +81,80 @@ const detailPostAction = (slug) => async (dispatch) => {
     }
 }
 
+const editPostAction = (slug) => async (dispatch) => {
+    try {
+        dispatch({
+            type: EDIT_POST_REQUESTED
+        });
+        const response = await axios.get(`http://localhost:5000/api/posts/${slug}/edit`);
+        dispatch({
+            type: EDIT_POST_SUCCEED,
+            payload: response.data.data
+        });
+    } catch (error) {
+        dispatch({
+            type: EDIT_POST_FAILED,
+            payload: error.message
+        });
+    }
+}
+
+const updatePostAction = (post, slug) => async (dispatch) => {
+    try {
+        dispatch({
+            type: UPDATE_POST_REQUESTED
+        });
+        const response = await axios.put(`http://localhost:5000/api/posts/${slug}`, post);
+        if (response.data.success) {
+            dispatch({
+                type: UPDATE_POST_SUCCEED,
+                payload: response.data.data
+            });
+        } else {
+            dispatch({
+                type: UPDATE_POST_FAILED,
+                payload: response.data.errors
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: UPDATE_POST_FAILED,
+            payload: error.message
+        });
+    }
+}
+
+const deletePostAction = (slug, history) => async (dispatch) => {
+    try {
+        dispatch({
+            type: DELETE_POST_REQUESTED
+        });
+        const response = await axios.delete(`http://localhost:5000/api/posts/${slug}`);
+        if (response.data.success) {
+            dispatch({
+                type: DELETE_POST_SUCCEED,
+                payload: response.data.data
+            });
+            history.push('/');
+        } else {
+            dispatch({
+                type: DELETE_POST_FAILED,
+                payload: response.data.errors
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: DELETE_POST_FAILED,
+            payload: error.message
+        });
+    }
+}
+
 export {
     fetchPostAction,
     createPostAction,
-    detailPostAction
+    detailPostAction,
+    editPostAction,
+    updatePostAction,
+    deletePostAction
 }

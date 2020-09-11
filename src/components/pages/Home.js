@@ -4,10 +4,10 @@ import FetchPost from '../Posts/FetchPost';
 
 const Home = () => {
     return (
-        <React.Fragment>
+        <>
             <Header />
             <FetchPost />
-        </React.Fragment>
+        </>
     )
 }
 

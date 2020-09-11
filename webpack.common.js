@@ -13,11 +13,11 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, '/public/index.html')
 		}),
-		new CopyPlugin({
-			patterns: [
-				{ from: path.join(__dirname, 'public'), to: path.join(__dirname, 'dist') },
-			],
-		})
+		//new CopyPlugin({
+		//	patterns: [
+		//		{ from: path.join(__dirname, 'public'), to: path.join(__dirname, 'dist') },
+		//	],
+		//})
 	],
 	module: {
 		rules: [
@@ -45,7 +45,7 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/'
 	},
-	optimization: {
+	/*optimization: {
 		runtimeChunk: 'single',
 		splitChunks: {
 			chunks: 'all',
@@ -64,5 +64,5 @@ module.exports = {
 				},
 			},
 		},
-	},
+	},*/
 };

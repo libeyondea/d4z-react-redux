@@ -7,7 +7,16 @@ import {
 	CREATE_POST_FAILED,
 	DETAIL_POST_REQUESTED,
 	DETAIL_POST_SUCCEED,
-	DETAIL_POST_FAILED
+	DETAIL_POST_FAILED,
+	EDIT_POST_REQUESTED,
+	EDIT_POST_SUCCEED,
+	EDIT_POST_FAILED,
+	UPDATE_POST_REQUESTED,
+	UPDATE_POST_SUCCEED,
+	UPDATE_POST_FAILED,
+	DELETE_POST_REQUESTED,
+	DELETE_POST_SUCCEED,
+	DELETE_POST_FAILED
 } from '../constants/postConstant';
 
 const fetchPostInitialState = {
@@ -25,6 +34,24 @@ const createPostInitialState = {
 const detailPostInitialState = {
 	posts: {},
 	loading: true,
+	errors: {}
+}
+
+const editPostInitialState = {
+	posts: {},
+	loading: true,
+	errors: {}
+}
+
+const updatePostInitialState = {
+	posts: {},
+	loading: false,
+	errors: {}
+}
+
+const deletePostInitialState = {
+	posts: {},
+	loading: false,
 	errors: {}
 }
 
@@ -112,8 +139,95 @@ const detailPostReducer = (state = detailPostInitialState, action) => {
 	}
 };
 
+const editPostReducer = (state = editPostInitialState, action) => {
+	switch (action.type) {
+		case EDIT_POST_REQUESTED:
+			return {
+				...state,
+				posts: {},
+				loading: true,
+				errors: {}
+			};
+		case EDIT_POST_SUCCEED:
+            return {
+            	...state,
+        		posts: action.payload,
+        		loading: false,
+				errors: {}
+            };
+		case EDIT_POST_FAILED:
+            return {
+            	...state,
+        		posts: {},
+        		loading: false,
+				errors: action.payload
+            };
+		default:
+			return state;
+	}
+};
+
+const updatePostReducer = (state = updatePostInitialState, action) => {
+	switch (action.type) {
+		case UPDATE_POST_REQUESTED:
+			return {
+				...state,
+				posts: {},
+				loading: true,
+				errors: {}
+			};
+		case UPDATE_POST_SUCCEED:
+            return {
+            	...state,
+        		posts: action.payload,
+        		loading: false,
+				errors: {}
+            };
+		case UPDATE_POST_FAILED:
+            return {
+            	...state,
+        		posts: {},
+        		loading: false,
+				errors: action.payload
+            };
+		default:
+			return state;
+	}
+};
+
+const deletePostReducer = (state = deletePostInitialState, action) => {
+	switch (action.type) {
+		case DELETE_POST_REQUESTED:
+			return {
+				...state,
+				posts: {},
+				loading: true,
+				errors: {}
+			};
+		case DELETE_POST_SUCCEED:
+            return {
+            	...state,
+        		posts: action.payload,
+        		loading: false,
+				errors: {}
+            };
+		case DELETE_POST_FAILED:
+            return {
+            	...state,
+        		posts: {},
+        		loading: false,
+				errors: action.payload
+            };
+		default:
+			return state;
+	}
+};
+
 export {
 	fetchPostReducer,
 	createPostReducer,
-	detailPostReducer
+	detailPostReducer,
+	editPostReducer,
+	updatePostReducer,
+	deletePostReducer
 }

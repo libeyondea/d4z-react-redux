@@ -1,66 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { registerAction } from '../../actions/authAction';
-import classnames from 'classnames';
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { registerAction } from '../../actions/authAction'
+import classnames from 'classnames'
+import { useHistory } from 'react-router-dom'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
-const Register = ({ registerAction, reg, log, history }) => {
+const propTypes = {
+	registerAction: PropTypes.func.isRequired,
+	log: PropTypes.object.isRequired,
+	reg: PropTypes.object.isRequired
+};
+const Register = (props) => {
+	const { registerAction, reg, log } = props
+	const history = useHistory()
 
-	const { register, errors, handleSubmit } = useForm();
+	const formik = useFormik({
+		initialValues: {
+			first_name: '',
+			last_name: '',
+			user_name: '',
+			email: '',
+			password: '',
+			password_confirm: '',
+			phone_number: '',
+			address: '',
+			gender: '1'
+		},
+		validationSchema: Yup.object({
+			first_name: Yup.string()
+				.required('first_name is required'),
+			last_name: Yup.string()
+				.required('last_name is required'),
+			user_name: Yup.string()
+				.required('Password is required'),
+			email: Yup.string()
+				.required('Password is required'),
+			password: Yup.string()
+				.required('Password is required'),
+			password_confirm: Yup.string()
+				.required('Password is required'),
+			phone_number: Yup.string()
+				.required('Password is required'),
+			address: Yup.string()
+				.required('Password is required'),
+			address: Yup.string()
+				.required('Password is required'),
+			gender: Yup.string()
+				.required('Password is required'),
 
-	const [state, setState] = useState({
-		first_name: '',
-		last_name: '',
-		user_name: '',
-		email: '',
-		password: '',
-		password_confirm: '',
-		phone_number: '',
-		address: '',
-		gender: '1'
+		}),
+		onSubmit: values => {
+			const user = {
+				first_name: values.first_name,
+				last_name: values.last_name,
+				user_name: values.user_name,
+				email: values.email,
+				password: values.password,
+				phone_number: values.phone_number,
+				address: values.address,
+				gender: values.gender
+			}
+			registerAction(user, history)
+		}
 	})
-
+	useEffect(() => {
+		const { isAuthenticated } = log
+		if (isAuthenticated) {
+			history.push('/')
+		}
+	})
 	const listGender = {
 		male: '1',
 		female: '0',
 		orther: '',
 	}
-
-	const handleInputChange = (e) => {
-		const { name, value } = e.target
-		setState(state => ({
-			...state,
-			[name]: value
-		}))
-	}
-
-	const onSubmit = () => {
-		const user = {
-			first_name: state.first_name,
-			last_name: state.last_name,
-			user_name: state.user_name,
-			email: state.email,
-			password: state.password,
-			phone_number: state.phone_number,
-			address: state.address,
-			gender: state.gender,
-		}
-		registerAction(user, history);
-	}
-
-	useEffect(() => {
-		if (log.isAuthenticated) {
-			history.push('/');
-		}
-	})
-
-	const { male, female, orther } = listGender;
-
+	const { male, female, orther } = listGender
 	return (
-		<React.Fragment>
+		<>
 			<header className="masthead" style={{ backgroundImage: 'url("assets/img/home-bg.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
@@ -78,36 +97,25 @@ const Register = ({ registerAction, reg, log, history }) => {
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
 						<div className="nht-form">
-							<form onSubmit={handleSubmit(onSubmit)}>
+							<form onSubmit={formik.handleSubmit}>
 								<div className="control-group">
 									<div className="form-group floating-label-form-group controls">
 										<label>First name</label>
 										<input
 											type="text"
 											id="first_name"
+											name="first_name"
 											placeholder="First name"
 											className={classnames('form-control', {
-												'is-invalid': errors.first_name
+												'is-invalid': (formik.touched.first_name && formik.errors.first_name)
 											})}
-											name="first_name"
-											onChange={handleInputChange}
-											ref={register({
-												required: "First name is required",
-												pattern: {
-													value: /^[a-zA-Z]+$/,
-													message: "First name is invalid"
-												},
-												maxLength: {
-													value: 16,
-													message: "First name must not exceed 16 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.first_name}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="first_name"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.emafirst_nameil && formik.errors.first_name ? (
+											<div className="invalid-feedback">{formik.errors.first_name}</div>
+										) : null}
 									</div>
 								</div>
 								<div className="control-group">
@@ -116,29 +124,18 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="text"
 											id="last_name"
+											name="last_name"
 											placeholder="Last name"
 											className={classnames('form-control', {
-												'is-invalid': errors.last_name
+												'is-invalid': (formik.touched.last_name && formik.errors.last_name)
 											})}
-											name="last_name"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Last name is required",
-												pattern: {
-													value: /^[a-zA-Z]+$/,
-													message: "Last name is invalid"
-												},
-												maxLength: {
-													value: 16,
-													message: "Last name must not exceed 16 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.last_name}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="last_name"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.last_name && formik.errors.last_name ? (
+											<div className="invalid-feedback">{formik.errors.last_name}</div>
+										) : null}
 									</div>
 								</div>
 								<div className="control-group">
@@ -147,33 +144,18 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="text"
 											id="user_name"
+											name="user_name"
 											placeholder="User name"
 											className={classnames('form-control', {
-												'is-invalid': errors.user_name || reg.errors.user_name
+												'is-invalid': reg.errors.user_name || (formik.touched.user_name && formik.errors.user_name)
 											})}
-											name="user_name"
-											onChange={handleInputChange}
-											ref={register({
-												required: "User name is required",
-												pattern: {
-													value: /^[a-zA-Z0-9]+$/,
-													message: "User name is invalid"
-												},
-												minLength: {
-													value: 6,
-													message: "User name must be at least 6 characters"
-												},
-												maxLength: {
-													value: 66,
-													message: "User name must not exceed 66 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.user_name}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="user_name"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.user_name && formik.errors.user_name ? (
+											<div className="invalid-feedback">{formik.errors.user_name}</div>
+										) : null}
 										{reg.errors.user_name && (<div className="invalid-feedback">{reg.errors.user_name}</div>)}
 									</div>
 								</div>
@@ -183,29 +165,18 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="email"
 											id="email"
+											name="email"
 											placeholder="Your email"
 											className={classnames('form-control', {
-												'is-invalid': errors.email || reg.errors.email
+												'is-invalid': reg.errors.email || (formik.touched.email && formik.errors.email)
 											})}
-											name="email"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Email is required",
-												pattern: {
-													value: /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
-													message: "Email is invalid"
-												},
-												maxLength: {
-													value: 66,
-													message: "Email must not exceed 66 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.email}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="email"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.email && formik.errors.email ? (
+											<div className="invalid-feedback">{formik.errors.email}</div>
+										) : null}
 										{reg.errors.email && (<div className="invalid-feedback">{reg.errors.email}</div>)}
 									</div>
 								</div>
@@ -215,29 +186,18 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="password"
 											id="password"
+											name="password"
 											placeholder="Password"
 											className={classnames('form-control', {
-												'is-invalid': errors.password
+												'is-invalid': (formik.touched.password && formik.errors.password)
 											})}
-											name="password"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Password is required",
-												minLength: {
-													value: 6,
-													message: "Password must be at least 6 characters"
-												},
-												maxLength: {
-													value: 66,
-													message: "Password must not exceed 66 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.password}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="password"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.password && formik.errors.password ? (
+											<div className="invalid-feedback">{formik.errors.password}</div>
+										) : null}
 									</div>
 								</div>
 								<div className="control-group">
@@ -246,21 +206,18 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="password"
 											id="password_confirm"
+											name="password_confirm"
 											placeholder="Confirm Password"
 											className={classnames('form-control', {
-												'is-invalid': errors.password_confirm
+												'is-invalid': (formik.touched.password_confirm && formik.errors.password_confirm)
 											})}
-											name="password_confirm"
-											onChange={handleInputChange}
-											ref={register({
-												validate: value => value === state.password || "Confirm Password do not match"
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.password_confirm}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="password_confirm"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.password_confirm && formik.errors.password_confirm ? (
+											<div className="invalid-feedback">{formik.errors.password_confirm}</div>
+										) : null}
 									</div>
 								</div>
 								<div className="control-group">
@@ -269,33 +226,18 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="text"
 											id="phone_number"
+											name="phone_number"
 											placeholder="Phone number"
 											className={classnames('form-control', {
-												'is-invalid': errors.phone_number
+												'is-invalid': (formik.touched.phone_number && formik.errors.phone_number)
 											})}
-											name="phone_number"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Phone number is required",
-												pattern: {
-													value: /^[0-9]+$/,
-													message: "Phone number is invalid"
-												},
-												minLength: {
-													value: 6,
-													message: "Phone number must be at least 6 characters"
-												},
-												maxLength: {
-													value: 16,
-													message: "Phone number must not exceed 16 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.phone_number}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="phone_number"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.phone_number && formik.errors.phone_number ? (
+											<div className="invalid-feedback">{formik.errors.phone_number}</div>
+										) : null}
 									</div>
 								</div>
 								<div className="control-group">
@@ -304,38 +246,31 @@ const Register = ({ registerAction, reg, log, history }) => {
 										<input
 											type="text"
 											id="address"
+											name="address"
 											placeholder="Address"
 											className={classnames('form-control', {
-												'is-invalid': errors.address
+												'is-invalid': (formik.touched.address && formik.errors.address)
 											})}
-											name="address"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Address is required",
-												maxLength: {
-													value: 666,
-													message: "Address must not exceed 66 characters"
-												}
-											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.address}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="address"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.address && formik.errors.address ? (
+											<div className="invalid-feedback">{formik.errors.address}</div>
+										) : null}
 									</div>
 								</div>
 								<div className="control-group">
 									<div className="custom-control custom-radio custom-control-inline mb-4">
-										<input type="radio" id="Male" name="gender" value={male} className="custom-control-input" onChange={handleInputChange} checked={state.gender === male}/>
+										<input type="radio" id="Male" name="gender" value={male} className="custom-control-input" onChange={handleInputChange} checked={state.gender === male} />
 										<label className="custom-control-label" htmlFor="Male">Male</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Female" name="gender" value={female} className="custom-control-input" onChange={handleInputChange} checked={state.gender === female}/>
+										<input type="radio" id="Female" name="gender" value={female} className="custom-control-input" onChange={handleInputChange} checked={state.gender === female} />
 										<label className="custom-control-label" htmlFor="Female">Female</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Other" name="gender" value={orther} className="custom-control-input" onChange={handleInputChange} checked={state.gender === orther}/>
+										<input type="radio" id="Other" name="gender" value={orther} className="custom-control-input" onChange={handleInputChange} checked={state.gender === orther} />
 										<label className="custom-control-label" htmlFor="Other">Other</label>
 									</div>
 								</div>
@@ -378,19 +313,12 @@ const Register = ({ registerAction, reg, log, history }) => {
 					</div>
 				</div>
 			</div>
-		</React.Fragment>
+		</>
 	)
 }
-
-Register.propTypes = {
-	registerAction: PropTypes.func.isRequired,
-	log: PropTypes.object.isRequired,
-	reg: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => ({
 	log: state.log,
 	reg: state.reg
 });
-
+Register.propTypes = propTypes;
 export default connect(mapStateToProps, { registerAction })(withRouter(Register))

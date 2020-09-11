@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { detailPostAction } from "../../actions/postAction";
+import { Link } from 'react-router-dom';
+import { detailPostAction, deletePostAction } from "../../actions/postAction";
 import LoadingTitlePost from '../Loading/LoadingTitlePost';
 import LoadingContentPost from '../Loading/LoadingContentPost';
 
@@ -13,7 +14,7 @@ const propTypes = {
             summary: PropTypes.string.isRequired,
             content: PropTypes.string.isRequired,
             created_at: PropTypes.string.isRequired,
-            user_id: PropTypes.number.isRequired,
+            user_name: PropTypes.string.isRequired,
         }).isRequired
     }).isRequired,
     match: PropTypes.shape({
@@ -23,13 +24,45 @@ const propTypes = {
     }).isRequired,
 };
 
-const DetailPost = ({ detailPostAction, detailPost, match }) => {
+const DetailPost = ({ detailPostAction, deletePostAction, deletePost, detailPost, match, history, log }) => {
 
     const { slug } = match.params;
 
     useEffect(() => {
         detailPostAction(slug);
     }, [detailPostAction, slug])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        deletePostAction(slug, history);
+    }
+
+    const { isAuthenticated } = log;
+
+    const authLinks = (
+        <>
+            <div className="clearfix">
+                <form onSubmit={handleSubmit}>
+                    <Link className="btn btn-primary float-right" to={`/edit-post/${detailPost.posts.slug}`}>Edit Post</Link>
+                    {
+                        deletePost.loading ?
+                            (
+                                <button type="submit" className="btn btn-danger float-righ mr-3" disabled>
+                                    <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
+                                        Loading...
+                                </button>
+                            ) : (
+                                <button type="submit" className="btn btn-danger float-right mr-3">
+                                    Delete Post
+                                </button>
+                            )
+                    }
+                </form>
+            </div>
+        </>
+    )
+
+    const guestLinks = null;
 
     return (
         <React.Fragment>
@@ -55,9 +88,13 @@ const DetailPost = ({ detailPostAction, detailPost, match }) => {
                     <div className="row">
                         <div className="col-lg-8 col-md-10 mx-auto">
                             {detailPost.loading ? <LoadingContentPost /> :
-                                <div>
-                                    <p>{detailPost.posts.content}</p>
-                                </div>
+                                <>
+                                    <div>
+                                        <p>{detailPost.posts.content}</p>
+                                    </div>
+                                    {isAuthenticated ? authLinks : guestLinks}
+
+                                </>
                             }
                         </div>
                     </div>
@@ -68,9 +105,11 @@ const DetailPost = ({ detailPostAction, detailPost, match }) => {
 }
 
 const mapStateToProps = (state) => ({
-    detailPost: state.detailPost
+    detailPost: state.detailPost,
+    deletePost: state.deletePost,
+    log: state.log
 })
 
 DetailPost.propTypes = propTypes;
 
-export default connect(mapStateToProps, { detailPostAction })(DetailPost)
+export default connect(mapStateToProps, { detailPostAction, deletePostAction })(DetailPost)

@@ -1,45 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { loginAction } from '../../actions/authAction';
-import classnames from 'classnames';
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { loginAction } from '../../actions/authAction'
+import classnames from 'classnames'
+import { useHistory } from 'react-router-dom'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
-const Login = ({ loginAction, log, history }) => {
-	const { register, errors, handleSubmit } = useForm();
-
-	const [state, setState] = useState({
-		email: '',
-		password: ''
-	})
-
-	const handleInputChange = (e) => {
-		const { name, value } = e.target
-		setState(state => ({
-			...state,
-			[name]: value
-		}))
-	}
-
-	const onSubmit = () => {
-		const user = {
-			email: state.email,
-			password: state.password,
+const propTypes = {
+	loginAction: PropTypes.func.isRequired,
+	log: PropTypes.object.isRequired
+}
+const Login = (props) => {
+	const { loginAction, log } = props;
+	const history = useHistory()
+	const formik = useFormik({
+		initialValues: {
+			email: '',
+			password: ''
+		},
+		validationSchema: Yup.object({
+			email: Yup.string()
+				.email('Invalid email address')
+				.required('Email is required'),
+			password: Yup.string()
+				.required('Password is required')
+		}),
+		onSubmit: values => {
+			const user = {
+				email: values.email,
+				password: values.password
+			}
+			loginAction(user);
 		}
-		loginAction(user);
-	}
-
+	})
 	useEffect(() => {
-		if (log.isAuthenticated) {
+		const { isAuthenticated } = log
+		if (isAuthenticated) {
 			history.push('/');
 		}
 	})
-
 	return (
-		<React.Fragment>
-			<header className="masthead" style={{ backgroundImage: 'url("assets/img/home-bg.jpg")' }}>
+		<>
+			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
@@ -56,35 +60,26 @@ const Login = ({ loginAction, log, history }) => {
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
 						<div className="nht-form">
-							<form onSubmit={handleSubmit(onSubmit)}>
+							<form onSubmit={formik.handleSubmit}>
 								<div className="control-group">
 									<div className="form-group floating-label-form-group controls">
 										<label>Email</label>
 										<input
 											type="text"
 											id="email"
+											name="email"
 											placeholder="Email"
-											className={classnames('form-control', { 'is-invalid': errors.email || log.errors.user})}
-											name="email"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Email is required",
-												pattern: {
-													value: /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
-													message: "Email is invalid"
-												},
-												maxLength: {
-													value: 66,
-													message: "Email must not exceed 66 characters"
-												}
+											className={classnames('form-control', {
+												'is-invalid': log.errors.user || (formik.touched.email && formik.errors.email)
 											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.email}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="email"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
-										{log.errors.user && (<div className="invalid-feedback">{log.errors.user}</div>)}
+										{formik.touched.email && formik.errors.email ? (
+											<div className="invalid-feedback">{formik.errors.email}</div>
+										) : null}
+										{log.errors.user && <div className="invalid-feedback">{log.errors.user}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -93,23 +88,19 @@ const Login = ({ loginAction, log, history }) => {
 										<input
 											type="password"
 											id="password"
+											name="password"
 											placeholder="Password"
-											className={classnames('form-control', { 'is-invalid': errors.password || log.errors.user})}
-											name="password"
-											onChange={handleInputChange}
-											ref={register({
-												required: "Password is required",
-												maxLength: {
-													value: 66,
-													message: "Password must not exceed 66 characters"
-												}
+											className={classnames('form-control', {
+												'is-invalid': log.errors.user || (formik.touched.password && formik.errors.password)
 											})}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.password}
 										/>
-										<ErrorMessage
-											errors={errors}
-											name="password"
-											render={({ message }) => <div className="invalid-feedback">{message}</div>}
-										/>
+										{formik.touched.password && formik.errors.password ? (
+											<div className="invalid-feedback">{formik.errors.password}</div>
+										) : null}
+										{log.errors.password && <div className="invalid-feedback">{log.errors.password}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -152,17 +143,11 @@ const Login = ({ loginAction, log, history }) => {
 					</div>
 				</div>
 			</div>
-		</React.Fragment>
+		</>
 	)
 }
-
-Login.propTypes = {
-	loginAction: PropTypes.func.isRequired,
-	log: PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state) => ({
 	log: state.log
 })
-
+Login.propTypes = propTypes;
 export default connect(mapStateToProps, { loginAction })(Login)

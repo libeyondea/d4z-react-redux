@@ -12,6 +12,7 @@ import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import CreatePost from './components/Posts/CreatePost';
 import DetailPost from './components/Posts/DetailPost';
+import EditPost from './components/Posts/EditPost';
 
 if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="/register" component={Register} />
                 <Route path="/create-post" component={CreatePost} />
                 <Route path="/posts/:slug" component={DetailPost} />
+                <Route path="/edit-post/:slug" component={EditPost} />
                 <Footer />
 			</Router>
 		</Provider>
