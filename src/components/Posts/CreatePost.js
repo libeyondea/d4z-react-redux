@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createPostAction } from '../../actions/postAction'
 import classnames from 'classnames'
-import { useHistory } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
@@ -13,8 +12,9 @@ const propTypes = {
 	log: PropTypes.object.isRequired
 }
 const CreatePost = (props) => {
+	const today = new Date()
+	const dateNow = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
 	const { createPostAction, createPost, log } = props
-	const history = useHistory()
 	const formik = useFormik({
 		initialValues: {
 			title: '',
@@ -24,7 +24,7 @@ const CreatePost = (props) => {
 			summary: '',
 			image: '',
 			content: '',
-			published: '1',
+			published: '',
 			published_at: '',
 			user_id: ''
 		},
@@ -44,26 +44,22 @@ const CreatePost = (props) => {
 			content: Yup.string()
 				.required('Content is required')
 		}),
-		onSubmit: values => {
+		onSubmit: (values, { resetForm}) => {
+			const { title, meta_title, meta_description, slug, summary, image, content, published_at } = values
 			const post = {
-				title: values.title,
-				meta_title: values.meta_title,
-				meta_description: values.meta_description,
-				slug: values.slug,
-				summary: values.summary,
-				image: values.image,
-				content: values.content,
-				published: values.published,
-				published_at: values.published_at,
+				title: title,
+				meta_title: meta_title,
+				meta_description: meta_description,
+				slug: slug,
+				summary: summary,
+				image: image,
+				content: content,
+				published: (log.user.role_id === 1) ? '1' : '0',
+				published_at: (log.user.role_id === 1) ? dateNow : published_at,
 				user_id: log.user.id
 			}
 			createPostAction(post);
-		}
-	})
-	useEffect(() => {
-		const { isAuthenticated } = log
-		if (!isAuthenticated) {
-			history.push('/login');
+			resetForm({});
 		}
 	})
 	return (

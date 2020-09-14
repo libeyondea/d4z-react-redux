@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 const EmptyFetchPost = () => {
     return (
-        <div className="post-preview">
+        <div>
 			<h2 className="post-title">
 				Empty
 			</h2>

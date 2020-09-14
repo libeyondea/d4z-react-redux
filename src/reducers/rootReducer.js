@@ -1,6 +1,13 @@
 import { combineReducers } from 'redux';
 import { loginReducer, registerReducer } from './authReducer';
-import { fetchPostReducer, createPostReducer, detailPostReducer, editPostReducer, updatePostReducer, deletePostReducer } from './postReducer';
+import {
+	fetchPostReducer,
+	createPostReducer,
+	detailPostReducer,
+	editPostReducer,
+	updatePostReducer,
+	deletePostReducer
+} from './postReducer';
 
 const rootReducer = combineReducers({
 	log: loginReducer,

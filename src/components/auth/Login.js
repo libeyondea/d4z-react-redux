@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loginAction } from '../../actions/authAction'
 import classnames from 'classnames'
-import { useHistory } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
@@ -14,17 +13,18 @@ const propTypes = {
 }
 const Login = (props) => {
 	const { loginAction, log } = props;
-	const history = useHistory()
 	const formik = useFormik({
 		initialValues: {
 			email: '',
 			password: ''
 		},
 		validationSchema: Yup.object({
-			email: Yup.string()
-				.email('Invalid email address')
+			email: Yup
+				.string()
+				.email('Invalid email')
 				.required('Email is required'),
-			password: Yup.string()
+			password: Yup
+				.string()
 				.required('Password is required')
 		}),
 		onSubmit: values => {
@@ -33,12 +33,6 @@ const Login = (props) => {
 				password: values.password
 			}
 			loginAction(user);
-		}
-	})
-	useEffect(() => {
-		const { isAuthenticated } = log
-		if (isAuthenticated) {
-			history.push('/');
 		}
 	})
 	return (

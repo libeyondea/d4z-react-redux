@@ -16,7 +16,6 @@ const propTypes = {
 const Register = (props) => {
 	const { registerAction, reg, log } = props
 	const history = useHistory()
-
 	const formik = useFormik({
 		initialValues: {
 			first_name: '',
@@ -30,27 +29,32 @@ const Register = (props) => {
 			gender: '1'
 		},
 		validationSchema: Yup.object({
-			first_name: Yup.string()
-				.required('first_name is required'),
-			last_name: Yup.string()
-				.required('last_name is required'),
-			user_name: Yup.string()
+			first_name: Yup
+				.string()
+				.required('First name is required'),
+			last_name: Yup
+				.string()
+				.required('Last name is required'),
+			user_name: Yup
+				.string()
+				.required('User name is required'),
+			email: Yup
+				.string()
+				.email('Invalid email')
+				.required('Email is required'),
+			password: Yup
+				.string()
 				.required('Password is required'),
-			email: Yup.string()
-				.required('Password is required'),
-			password: Yup.string()
-				.required('Password is required'),
-			password_confirm: Yup.string()
-				.required('Password is required'),
-			phone_number: Yup.string()
-				.required('Password is required'),
-			address: Yup.string()
-				.required('Password is required'),
-			address: Yup.string()
-				.required('Password is required'),
-			gender: Yup.string()
-				.required('Password is required'),
-
+			password_confirm: Yup
+				.string()
+				.required('Comfirm password is required')
+				.oneOf([Yup.ref("password")], "Password is not match"),
+			phone_number: Yup
+				.string()
+				.required('Phone number is required'),
+			address: Yup
+				.string()
+				.required('Address is required'),
 		}),
 		onSubmit: values => {
 			const user = {
@@ -64,12 +68,6 @@ const Register = (props) => {
 				gender: values.gender
 			}
 			registerAction(user, history)
-		}
-	})
-	useEffect(() => {
-		const { isAuthenticated } = log
-		if (isAuthenticated) {
-			history.push('/')
 		}
 	})
 	const listGender = {
@@ -262,15 +260,15 @@ const Register = (props) => {
 								</div>
 								<div className="control-group">
 									<div className="custom-control custom-radio custom-control-inline mb-4">
-										<input type="radio" id="Male" name="gender" value={male} className="custom-control-input" onChange={handleInputChange} checked={state.gender === male} />
+										<input type="radio" id="Male" name="gender" value={male} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === male} />
 										<label className="custom-control-label" htmlFor="Male">Male</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Female" name="gender" value={female} className="custom-control-input" onChange={handleInputChange} checked={state.gender === female} />
+										<input type="radio" id="Female" name="gender" value={female} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === female} />
 										<label className="custom-control-label" htmlFor="Female">Female</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Other" name="gender" value={orther} className="custom-control-input" onChange={handleInputChange} checked={state.gender === orther} />
+										<input type="radio" id="Other" name="gender" value={orther} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === orther} />
 										<label className="custom-control-label" htmlFor="Other">Other</label>
 									</div>
 								</div>

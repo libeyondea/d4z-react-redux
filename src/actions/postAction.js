@@ -99,7 +99,7 @@ const editPostAction = (slug) => async (dispatch) => {
     }
 }
 
-const updatePostAction = (post, slug) => async (dispatch) => {
+const updatePostAction = (post, slug, history) => async (dispatch) => {
     try {
         dispatch({
             type: UPDATE_POST_REQUESTED
@@ -110,6 +110,7 @@ const updatePostAction = (post, slug) => async (dispatch) => {
                 type: UPDATE_POST_SUCCEED,
                 payload: response.data.data
             });
+            history.push(`/edit-post/${slug}`);
         } else {
             dispatch({
                 type: UPDATE_POST_FAILED,

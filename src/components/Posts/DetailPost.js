@@ -8,37 +8,23 @@ import LoadingContentPost from '../Loading/LoadingContentPost';
 
 const propTypes = {
     detailPostAction: PropTypes.func.isRequired,
-    detailPost: PropTypes.shape({
-        posts: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            summary: PropTypes.string.isRequired,
-            content: PropTypes.string.isRequired,
-            created_at: PropTypes.string.isRequired,
-            user_name: PropTypes.string.isRequired,
-        }).isRequired
-    }).isRequired,
+    detailPost: PropTypes.object.isRequired,
     match: PropTypes.shape({
         params: PropTypes.shape({
             slug: PropTypes.string.isRequired,
         }).isRequired
     }).isRequired,
 };
-
-const DetailPost = ({ detailPostAction, deletePostAction, deletePost, detailPost, match, history, log }) => {
-
+const DetailPost = (props) => {
+    const { detailPostAction, deletePostAction, deletePost, detailPost, match, history, log } = props
     const { slug } = match.params;
-
     useEffect(() => {
         detailPostAction(slug);
     }, [detailPostAction, slug])
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
         deletePostAction(slug, history);
     }
-
-    const { isAuthenticated } = log;
-
     const authLinks = (
         <>
             <div className="clearfix">
@@ -47,9 +33,9 @@ const DetailPost = ({ detailPostAction, deletePostAction, deletePost, detailPost
                     {
                         deletePost.loading ?
                             (
-                                <button type="submit" className="btn btn-danger float-righ mr-3" disabled>
+                                <button type="submit" className="btn btn-danger float-right mr-3" disabled>
                                     <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
-                                        Loading...
+                                    Loading...
                                 </button>
                             ) : (
                                 <button type="submit" className="btn btn-danger float-right mr-3">
@@ -61,9 +47,7 @@ const DetailPost = ({ detailPostAction, deletePostAction, deletePost, detailPost
             </div>
         </>
     )
-
     const guestLinks = null;
-
     return (
         <React.Fragment>
             <header className="masthead" style={detailPost.loading ? { backgroundColor: '#343a40' } : { backgroundImage: 'url("/assets/img/post-bg.jpg")' }}>
@@ -92,7 +76,7 @@ const DetailPost = ({ detailPostAction, deletePostAction, deletePost, detailPost
                                     <div>
                                         <p>{detailPost.posts.content}</p>
                                     </div>
-                                    {isAuthenticated ? authLinks : guestLinks}
+                                    {log.isAuthenticated ? authLinks : guestLinks}
 
                                 </>
                             }
@@ -103,13 +87,10 @@ const DetailPost = ({ detailPostAction, deletePostAction, deletePost, detailPost
         </React.Fragment>
     );
 }
-
 const mapStateToProps = (state) => ({
     detailPost: state.detailPost,
     deletePost: state.deletePost,
     log: state.log
 })
-
 DetailPost.propTypes = propTypes;
-
 export default connect(mapStateToProps, { detailPostAction, deletePostAction })(DetailPost)

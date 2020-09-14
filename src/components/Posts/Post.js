@@ -1,8 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-const Post = ({ post }) => {
+const propTypes = {
+    post: PropTypes.shape({
+        slug: PropTypes.string,
+        title: PropTypes.string,
+        summary: PropTypes.string,
+        created_at: PropTypes.string,
+        user_name: PropTypes.string
+    })
+}
+const Post = (props) => {
+    const { post } = props
     return (
         <div className="post-preview border-bottom mb-3">
             <Link to={`/posts/${post.slug}`}>
@@ -17,15 +27,5 @@ const Post = ({ post }) => {
         </div>
     )
 }
-
-Post.propTypes = {
-    post: PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        summary: PropTypes.string,
-        created_at: PropTypes.string,
-        user_id: PropTypes.number
-    })
-}
-
+Post.propTypes = propTypes
 export default Post
