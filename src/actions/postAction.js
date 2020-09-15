@@ -38,7 +38,7 @@ const fetchPostAction = () => async (dispatch) => {
     }
 }
 
-const createPostAction = (post) => async (dispatch) => {
+const createPostAction = (post, slug, history) => async (dispatch) => {
     try {
         dispatch({
             type: CREATE_POST_REQUESTED
@@ -49,6 +49,7 @@ const createPostAction = (post) => async (dispatch) => {
                 type: CREATE_POST_SUCCEED,
                 payload: response.data.data
             });
+            history.push(`/posts/${slug}`);
         } else {
             dispatch({
                 type: CREATE_POST_FAILED,
@@ -99,7 +100,7 @@ const editPostAction = (slug) => async (dispatch) => {
     }
 }
 
-const updatePostAction = (post, slug, history) => async (dispatch) => {
+const updatePostAction = (post, history, slug, slugNew) => async (dispatch) => {
     try {
         dispatch({
             type: UPDATE_POST_REQUESTED
@@ -110,7 +111,7 @@ const updatePostAction = (post, slug, history) => async (dispatch) => {
                 type: UPDATE_POST_SUCCEED,
                 payload: response.data.data
             });
-            history.push(`/edit-post/${slug}`);
+            history.push(`/posts/${slugNew}`);
         } else {
             dispatch({
                 type: UPDATE_POST_FAILED,

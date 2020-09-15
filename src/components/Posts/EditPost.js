@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editPostAction, updatePostAction } from '../../actions/postAction';
 import classnames from 'classnames';
-import { useFormik, Formik  } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Swal from "sweetalert2";
 
 const propTypes = {
 	editPostAction: PropTypes.func.isRequired,
@@ -16,22 +17,21 @@ const propTypes = {
 }
 const EditPost = (props) => {
 	const { editPostAction, updatePostAction, editPost, updatePost, match } = props
-	//const { slug } = match.params
+	const { slug } = match.params
 	const history = useHistory()
 	const formik = useFormik({
 		initialValues: {
-			title: editPost.posts.title,
-			meta_title: editPost.posts.meta_title,
-			meta_description: editPost.posts.meta_description,
-			slug: editPost.posts.slug,
-			summary: editPost.posts.summary,
-			image: editPost.posts.image,
-			content: editPost.posts.content,
-			published: editPost.posts.published,
-			published_at: editPost.posts.published_at,
-			user_id: editPost.posts.user_id
+			title: '',
+			meta_title: '',
+			meta_description: '',
+			slug: '',
+			summary: '',
+			image: '',
+			content: '',
+			published: '',
+			published_at: '',
+			user_id: ''
 		},
-		enableReinitialize: true,
 		validationSchema: Yup.object({
 			title: Yup.string()
 				.required('Title is required'),
@@ -49,25 +49,37 @@ const EditPost = (props) => {
 				.required('Content is required')
 		}),
 		onSubmit: values => {
-			const { title, meta_title, meta_description, summary, slug,image, content, published, published_at, user_id } = values
+			const slugNew = values.slug
 			const post = {
-				title: title,
-				meta_title: meta_title,
-				meta_description: meta_description,
-				slug: slug,
-				summary: summary,
-				image: image,
-				content: content,
-				published: published,
-				published_at: published_at,
-				user_id: user_id
+				title: values.title,
+				meta_title: values.meta_title,
+				meta_description: values.meta_description,
+				slug: slugNew,
+				summary: values.summary,
+				image: values.image,
+				content: values.content,
+				published: editPost.posts.published,
+				published_at: editPost.posts.published_at,
+				user_id: editPost.posts.user_id
 			}
-			updatePostAction(post, slug, history)
+			Swal.fire({
+				title: 'Do you want to update?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'No'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					updatePostAction(post, history, slug, slugNew)
+				}
+			})
 		}
 	})
 	useEffect(() => {
-		editPostAction(match.params.slug)
-	}, [editPostAction])
+		editPostAction(slug)
+	}, [editPostAction, slug])
 	return (
 		<>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
@@ -101,7 +113,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.title}
+											value={formik.values.title}
 										/>
 										{formik.touched.title && formik.errors.title ? (
 											<div className="invalid-feedback">{formik.errors.title}</div>
@@ -122,7 +134,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.meta_title}
+											value={formik.values.meta_title}
 										/>
 										{formik.touched.meta_title && formik.errors.meta_title ? (
 											<div className="invalid-feedback">{formik.errors.meta_title}</div>
@@ -143,7 +155,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.meta_description}
+											value={formik.values.meta_description}
 										/>
 										{formik.touched.meta_description && formik.errors.meta_description ? (
 											<div className="invalid-feedback">{formik.errors.meta_description}</div>
@@ -164,7 +176,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.slug}
+											value={formik.values.slug}
 										/>
 										{formik.touched.slug && formik.errors.slug ? (
 											<div className="invalid-feedback">{formik.errors.slug}</div>
@@ -185,7 +197,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.summary}
+											value={formik.values.summary}
 										/>
 										{formik.touched.summary && formik.errors.summary ? (
 											<div className="invalid-feedback">{formik.errors.summary}</div>
@@ -205,7 +217,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.content}
+											value={formik.values.content}
 											rows="6">
 										</textarea>
 										{formik.touched.content && formik.errors.content ? (
@@ -227,7 +239,7 @@ const EditPost = (props) => {
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
-											defaultValue={formik.values.image}
+											value={formik.values.image}
 										/>
 										{formik.touched.image && formik.errors.image ? (
 											<div className="invalid-feedback">{formik.errors.image}</div>

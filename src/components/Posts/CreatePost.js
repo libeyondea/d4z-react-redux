@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createPostAction } from '../../actions/postAction'
 import classnames from 'classnames'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import Swal from "sweetalert2";
 
 const propTypes = {
 	createPostAction: PropTypes.func.isRequired,
@@ -15,6 +17,7 @@ const CreatePost = (props) => {
 	const today = new Date()
 	const dateNow = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
 	const { createPostAction, createPost, log } = props
+	const history = useHistory()
 	const formik = useFormik({
 		initialValues: {
 			title: '',
@@ -44,7 +47,7 @@ const CreatePost = (props) => {
 			content: Yup.string()
 				.required('Content is required')
 		}),
-		onSubmit: (values, { resetForm}) => {
+		onSubmit: values => {
 			const { title, meta_title, meta_description, slug, summary, image, content, published_at } = values
 			const post = {
 				title: title,
@@ -58,8 +61,19 @@ const CreatePost = (props) => {
 				published_at: (log.user.role_id === 1) ? dateNow : published_at,
 				user_id: log.user.id
 			}
-			createPostAction(post);
-			resetForm({});
+			Swal.fire({
+				title: 'Do you want to create?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'No'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					createPostAction(post, slug, history);
+				}
+			})
 		}
 	})
 	return (

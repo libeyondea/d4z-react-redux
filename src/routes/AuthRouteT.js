@@ -10,9 +10,7 @@ const AuthRouteLogT = (props) => {
             render={props => {
                 if (log.isAuthenticated) {
                     return <Component {...props} />
-                }
-                else
-                {
+                } else {
                     return <Redirect to="/login" />
                 }      
             }}
