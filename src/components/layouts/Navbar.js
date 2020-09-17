@@ -1,20 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authAction';
 import { withRouter } from 'react-router-dom';
 
-const Navbar = ({logoutUser, log, history}) => {
-    const onLogout = (e) => {
-        e.preventDefault();
+const propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    log: PropTypes.object.isRequired
+}
+const Navbar = (props) => {
+	const {logoutUser, log} = props
+	const { isAuthenticated, user } = log
+	const history = useHistory()
+    const onLogout = (event) => {
+        event.preventDefault();
         logoutUser(history);
     }
-
-    const { isAuthenticated, user } = log;
-
     const authLinks = (
-        <React.Fragment>
+        <>
         	<li className="nav-item">
 				<Link className="nav-link" to="/create-post">Create post</Link>
 			</li>
@@ -28,17 +32,17 @@ const Navbar = ({logoutUser, log, history}) => {
 					<a className="dropdown-item" href="#!" onClick={onLogout.bind(this)}>Logout</a>
 				</div>
 			</li>
-		</React.Fragment>
+		</>
     )
     const guestLinks = (
-        <React.Fragment>
+        <>
 			<li className="nav-item">
 				<Link className="nav-link" to="/register">Register</Link>
 			</li>
 			<li className="nav-item">
 				<Link className="nav-link" to="/login">Login</Link>
 			</li>
-		</React.Fragment>
+		</>
     )
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -69,13 +73,8 @@ const Navbar = ({logoutUser, log, history}) => {
 		</nav>
     )
 }
-Navbar.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
-    log: PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state) => ({
     log: state.log
 })
-
+Navbar.propTypes = propTypes
 export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));

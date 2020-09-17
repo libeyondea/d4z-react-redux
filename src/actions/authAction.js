@@ -18,7 +18,8 @@ const registerAction = (user, history) => async (dispatch) => {
         const response = await axios.post('http://localhost:5000/api/users/register', user);
         if (response.data.success) {
             dispatch({
-            	type: REGISTER_SUCCEED
+                type: REGISTER_SUCCEED,
+                payload: response.data.data
             });
 			history.push('/login');
         } else {
