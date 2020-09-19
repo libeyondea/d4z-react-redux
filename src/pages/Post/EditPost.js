@@ -1,22 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { createPostAction } from '../../actions/postAction'
-import classnames from 'classnames'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { editPostThunk, updatePostThunk } from '../../thunks/postThunk';
+import classnames from 'classnames';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import Swal from "sweetalert2";
+import MainLayout from '../../layouts/MainLayout';
 
 const propTypes = {
-	createPostAction: PropTypes.func.isRequired,
-	createPost: PropTypes.object.isRequired,
-	log: PropTypes.object.isRequired
+	editPostThunk: PropTypes.func.isRequired,
+	updatePostThunk: PropTypes.func.isRequired,
+	editPost: PropTypes.object.isRequired,
+	updatePost: PropTypes.object.isRequired,
+	match: PropTypes.object.isRequired
 }
-const CreatePost = (props) => {
-	const today = new Date()
-	const dateNow = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
-	const { createPostAction, createPost, log } = props
+const mapStateToProps = (state) => ({
+	editPost: state.editPost,
+	updatePost: state.updatePost
+})
+const mapDispatchToProps = {
+    editPostThunk,
+    updatePostThunk
+}
+const EditPost = (props) => {
+	const { editPostThunk, updatePostThunk, editPost, updatePost, match } = props
+	const { slug } = match.params
 	const history = useHistory()
 	const formik = useFormik({
 		initialValues: {
@@ -48,21 +58,21 @@ const CreatePost = (props) => {
 				.required('Content is required')
 		}),
 		onSubmit: values => {
-			const { title, meta_title, meta_description, slug, summary, image, content, published_at } = values
+			const slugNew = values.slug
 			const post = {
-				title: title,
-				meta_title: meta_title,
-				meta_description: meta_description,
-				slug: slug,
-				summary: summary,
-				image: image,
-				content: content,
-				published: (log.user.role_id === 1) ? '1' : '0',
-				published_at: (log.user.role_id === 1) ? dateNow : published_at,
-				user_id: log.user.id
+				title: values.title,
+				meta_title: values.meta_title,
+				meta_description: values.meta_description,
+				slug: slugNew,
+				summary: values.summary,
+				image: values.image,
+				content: values.content,
+				published: editPost.posts.published,
+				published_at: editPost.posts.published_at,
+				user_id: editPost.posts.user_id
 			}
 			Swal.fire({
-				title: 'Do you want to create?',
+				title: 'Do you want to update?',
 				icon: 'question',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -71,20 +81,23 @@ const CreatePost = (props) => {
 				cancelButtonText: 'No'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					createPostAction(post, slug, history);
+					updatePostThunk(post, history, slug, slugNew)
 				}
 			})
 		}
 	})
+	useEffect(() => {
+		editPostThunk(slug)
+	}, [editPostThunk, slug])
 	return (
-		<>
+		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
 						<div className="col-lg-8 col-md-10 mx-auto">
 							<div className="site-heading">
-								<h1>Create Post</h1>
+								<h1>Edit Post</h1>
 								<span className="subheading">Admin</span>
 							</div>
 						</div>
@@ -105,7 +118,7 @@ const CreatePost = (props) => {
 											name="title"
 											placeholder="Title"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.title || (formik.touched.title && formik.errors.title)
+												'is-invalid': updatePost.errors.title || (formik.touched.title && formik.errors.title)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -114,7 +127,7 @@ const CreatePost = (props) => {
 										{formik.touched.title && formik.errors.title ? (
 											<div className="invalid-feedback">{formik.errors.title}</div>
 										) : null}
-										{createPost.errors.title && <div className="invalid-feedback">{createPost.errors.title}</div>}
+										{updatePost.errors.title && <div className="invalid-feedback">{updatePost.errors.title}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -126,7 +139,7 @@ const CreatePost = (props) => {
 											name="meta_title"
 											placeholder="Meta title"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.meta_title || (formik.touched.meta_title && formik.errors.meta_title)
+												'is-invalid': updatePost.errors.meta_title || (formik.touched.meta_title && formik.errors.meta_title)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -135,7 +148,7 @@ const CreatePost = (props) => {
 										{formik.touched.meta_title && formik.errors.meta_title ? (
 											<div className="invalid-feedback">{formik.errors.meta_title}</div>
 										) : null}
-										{createPost.errors.meta_title && <div className="invalid-feedback">{createPost.errors.meta_title}</div>}
+										{updatePost.errors.meta_title && <div className="invalid-feedback">{updatePost.errors.meta_title}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -147,7 +160,7 @@ const CreatePost = (props) => {
 											name="meta_description"
 											placeholder="Meta Description"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.meta_description || (formik.touched.meta_description && formik.errors.meta_description)
+												'is-invalid': updatePost.errors.meta_description || (formik.touched.meta_description && formik.errors.meta_description)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -156,7 +169,7 @@ const CreatePost = (props) => {
 										{formik.touched.meta_description && formik.errors.meta_description ? (
 											<div className="invalid-feedback">{formik.errors.meta_description}</div>
 										) : null}
-										{createPost.errors.meta_description && <div className="invalid-feedback">{createPost.errors.meta_description}</div>}
+										{updatePost.errors.meta_description && <div className="invalid-feedback">{updatePost.errors.meta_description}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -168,7 +181,7 @@ const CreatePost = (props) => {
 											name="slug"
 											placeholder="Slug"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.slug || (formik.touched.slug && formik.errors.slug)
+												'is-invalid': updatePost.errors.slug || (formik.touched.slug && formik.errors.slug)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -177,7 +190,7 @@ const CreatePost = (props) => {
 										{formik.touched.slug && formik.errors.slug ? (
 											<div className="invalid-feedback">{formik.errors.slug}</div>
 										) : null}
-										{createPost.errors.slug && <div className="invalid-feedback">{createPost.errors.slug}</div>}
+										{updatePost.errors.slug && <div className="invalid-feedback">{updatePost.errors.slug}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -189,7 +202,7 @@ const CreatePost = (props) => {
 											name="summary"
 											placeholder="Summary"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.summary || (formik.touched.summary && formik.errors.summary)
+												'is-invalid': updatePost.errors.summary || (formik.touched.summary && formik.errors.summary)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -198,28 +211,28 @@ const CreatePost = (props) => {
 										{formik.touched.summary && formik.errors.summary ? (
 											<div className="invalid-feedback">{formik.errors.summary}</div>
 										) : null}
-										{createPost.errors.summary && <div className="invalid-feedback">{createPost.errors.summary}</div>}
+										{updatePost.errors.summary && <div className="invalid-feedback">{updatePost.errors.summary}</div>}
 									</div>
 								</div>
 								<div className="control-group">
 									<div className="form-group floating-label-form-group controls">
 										<label>Content</label>
-										<input
-											type="text"
+										<textarea
 											id="content"
 											name="content"
 											placeholder="Content"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.content || (formik.touched.content && formik.errors.content)
+												'is-invalid': updatePost.errors.content || (formik.touched.content && formik.errors.content)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
 											value={formik.values.content}
-										/>
+											rows="6">
+										</textarea>
 										{formik.touched.content && formik.errors.content ? (
 											<div className="invalid-feedback">{formik.errors.content}</div>
 										) : null}
-										{createPost.errors.content && <div className="invalid-feedback">{createPost.errors.content}</div>}
+										{updatePost.errors.content && <div className="invalid-feedback">{updatePost.errors.content}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -231,7 +244,7 @@ const CreatePost = (props) => {
 											name="image"
 											placeholder="Image"
 											className={classnames('form-control', {
-												'is-invalid': createPost.errors.image || (formik.touched.image && formik.errors.image)
+												'is-invalid': updatePost.errors.image || (formik.touched.image && formik.errors.image)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -240,18 +253,18 @@ const CreatePost = (props) => {
 										{formik.touched.image && formik.errors.image ? (
 											<div className="invalid-feedback">{formik.errors.image}</div>
 										) : null}
-										{createPost.errors.image && <div className="invalid-feedback">{createPost.errors.image}</div>}
+										{updatePost.errors.image && <div className="invalid-feedback">{updatePost.errors.image}</div>}
 									</div>
 								</div>
 								<div className="text-center">
-									{createPost.loading ? (
+									{updatePost.loading ? (
 										<button type="submit" className="btn btn-primary" disabled>
 											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 											Loading...
 										</button>
 									) : (
 											<button type="submit" className="btn btn-primary">
-												Create
+												Update
 											</button>
 										)}
 								</div>
@@ -260,12 +273,8 @@ const CreatePost = (props) => {
 					</div>
 				</div>
 			</div>
-		</>
+		</MainLayout>
 	)
 }
-const mapStateToProps = (state) => ({
-	createPost: state.createPost,
-	log: state.log
-})
-CreatePost.propTypes = propTypes;
-export default connect(mapStateToProps, { createPostAction })(CreatePost)
+EditPost.propTypes = propTypes;
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost)

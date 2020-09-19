@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { loginAction } from '../../actions/authAction'
+import { loginThunk } from '../../thunks/authThunk'
 import classnames from 'classnames'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import MainLayout from '../../layouts/MainLayout';
 
 const propTypes = {
-	loginAction: PropTypes.func.isRequired,
+	loginThunk: PropTypes.func.isRequired,
 	log: PropTypes.object.isRequired
 }
+const mapStateToProps = (state) => ({
+	log: state.log
+})
+const mapDispatchToProps = {
+	loginThunk
+}
 const Login = (props) => {
-	const { loginAction, log } = props;
+	const { loginThunk, log } = props;
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -32,11 +39,11 @@ const Login = (props) => {
 				email: values.email,
 				password: values.password
 			}
-			loginAction(user);
+			loginThunk(user);
 		}
 	})
 	return (
-		<>
+		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
@@ -94,7 +101,7 @@ const Login = (props) => {
 										{formik.touched.password && formik.errors.password ? (
 											<div className="invalid-feedback">{formik.errors.password}</div>
 										) : null}
-										{log.errors.password && <div className="invalid-feedback">{log.errors.password}</div>}
+										{log.errors.user && <div className="invalid-feedback">{log.errors.user}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -137,11 +144,8 @@ const Login = (props) => {
 					</div>
 				</div>
 			</div>
-		</>
+		</MainLayout>
 	)
 }
-const mapStateToProps = (state) => ({
-	log: state.log
-})
 Login.propTypes = propTypes;
-export default connect(mapStateToProps, { loginAction })(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

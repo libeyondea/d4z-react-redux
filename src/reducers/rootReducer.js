@@ -3,7 +3,7 @@ import { loginReducer, registerReducer } from './authReducer';
 import {
 	fetchPostReducer,
 	createPostReducer,
-	detailPostReducer,
+	singlePostReducer,
 	editPostReducer,
 	updatePostReducer,
 	deletePostReducer
@@ -14,10 +14,10 @@ const rootReducer = combineReducers({
 	reg: registerReducer,
 	fetchPost: fetchPostReducer,
 	createPost: createPostReducer,
-	detailPost: detailPostReducer,
+	singlePost: singlePostReducer,
 	editPost: editPostReducer,
 	updatePost: updatePostReducer,
 	deletePost: deletePostReducer
 });
 
-export {rootReducer};
+export default rootReducer;

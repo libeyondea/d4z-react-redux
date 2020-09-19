@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import { registerAction } from '../../actions/authAction'
+import { withRouter, useHistory } from 'react-router-dom'
+import { registerThunk } from '../../thunks/authThunk'
 import classnames from 'classnames'
-import { useHistory } from 'react-router-dom'
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
+import * as Yup from 'yup';
+import MainLayout from '../../layouts/MainLayout';
 
 const propTypes = {
-	registerAction: PropTypes.func.isRequired,
+	registerThunk: PropTypes.func.isRequired,
 	log: PropTypes.object.isRequired,
 	reg: PropTypes.object.isRequired
 };
+const mapStateToProps = state => ({
+	log: state.log,
+	reg: state.reg
+});
+const mapDispatchToProps = {
+	registerThunk
+}
 const Register = (props) => {
-	const { registerAction, reg, log } = props
+	const { registerThunk, reg } = props
 	const history = useHistory()
 	const formik = useFormik({
 		initialValues: {
@@ -26,7 +33,7 @@ const Register = (props) => {
 			password_confirm: '',
 			phone_number: '',
 			address: '',
-			gender: '1'
+			gender: ''
 		},
 		validationSchema: Yup.object({
 			first_name: Yup
@@ -67,17 +74,16 @@ const Register = (props) => {
 				address: values.address,
 				gender: values.gender
 			}
-			registerAction(user, history)
+			registerThunk(user, history)
 		}
 	})
-	const listGender = {
+	const gender = {
 		male: '1',
 		female: '0',
 		orther: '',
 	}
-	const { male, female, orther } = listGender
 	return (
-		<>
+		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("assets/img/home-bg.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
@@ -260,15 +266,15 @@ const Register = (props) => {
 								</div>
 								<div className="control-group">
 									<div className="custom-control custom-radio custom-control-inline mb-4">
-										<input type="radio" id="Male" name="gender" value={male} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === male} />
+										<input type="radio" id="Male" name="gender" value={gender.male} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === gender.male} />
 										<label className="custom-control-label" htmlFor="Male">Male</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Female" name="gender" value={female} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === female} />
+										<input type="radio" id="Female" name="gender" value={gender.female} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === gender.female} />
 										<label className="custom-control-label" htmlFor="Female">Female</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Other" name="gender" value={orther} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === orther} />
+										<input type="radio" id="Other" name="gender" value={gender.orther} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === gender.orther} />
 										<label className="custom-control-label" htmlFor="Other">Other</label>
 									</div>
 								</div>
@@ -311,12 +317,8 @@ const Register = (props) => {
 					</div>
 				</div>
 			</div>
-		</>
+		</MainLayout>
 	)
 }
-const mapStateToProps = state => ({
-	log: state.log,
-	reg: state.reg
-});
 Register.propTypes = propTypes;
-export default connect(mapStateToProps, { registerAction })(withRouter(Register))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register))

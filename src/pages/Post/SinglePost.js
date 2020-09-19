@@ -2,26 +2,36 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Swal from "sweetalert2";
-import { detailPostAction, deletePostAction } from "../../actions/postAction";
-import LoadingTitlePost from '../Loading/LoadingTitlePost';
-import LoadingContentPost from '../Loading/LoadingContentPost';
+import Swal from 'sweetalert2';
+import { singlePostThunk, deletePostThunk } from '../../thunks/postThunk';
+import MainLayout from '../../layouts/MainLayout';
+import LoadingTitlePost from '../../components/Loading/LoadingTitlePost';
+import LoadingContentPost from '../../components/Loading/LoadingContentPost';
 
 const propTypes = {
-    detailPostAction: PropTypes.func.isRequired,
-    detailPost: PropTypes.object.isRequired,
+    singlePostThunk: PropTypes.func.isRequired,
+    singlePost: PropTypes.object.isRequired,
     match: PropTypes.shape({
         params: PropTypes.shape({
             slug: PropTypes.string.isRequired,
         }).isRequired
     }).isRequired,
 };
-const DetailPost = (props) => {
-    const { detailPostAction, deletePostAction, deletePost, detailPost, match, history, log } = props
+const mapStateToProps = (state) => ({
+    singlePost: state.singlePost,
+    deletePost: state.deletePost,
+    log: state.log
+})
+const mapDispatchToProps = {
+    singlePostThunk,
+    deletePostThunk
+}
+const SinglePost = (props) => {
+    const { singlePostThunk, deletePostThunk, deletePost, singlePost, match, history, log } = props
     const { slug } = match.params;
     useEffect(() => {
-        detailPostAction(slug);
-    }, [detailPostAction, slug])
+        singlePostThunk(slug);
+    }, [singlePostThunk, slug])
     const handleSubmit = (event) => {
         event.preventDefault();
         Swal.fire({
@@ -33,15 +43,15 @@ const DetailPost = (props) => {
             confirmButtonText: 'Yes',
             cancelButtonText: 'No'
         }).then((result) => {
-            if (result.isConfirmed && (log.user.role_id === 1 || detailPost.posts.user_id === log.user.id)) {
-                deletePostAction(slug, history);
+            if (result.isConfirmed && (log.user.role_id === 1 || singlePost.posts.user_id === log.user.id)) {
+                deletePostThunk(slug, history);
             }
         })
     }
     const edLinks = (
         <div className="clearfix">
             <form onSubmit={handleSubmit}>
-                <Link className="btn btn-primary float-right" to={`/edit-post/${detailPost.posts.slug}`}>Edit Post</Link>
+                <Link className="btn btn-primary float-right" to={`/edit-post/${singlePost.posts.slug}`}>Edit Post</Link>
                 {
                     deletePost.loading ?
                         (
@@ -58,19 +68,19 @@ const DetailPost = (props) => {
             </form>
         </div>
     )
-    const authLinks = (log.user.role_id === 1 || detailPost.posts.user_id === log.user.id) ? edLinks : null
+    const authLinks = (log.user.role_id === 1 || singlePost.posts.user_id === log.user.id) ? edLinks : null
     return (
-        <>
-            <header className="masthead" style={detailPost.loading ? { backgroundColor: '#343a40' } : { backgroundImage: 'url("/assets/img/post-bg.jpg")' }}>
+        <MainLayout>
+            <header className="masthead" style={singlePost.loading ? { backgroundColor: '#343a40' } : { backgroundImage: 'url("/assets/img/post-bg.jpg")' }}>
                 <div className="overlay" />
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8 col-md-10 mx-auto">
-                            {detailPost.loading ? <LoadingTitlePost /> :
+                            {singlePost.loading ? <LoadingTitlePost /> :
                                 <div className="post-heading">
-                                    <h1>{detailPost.posts.title}</h1>
-                                    <h2 className="subheading">{detailPost.posts.summary}</h2>
-                                    <span className="meta">Posted by <a href="!#">{detailPost.posts.user_name}</a> on {detailPost.posts.created_at}
+                                    <h1>{singlePost.posts.title}</h1>
+                                    <h2 className="subheading">{singlePost.posts.summary}</h2>
+                                    <span className="meta">Posted by <a href="!#">{singlePost.posts.user_name}</a> on {singlePost.posts.created_at}
                                     </span>
                                 </div>
                             }
@@ -82,10 +92,10 @@ const DetailPost = (props) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8 col-md-10 mx-auto">
-                            {detailPost.loading ? <LoadingContentPost /> :
+                            {singlePost.loading ? <LoadingContentPost /> :
                                 <>
                                     <div>
-                                        <p>{detailPost.posts.content}</p>
+                                        <p>{singlePost.posts.content}</p>
                                     </div>
                                     {authLinks}
                                 </>
@@ -94,13 +104,8 @@ const DetailPost = (props) => {
                     </div>
                 </div>
             </article>
-        </>
+        </MainLayout>
     );
 }
-const mapStateToProps = (state) => ({
-    detailPost: state.detailPost,
-    deletePost: state.deletePost,
-    log: state.log
-})
-DetailPost.propTypes = propTypes;
-export default connect(mapStateToProps, { detailPostAction, deletePostAction })(DetailPost)
+SinglePost.propTypes = propTypes;
+export default connect(mapStateToProps, mapDispatchToProps)(SinglePost)
