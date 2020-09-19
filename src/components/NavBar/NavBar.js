@@ -45,10 +45,7 @@ const Navbar = (props) => {
 						}}
 					/>
 				</a>
-				<div
-					className="dropdown-menu dropdown-menu-right"
-					aria-labelledby="navbarDropdownUser"
-				>
+				<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
 					<a className="dropdown-item" href="#!">
 						Info
 					</a>
@@ -74,10 +71,7 @@ const Navbar = (props) => {
 		</>
 	);
 	return (
-		<nav
-			className="navbar navbar-expand-lg navbar-light fixed-top"
-			id="mainNav"
-		>
+		<nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
 			<div className="container">
 				<Link className="navbar-brand" to="/">
 					NguyenThucOfficial

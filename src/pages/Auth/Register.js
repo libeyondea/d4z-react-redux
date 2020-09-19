@@ -1,10 +1,10 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { withRouter, useHistory } from 'react-router-dom'
-import { registerThunk } from '../../thunks/authThunk'
-import classnames from 'classnames'
-import { useFormik } from 'formik'
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { withRouter, useHistory } from 'react-router-dom';
+import { registerThunk } from '../../thunks/authThunk';
+import classnames from 'classnames';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import MainLayout from '../../layouts/MainLayout';
 
@@ -13,16 +13,16 @@ const propTypes = {
 	log: PropTypes.object.isRequired,
 	reg: PropTypes.object.isRequired
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	log: state.log,
 	reg: state.reg
 });
 const mapDispatchToProps = {
 	registerThunk
-}
+};
 const Register = (props) => {
-	const { registerThunk, reg } = props
-	const history = useHistory()
+	const { registerThunk, reg } = props;
+	const history = useHistory();
 	const formik = useFormik({
 		initialValues: {
 			first_name: '',
@@ -36,34 +36,18 @@ const Register = (props) => {
 			gender: ''
 		},
 		validationSchema: Yup.object({
-			first_name: Yup
-				.string()
-				.required('First name is required'),
-			last_name: Yup
-				.string()
-				.required('Last name is required'),
-			user_name: Yup
-				.string()
-				.required('User name is required'),
-			email: Yup
-				.string()
-				.email('Invalid email')
-				.required('Email is required'),
-			password: Yup
-				.string()
-				.required('Password is required'),
-			password_confirm: Yup
-				.string()
+			first_name: Yup.string().required('First name is required'),
+			last_name: Yup.string().required('Last name is required'),
+			user_name: Yup.string().required('User name is required'),
+			email: Yup.string().email('Invalid email').required('Email is required'),
+			password: Yup.string().required('Password is required'),
+			password_confirm: Yup.string()
 				.required('Comfirm password is required')
-				.oneOf([Yup.ref("password")], "Password is not match"),
-			phone_number: Yup
-				.string()
-				.required('Phone number is required'),
-			address: Yup
-				.string()
-				.required('Address is required'),
+				.oneOf([Yup.ref('password')], 'Password is not match'),
+			phone_number: Yup.string().required('Phone number is required'),
+			address: Yup.string().required('Address is required')
 		}),
-		onSubmit: values => {
+		onSubmit: (values) => {
 			const user = {
 				first_name: values.first_name,
 				last_name: values.last_name,
@@ -73,15 +57,15 @@ const Register = (props) => {
 				phone_number: values.phone_number,
 				address: values.address,
 				gender: values.gender
-			}
-			registerThunk(user, history)
+			};
+			registerThunk(user, history);
 		}
-	})
+	});
 	const gender = {
 		male: '1',
 		female: '0',
-		orther: '',
-	}
+		orther: ''
+	};
 	return (
 		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("assets/img/home-bg.jpg")' }}>
@@ -111,7 +95,7 @@ const Register = (props) => {
 											name="first_name"
 											placeholder="First name"
 											className={classnames('form-control', {
-												'is-invalid': (formik.touched.first_name && formik.errors.first_name)
+												'is-invalid': formik.touched.first_name && formik.errors.first_name
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -131,7 +115,7 @@ const Register = (props) => {
 											name="last_name"
 											placeholder="Last name"
 											className={classnames('form-control', {
-												'is-invalid': (formik.touched.last_name && formik.errors.last_name)
+												'is-invalid': formik.touched.last_name && formik.errors.last_name
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -151,7 +135,9 @@ const Register = (props) => {
 											name="user_name"
 											placeholder="User name"
 											className={classnames('form-control', {
-												'is-invalid': reg.errors.user_name || (formik.touched.user_name && formik.errors.user_name)
+												'is-invalid':
+													reg.errors.user_name ||
+													(formik.touched.user_name && formik.errors.user_name)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -160,7 +146,9 @@ const Register = (props) => {
 										{formik.touched.user_name && formik.errors.user_name ? (
 											<div className="invalid-feedback">{formik.errors.user_name}</div>
 										) : null}
-										{reg.errors.user_name && (<div className="invalid-feedback">{reg.errors.user_name}</div>)}
+										{reg.errors.user_name && (
+											<div className="invalid-feedback">{reg.errors.user_name}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -172,7 +160,8 @@ const Register = (props) => {
 											name="email"
 											placeholder="Your email"
 											className={classnames('form-control', {
-												'is-invalid': reg.errors.email || (formik.touched.email && formik.errors.email)
+												'is-invalid':
+													reg.errors.email || (formik.touched.email && formik.errors.email)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -181,7 +170,7 @@ const Register = (props) => {
 										{formik.touched.email && formik.errors.email ? (
 											<div className="invalid-feedback">{formik.errors.email}</div>
 										) : null}
-										{reg.errors.email && (<div className="invalid-feedback">{reg.errors.email}</div>)}
+										{reg.errors.email && <div className="invalid-feedback">{reg.errors.email}</div>}
 									</div>
 								</div>
 								<div className="control-group">
@@ -193,7 +182,7 @@ const Register = (props) => {
 											name="password"
 											placeholder="Password"
 											className={classnames('form-control', {
-												'is-invalid': (formik.touched.password && formik.errors.password)
+												'is-invalid': formik.touched.password && formik.errors.password
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -213,7 +202,8 @@ const Register = (props) => {
 											name="password_confirm"
 											placeholder="Confirm Password"
 											className={classnames('form-control', {
-												'is-invalid': (formik.touched.password_confirm && formik.errors.password_confirm)
+												'is-invalid':
+													formik.touched.password_confirm && formik.errors.password_confirm
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -233,7 +223,7 @@ const Register = (props) => {
 											name="phone_number"
 											placeholder="Phone number"
 											className={classnames('form-control', {
-												'is-invalid': (formik.touched.phone_number && formik.errors.phone_number)
+												'is-invalid': formik.touched.phone_number && formik.errors.phone_number
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -253,7 +243,7 @@ const Register = (props) => {
 											name="address"
 											placeholder="Address"
 											className={classnames('form-control', {
-												'is-invalid': (formik.touched.address && formik.errors.address)
+												'is-invalid': formik.touched.address && formik.errors.address
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -266,35 +256,76 @@ const Register = (props) => {
 								</div>
 								<div className="control-group">
 									<div className="custom-control custom-radio custom-control-inline mb-4">
-										<input type="radio" id="Male" name="gender" value={gender.male} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === gender.male} />
-										<label className="custom-control-label" htmlFor="Male">Male</label>
+										<input
+											type="radio"
+											id="Male"
+											name="gender"
+											value={gender.male}
+											className="custom-control-input"
+											onChange={formik.handleChange}
+											checked={formik.values.gender === gender.male}
+										/>
+										<label className="custom-control-label" htmlFor="Male">
+											Male
+										</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Female" name="gender" value={gender.female} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === gender.female} />
-										<label className="custom-control-label" htmlFor="Female">Female</label>
+										<input
+											type="radio"
+											id="Female"
+											name="gender"
+											value={gender.female}
+											className="custom-control-input"
+											onChange={formik.handleChange}
+											checked={formik.values.gender === gender.female}
+										/>
+										<label className="custom-control-label" htmlFor="Female">
+											Female
+										</label>
 									</div>
 									<div className="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="Other" name="gender" value={gender.orther} className="custom-control-input" onChange={formik.handleChange} checked={formik.values.gender === gender.orther} />
-										<label className="custom-control-label" htmlFor="Other">Other</label>
+										<input
+											type="radio"
+											id="Other"
+											name="gender"
+											value={gender.orther}
+											className="custom-control-input"
+											onChange={formik.handleChange}
+											checked={formik.values.gender === gender.orther}
+										/>
+										<label className="custom-control-label" htmlFor="Other">
+											Other
+										</label>
 									</div>
 								</div>
 								<div className="control-group">
 									<div className="custom-control custom-checkbox mb-3">
-										<input type="checkbox" className="custom-control-input" id="invalidCheck" required />
-										<label className="custom-control-label" htmlFor="invalidCheck">Agree to terms of service</label>
+										<input
+											type="checkbox"
+											className="custom-control-input"
+											id="invalidCheck"
+											required
+										/>
+										<label className="custom-control-label" htmlFor="invalidCheck">
+											Agree to terms of service
+										</label>
 									</div>
 								</div>
 								<div className="text-center">
 									{reg.isLoading ? (
 										<button type="submit" className="btn btn-primary" disabled>
-											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
+											<span
+												className="spinner-border spinner-border-sm mr-1"
+												role="status"
+												aria-hidden="true"
+											/>
 											Loading...
 										</button>
 									) : (
-											<button type="submit" className="btn btn-primary">
-												Register
-											</button>
-										)}
+										<button type="submit" className="btn btn-primary">
+											Register
+										</button>
+									)}
 									<p>or sign up with:</p>
 									<a href="!#" className="btn-floating btn-fb btn-sm mr-1">
 										<i className="fab fa-facebook-f" />
@@ -309,7 +340,8 @@ const Register = (props) => {
 										<i className="fab fa-github" />
 									</a>
 									<hr className="mt-4" />
-									<p>By clicking <em>Register</em> you agree to our <a href="#!">terms of service</a>
+									<p>
+										By clicking <em>Register</em> you agree to our <a href="#!">terms of service</a>
 									</p>
 								</div>
 							</form>
@@ -318,7 +350,7 @@ const Register = (props) => {
 				</div>
 			</div>
 		</MainLayout>
-	)
-}
+	);
+};
 Register.propTypes = propTypes;
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));

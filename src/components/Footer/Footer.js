@@ -32,9 +32,7 @@ const Footer = () => {
 								</a>
 							</li>
 						</ul>
-						<p className="copyright text-muted">
-							Copyright © Your Website 2020
-						</p>
+						<p className="copyright text-muted">Copyright © Your Website 2020</p>
 					</div>
 				</div>
 			</div>

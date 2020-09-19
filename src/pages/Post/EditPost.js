@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editPostThunk, updatePostThunk } from '../../thunks/postThunk';
 import classnames from 'classnames';
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import Swal from "sweetalert2";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import Swal from 'sweetalert2';
 import MainLayout from '../../layouts/MainLayout';
 
 const propTypes = {
@@ -15,19 +15,19 @@ const propTypes = {
 	editPost: PropTypes.object.isRequired,
 	updatePost: PropTypes.object.isRequired,
 	match: PropTypes.object.isRequired
-}
+};
 const mapStateToProps = (state) => ({
 	editPost: state.editPost,
 	updatePost: state.updatePost
-})
+});
 const mapDispatchToProps = {
-    editPostThunk,
-    updatePostThunk
-}
+	editPostThunk,
+	updatePostThunk
+};
 const EditPost = (props) => {
-	const { editPostThunk, updatePostThunk, editPost, updatePost, match } = props
-	const { slug } = match.params
-	const history = useHistory()
+	const { editPostThunk, updatePostThunk, editPost, updatePost, match } = props;
+	const { slug } = match.params;
+	const history = useHistory();
 	const formik = useFormik({
 		initialValues: {
 			title: '',
@@ -42,23 +42,16 @@ const EditPost = (props) => {
 			user_id: ''
 		},
 		validationSchema: Yup.object({
-			title: Yup.string()
-				.required('Title is required'),
-			meta_title: Yup.string()
-				.required('Meta title is required'),
-			meta_description: Yup.string()
-				.required('Meta description is required'),
-			slug: Yup.string()
-				.required('Slug is required'),
-			summary: Yup.string()
-				.required('Summary is required'),
-			image: Yup.string()
-				.required('Image is required'),
-			content: Yup.string()
-				.required('Content is required')
+			title: Yup.string().required('Title is required'),
+			meta_title: Yup.string().required('Meta title is required'),
+			meta_description: Yup.string().required('Meta description is required'),
+			slug: Yup.string().required('Slug is required'),
+			summary: Yup.string().required('Summary is required'),
+			image: Yup.string().required('Image is required'),
+			content: Yup.string().required('Content is required')
 		}),
-		onSubmit: values => {
-			const slugNew = values.slug
+		onSubmit: (values) => {
+			const slugNew = values.slug;
 			const post = {
 				title: values.title,
 				meta_title: values.meta_title,
@@ -70,7 +63,7 @@ const EditPost = (props) => {
 				published: editPost.posts.published,
 				published_at: editPost.posts.published_at,
 				user_id: editPost.posts.user_id
-			}
+			};
 			Swal.fire({
 				title: 'Do you want to update?',
 				icon: 'question',
@@ -81,14 +74,14 @@ const EditPost = (props) => {
 				cancelButtonText: 'No'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					updatePostThunk(post, history, slug, slugNew)
+					updatePostThunk(post, history, slug, slugNew);
 				}
-			})
+			});
 		}
-	})
+	});
 	useEffect(() => {
-		editPostThunk(slug)
-	}, [editPostThunk, slug])
+		editPostThunk(slug);
+	}, [editPostThunk, slug]);
 	return (
 		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
@@ -118,7 +111,8 @@ const EditPost = (props) => {
 											name="title"
 											placeholder="Title"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.title || (formik.touched.title && formik.errors.title)
+												'is-invalid':
+													updatePost.errors.title || (formik.touched.title && formik.errors.title)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -127,7 +121,9 @@ const EditPost = (props) => {
 										{formik.touched.title && formik.errors.title ? (
 											<div className="invalid-feedback">{formik.errors.title}</div>
 										) : null}
-										{updatePost.errors.title && <div className="invalid-feedback">{updatePost.errors.title}</div>}
+										{updatePost.errors.title && (
+											<div className="invalid-feedback">{updatePost.errors.title}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -139,7 +135,9 @@ const EditPost = (props) => {
 											name="meta_title"
 											placeholder="Meta title"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.meta_title || (formik.touched.meta_title && formik.errors.meta_title)
+												'is-invalid':
+													updatePost.errors.meta_title ||
+													(formik.touched.meta_title && formik.errors.meta_title)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -148,7 +146,9 @@ const EditPost = (props) => {
 										{formik.touched.meta_title && formik.errors.meta_title ? (
 											<div className="invalid-feedback">{formik.errors.meta_title}</div>
 										) : null}
-										{updatePost.errors.meta_title && <div className="invalid-feedback">{updatePost.errors.meta_title}</div>}
+										{updatePost.errors.meta_title && (
+											<div className="invalid-feedback">{updatePost.errors.meta_title}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -160,7 +160,9 @@ const EditPost = (props) => {
 											name="meta_description"
 											placeholder="Meta Description"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.meta_description || (formik.touched.meta_description && formik.errors.meta_description)
+												'is-invalid':
+													updatePost.errors.meta_description ||
+													(formik.touched.meta_description && formik.errors.meta_description)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -169,7 +171,9 @@ const EditPost = (props) => {
 										{formik.touched.meta_description && formik.errors.meta_description ? (
 											<div className="invalid-feedback">{formik.errors.meta_description}</div>
 										) : null}
-										{updatePost.errors.meta_description && <div className="invalid-feedback">{updatePost.errors.meta_description}</div>}
+										{updatePost.errors.meta_description && (
+											<div className="invalid-feedback">{updatePost.errors.meta_description}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -181,7 +185,8 @@ const EditPost = (props) => {
 											name="slug"
 											placeholder="Slug"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.slug || (formik.touched.slug && formik.errors.slug)
+												'is-invalid':
+													updatePost.errors.slug || (formik.touched.slug && formik.errors.slug)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -190,7 +195,9 @@ const EditPost = (props) => {
 										{formik.touched.slug && formik.errors.slug ? (
 											<div className="invalid-feedback">{formik.errors.slug}</div>
 										) : null}
-										{updatePost.errors.slug && <div className="invalid-feedback">{updatePost.errors.slug}</div>}
+										{updatePost.errors.slug && (
+											<div className="invalid-feedback">{updatePost.errors.slug}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -202,7 +209,9 @@ const EditPost = (props) => {
 											name="summary"
 											placeholder="Summary"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.summary || (formik.touched.summary && formik.errors.summary)
+												'is-invalid':
+													updatePost.errors.summary ||
+													(formik.touched.summary && formik.errors.summary)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -211,7 +220,9 @@ const EditPost = (props) => {
 										{formik.touched.summary && formik.errors.summary ? (
 											<div className="invalid-feedback">{formik.errors.summary}</div>
 										) : null}
-										{updatePost.errors.summary && <div className="invalid-feedback">{updatePost.errors.summary}</div>}
+										{updatePost.errors.summary && (
+											<div className="invalid-feedback">{updatePost.errors.summary}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -222,17 +233,21 @@ const EditPost = (props) => {
 											name="content"
 											placeholder="Content"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.content || (formik.touched.content && formik.errors.content)
+												'is-invalid':
+													updatePost.errors.content ||
+													(formik.touched.content && formik.errors.content)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
 											value={formik.values.content}
-											rows="6">
-										</textarea>
+											rows="6"
+										></textarea>
 										{formik.touched.content && formik.errors.content ? (
 											<div className="invalid-feedback">{formik.errors.content}</div>
 										) : null}
-										{updatePost.errors.content && <div className="invalid-feedback">{updatePost.errors.content}</div>}
+										{updatePost.errors.content && (
+											<div className="invalid-feedback">{updatePost.errors.content}</div>
+										)}
 									</div>
 								</div>
 								<div className="control-group">
@@ -244,7 +259,8 @@ const EditPost = (props) => {
 											name="image"
 											placeholder="Image"
 											className={classnames('form-control', {
-												'is-invalid': updatePost.errors.image || (formik.touched.image && formik.errors.image)
+												'is-invalid':
+													updatePost.errors.image || (formik.touched.image && formik.errors.image)
 											})}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
@@ -253,20 +269,26 @@ const EditPost = (props) => {
 										{formik.touched.image && formik.errors.image ? (
 											<div className="invalid-feedback">{formik.errors.image}</div>
 										) : null}
-										{updatePost.errors.image && <div className="invalid-feedback">{updatePost.errors.image}</div>}
+										{updatePost.errors.image && (
+											<div className="invalid-feedback">{updatePost.errors.image}</div>
+										)}
 									</div>
 								</div>
 								<div className="text-center">
 									{updatePost.loading ? (
 										<button type="submit" className="btn btn-primary" disabled>
-											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
+											<span
+												className="spinner-border spinner-border-sm mr-1"
+												role="status"
+												aria-hidden="true"
+											/>
 											Loading...
 										</button>
 									) : (
-											<button type="submit" className="btn btn-primary">
-												Update
-											</button>
-										)}
+										<button type="submit" className="btn btn-primary">
+											Update
+										</button>
+									)}
 								</div>
 							</form>
 						</div>
@@ -274,7 +296,7 @@ const EditPost = (props) => {
 				</div>
 			</div>
 		</MainLayout>
-	)
-}
+	);
+};
 EditPost.propTypes = propTypes;
-export default connect(mapStateToProps, mapDispatchToProps)(EditPost)
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost);

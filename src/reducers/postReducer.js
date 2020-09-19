@@ -17,185 +17,185 @@ import {
 	DELETE_POST_REQUESTED,
 	DELETE_POST_SUCCEED,
 	DELETE_POST_FAILED
-} from '../constants/postConstant'
-import { produce } from 'immer'
+} from '../constants/postConstant';
+import { produce } from 'immer';
 
 const fetchPostInitialState = {
 	posts: [],
 	loading: true,
 	errors: {}
-}
+};
 
 const createPostInitialState = {
 	posts: {},
 	loading: false,
 	errors: {}
-}
+};
 
 const singlePostInitialState = {
 	posts: {},
 	loading: true,
 	errors: {}
-}
+};
 
 const editPostInitialState = {
 	posts: {},
 	loading: true,
 	errors: {}
-}
+};
 
 const updatePostInitialState = {
 	posts: {},
 	loading: false,
 	errors: {}
-}
+};
 
 const deletePostInitialState = {
 	posts: {},
 	loading: false,
 	errors: {}
-}
+};
 
 export const fetchPostReducer = (state = fetchPostInitialState, action) => {
-	return produce(state, draft => {
+	return produce(state, (draft) => {
 		switch (action.type) {
 			case FETCH_POST_REQUESTED:
-				draft.posts = []
-				draft.loading = true
-				draft.errors = {}
-				break
+				draft.posts = [];
+				draft.loading = true;
+				draft.errors = {};
+				break;
 			case FETCH_POST_SUCCEED:
-				draft.posts = action.payload
-				draft.loading = false
-				draft.errors = {}
-				break
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
 			case FETCH_POST_FAILED:
-				draft.posts = []
-				draft.loading = false
-				draft.errors = action.payload
-				break
+				draft.posts = [];
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
 			default:
-				break
+				break;
 		}
-	})
-}
+	});
+};
 
 export const createPostReducer = (state = createPostInitialState, action) => {
-	return produce(state, draft => {
+	return produce(state, (draft) => {
 		switch (action.type) {
 			case CREATE_POST_REQUESTED:
-				draft.posts = {}
-				draft.loading = true
-				draft.errors = {}
-				break
+				draft.posts = {};
+				draft.loading = true;
+				draft.errors = {};
+				break;
 			case CREATE_POST_SUCCEED:
-				draft.posts = action.payload
-				draft.loading = false
-				draft.errors = {}
-				break
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
 			case CREATE_POST_FAILED:
-				draft.posts = {}
-				draft.loading = false
-				draft.errors = action.payload
-				break
+				draft.posts = {};
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
 			default:
-				break
+				break;
 		}
-	})
-}
+	});
+};
 
 export const singlePostReducer = (state = singlePostInitialState, action) => {
-	return produce(state, draft => {
+	return produce(state, (draft) => {
 		switch (action.type) {
 			case SINGLE_POST_REQUESTED:
-				draft.posts = {}
-				draft.loading = true
-				draft.errors = {}
-				break
+				draft.posts = {};
+				draft.loading = true;
+				draft.errors = {};
+				break;
 			case SINGLE_POST_SUCCEED:
-				draft.posts = action.payload
-				draft.loading = false
-				draft.errors = {}
-				break
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
 			case SINGLE_POST_FAILED:
-				draft.posts = {}
-				draft.loading = false
-				draft.errors = action.payload
-				break
+				draft.posts = {};
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
 			default:
-				break
+				break;
 		}
-	})
-}
+	});
+};
 
 export const editPostReducer = (state = editPostInitialState, action) => {
-	return produce(state, draft => {
+	return produce(state, (draft) => {
 		switch (action.type) {
 			case EDIT_POST_REQUESTED:
-				draft.posts = {}
-				draft.loading = true
-				draft.errors = {}
-				break
+				draft.posts = {};
+				draft.loading = true;
+				draft.errors = {};
+				break;
 			case EDIT_POST_SUCCEED:
-				draft.posts = action.payload
-				draft.loading = false
-				draft.errors = {}
-				break
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
 			case EDIT_POST_FAILED:
-				draft.posts = {}
-				draft.loading = false
-				draft.errors = action.payload
-				break
+				draft.posts = {};
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
 			default:
-				break
+				break;
 		}
-	})
-}
+	});
+};
 
 export const updatePostReducer = (state = updatePostInitialState, action) => {
-	return produce(state, draft => {
+	return produce(state, (draft) => {
 		switch (action.type) {
 			case UPDATE_POST_REQUESTED:
-				draft.posts = {}
-				draft.loading = true
-				draft.errors = {}
-				break
+				draft.posts = {};
+				draft.loading = true;
+				draft.errors = {};
+				break;
 			case UPDATE_POST_SUCCEED:
-				draft.posts = action.payload
-				draft.loading = false
-				draft.errors = {}
-				break
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
 			case UPDATE_POST_FAILED:
-				draft.posts = {}
-				draft.loading = false
-				draft.errors = action.payload
-				break
+				draft.posts = {};
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
 			default:
-				break
+				break;
 		}
-	})
-}
+	});
+};
 
 export const deletePostReducer = (state = deletePostInitialState, action) => {
-	return produce(state, draft => {
+	return produce(state, (draft) => {
 		switch (action.type) {
 			case DELETE_POST_REQUESTED:
-				draft.posts = {}
-				draft.loading = true
-				draft.errors = {}
-				break
+				draft.posts = {};
+				draft.loading = true;
+				draft.errors = {};
+				break;
 			case DELETE_POST_SUCCEED:
-				draft.posts = action.payload
-				draft.loading = false
-				draft.errors = {}
-				break
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
 			case DELETE_POST_FAILED:
-				draft.posts = {}
-				draft.loading = false
-				draft.errors = action.payload
-				break
+				draft.posts = {};
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
 			default:
-				break
+				break;
 		}
-	})
-}
+	});
+};

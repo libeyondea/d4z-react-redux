@@ -4,11 +4,11 @@ import Header from '../../components/SideShow/SideShow';
 import FetchPost from '../../components/Post/FetchPost';
 
 const Home = () => {
-    return (
-        <MainLayout>
-            <Header />
-            <FetchPost />
-        </MainLayout>
-    )
-}
+	return (
+		<MainLayout>
+			<Header />
+			<FetchPost />
+		</MainLayout>
+	);
+};
 export default Home;

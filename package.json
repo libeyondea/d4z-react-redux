@@ -11,7 +11,8 @@
 		"start": "node server.js",
 		"dev-server": "webpack-dev-server --config webpack.dev.js --open",
 		"build": "webpack --config webpack.prod.js",
-		"heroku-postbuild": "npm run build"
+		"heroku-postbuild": "npm run build",
+		"format": "prettier --write src/"
 	},
 	"author": "nguyenthucofficial",
 	"license": "ISC",
@@ -49,9 +50,12 @@
 		"dotenv": "^8.2.0",
 		"dotenv-webpack": "^3.0.0",
 		"eslint": "^7.8.1",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-prettier": "^3.1.4",
 		"file-loader": "^6.0.0",
 		"html-webpack-plugin": "^4.3.0",
 		"mini-css-extract-plugin": "^0.11.0",
+		"prettier": "^2.1.2",
 		"sass": "^1.26.10",
 		"sass-loader": "^10.0.2",
 		"style-loader": "^1.2.1",
