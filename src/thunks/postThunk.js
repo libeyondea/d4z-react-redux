@@ -23,80 +23,78 @@ import axios from 'axios';
 export const fetchPostThunk = () => async (dispatch) => {
 	try {
 		dispatch(fetchPostRequestedAction());
-		const response = await axios.get(`${process.env.API_URL}/posts`);
-		if (response.data.success) {
-			dispatch(fetchPostSucceedAction(response.data.data));
+		const res = await axios.get(`${process.env.API_URL}/posts`);
+		if (res.data.success) {
+			dispatch(fetchPostSucceedAction(res.data.data));
 		}
-	} catch (error) {
-		dispatch(fetchPostFailedAction(error.message));
+	} catch (err) {
+		dispatch(fetchPostFailedAction(err.message));
 	}
 };
 
 export const createPostThunk = (post, slug, history) => async (dispatch) => {
 	try {
 		dispatch(createPostRequestedAction());
-		const response = await axios.post(`${process.env.API_URL}/posts`, post);
-		if (response.data.success) {
-			dispatch(createPostSucceedAction(response.data.data));
+		const res = await axios.post(`${process.env.API_URL}/posts`, post);
+		if (res.data.success) {
+			dispatch(createPostSucceedAction(res.data.data));
 			history.push(`/posts/${slug}`);
-		} else {
-			dispatch(createPostFailedAction(response.data.errors));
 		}
-	} catch (error) {
-		dispatch(createPostFailedAction(error.message));
+	} catch (err) {
+		dispatch(createPostFailedAction(err.message));
 	}
 };
 
 export const singlePostThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(singlePostRequestedAction());
-		const response = await axios.get(`${process.env.API_URL}/posts/${slug}`);
-		if (response.data.success) {
-			dispatch(singlePostSucceedAction(response.data.data));
+		const res = await axios.get(`${process.env.API_URL}/posts/${slug}`);
+		if (res.data.success) {
+			dispatch(singlePostSucceedAction(res.data.data));
 		}
-	} catch (error) {
-		dispatch(singlePostFailedAction(error.message));
+	} catch (err) {
+		dispatch(singlePostFailedAction(err.message));
 	}
 };
 
 export const editPostThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(editPostRequestedAction());
-		const response = await axios.get(`${process.env.API_URL}/posts/${slug}/edit`);
-		if (response.data.success) {
-			dispatch(editPostSucceedAction(response.data.data));
+		const res = await axios.get(`${process.env.API_URL}/posts/${slug}/edit`);
+		if (res.data.success) {
+			dispatch(editPostSucceedAction(res.data.data));
 		}
-	} catch (error) {
-		dispatch(editPostFailedAction(error.message));
+	} catch (err) {
+		dispatch(editPostFailedAction(err.message));
 	}
 };
 
 export const updatePostThunk = (post, history, slug, slugNew) => async (dispatch) => {
 	try {
 		dispatch(updatePostRequestedAction());
-		const response = await axios.put(`${process.env.API_URL}/posts/${slug}`, post);
-		if (response.data.success) {
-			dispatch(updatePostSucceedAction(response.data.data));
+		const res = await axios.put(`${process.env.API_URL}/posts/${slug}`, post);
+		if (res.data.success) {
+			dispatch(updatePostSucceedAction(res.data.data));
 			history.push(`/posts/${slugNew}`);
 		} else {
-			dispatch(updatePostFailedAction(response.data.errors));
+			dispatch(updatePostFailedAction(res.data.errs));
 		}
-	} catch (error) {
-		dispatch(updatePostFailedAction(error.message));
+	} catch (err) {
+		dispatch(updatePostFailedAction(err.message));
 	}
 };
 
 export const deletePostThunk = (slug, history) => async (dispatch) => {
 	try {
 		dispatch(deletePostRequestedAction());
-		const response = await axios.delete(`${process.env.API_URL}/posts/${slug}`);
-		if (response.data.success) {
-			dispatch(deletePostSucceedAction(response.data.data));
+		const res = await axios.delete(`${process.env.API_URL}/posts/${slug}`);
+		if (res.data.success) {
+			dispatch(deletePostSucceedAction(res.data.data));
 			history.push('/');
 		} else {
-			dispatch(deletePostFailedAction(response.data.errors));
+			dispatch(deletePostFailedAction(res.data.errs));
 		}
-	} catch (error) {
-		dispatch(deletePostFailedAction(error.message));
+	} catch (err) {
+		dispatch(deletePostFailedAction(err.message));
 	}
 };

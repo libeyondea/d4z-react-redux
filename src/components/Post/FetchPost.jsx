@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPostThunk } from '../../thunks/postThunk';
 import LoadingFetchPost from '../Loading/LoadingFetchPost';
@@ -9,16 +10,18 @@ import Posts from './Posts';
 const propTypes = {
 	fetchPostThunk: PropTypes.func.isRequired,
 	fetchPost: PropTypes.shape({
-		posts: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.number,
-				slug: PropTypes.string,
-				title: PropTypes.string,
-				summary: PropTypes.string,
-				created_at: PropTypes.string,
-				user_name: PropTypes.string
-			})
-		)
+		posts: PropTypes.shape({
+			data: PropTypes.arrayOf(
+				PropTypes.shape({
+					id: PropTypes.number,
+					slug: PropTypes.string,
+					title: PropTypes.string,
+					summary: PropTypes.string,
+					created_at: PropTypes.string,
+					user_name: PropTypes.string
+				})
+			)
+		})
 	}).isRequired
 };
 const mapStateToProps = (state) => ({
@@ -31,7 +34,7 @@ const FetchPost = (props) => {
 	const { fetchPostThunk, fetchPost } = props;
 	useEffect(() => {
 		fetchPostThunk();
-	}, [fetchPostThunk]);
+	}, []);
 	return (
 		<div className="container">
 			<div className="row">
@@ -40,15 +43,15 @@ const FetchPost = (props) => {
 						<LoadingFetchPost />
 					) : (
 						<div>
-							{!fetchPost.posts.length ? (
+							{!fetchPost.posts.data.length ? (
 								<EmptyFetchPost />
 							) : (
 								<>
-									<Posts posts={fetchPost.posts} />
+									<Posts posts={fetchPost.posts.data} />
 									<div className="clearfix">
-										<a className="btn btn-primary float-right" href="!#">
-											Older Posts →
-										</a>
+										<Link className="btn btn-primary float-right" to="/">
+											Next Page →
+										</Link>
 									</div>
 								</>
 							)}

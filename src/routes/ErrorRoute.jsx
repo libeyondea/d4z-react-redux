@@ -2,11 +2,11 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Home from '../pages/Home/Home';
 
-const AnyRoute = () => {
+const ErrorRoute = () => {
 	return (
 		<>
 			<Route path="/404" component={Home} />
 		</>
 	);
 };
-export default AnyRoute;
+export default ErrorRoute;

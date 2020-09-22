@@ -2,20 +2,22 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../thunks/authThunk';
+import { logoutThunk } from '../../thunks/authThunk';
 import { withRouter } from 'react-router-dom';
 
 const propTypes = {
-	logoutUser: PropTypes.func.isRequired,
+	logoutThunk: PropTypes.func.isRequired,
 	log: PropTypes.object.isRequired
 };
+const mapDispatchToProps = {
+	logoutThunk
+};
 const Navbar = (props) => {
-	const { logoutUser, log } = props;
-	const { isAuthenticated, user } = log;
+	const { logoutThunk, log } = props;
 	const history = useHistory();
 	const onLogout = (event) => {
 		event.preventDefault();
-		logoutUser(history);
+		logoutThunk(history);
 	};
 	const authLinks = (
 		<>
@@ -26,18 +28,18 @@ const Navbar = (props) => {
 			</li>
 			<li className="nav-item dropdown">
 				<a
-					href="!#"
+					href="#!"
 					className="nav-link dropdown-toggle"
 					id="navbarDropdownUser"
 					data-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="true"
 				>
-					<span className="mr-1">{user.user_name}</span>
+					<span className="mr-1">{log.user.user_name}</span>
 					<img
 						src="http://www.gravatar.com/avatar/08807ef52c734e34520bbfee71c060b7?s=200&r=pg&d=mm"
-						alt={user.user_name}
-						title={user.user_name}
+						alt={log.user.user_name}
+						title={log.user.user_name}
 						className="rounded-circle"
 						style={{
 							width: '20px',
@@ -110,7 +112,7 @@ const Navbar = (props) => {
 								Contact
 							</a>
 						</li>
-						{isAuthenticated ? authLinks : guestLinks}
+						{log.isAuthenticated ? authLinks : guestLinks}
 					</ul>
 				</div>
 			</div>
@@ -121,4 +123,4 @@ const mapStateToProps = (state) => ({
 	log: state.log
 });
 Navbar.propTypes = propTypes;
-export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

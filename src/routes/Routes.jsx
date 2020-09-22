@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Switch } from 'react-router-dom';
 import HomeRoute from './HomeRoute';
 import AuthRoute from './AuthRoute';
 import PostRoute from './PostRoute';
-import AnyRoute from './AnyRoute';
+import ErrorRoute from './ErrorRoute';
 
 const Routes = () => {
 	return (
@@ -11,7 +11,7 @@ const Routes = () => {
 			<HomeRoute />
 			<AuthRoute />
 			<PostRoute />
-			<AnyRoute />
+			<ErrorRoute />
 		</Switch>
 	);
 };

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
 	entry: {
-		app: './src/index.js',
+		app: './src/index.jsx'
 	},
 	module: {
 		rules: [
@@ -20,6 +20,9 @@ module.exports = {
 				]
 			}
 		]
+	},
+	resolve: {
+		extensions: ['.js', '.jsx']
 	},
 	output: {
 		filename: 'js/[name].[chunkhash].js',

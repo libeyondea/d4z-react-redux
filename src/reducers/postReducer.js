@@ -21,7 +21,7 @@ import {
 import { produce } from 'immer';
 
 const fetchPostInitialState = {
-	posts: [],
+	posts: {},
 	loading: true,
 	errors: {}
 };
@@ -39,7 +39,15 @@ const singlePostInitialState = {
 };
 
 const editPostInitialState = {
-	posts: {},
+	posts: {
+		title: '',
+		meta_title: '',
+		meta_description: '',
+		slug: '',
+		summary: '',
+		image: '',
+		content: ''
+	},
 	loading: true,
 	errors: {}
 };
@@ -56,8 +64,31 @@ const deletePostInitialState = {
 	errors: {}
 };
 
-export const fetchPostReducer = (state = fetchPostInitialState, action) => {
-	return produce(state, (draft) => {
+export const fetchPostReducer = (state = fetchPostInitialState, action) =>
+	produce(state, (draft) => {
+		switch (action.type) {
+			case FETCH_POST_REQUESTED:
+				draft.posts = {};
+				draft.loading = true;
+				draft.errors = {};
+				break;
+			case FETCH_POST_SUCCEED:
+				draft.posts = action.payload;
+				draft.loading = false;
+				draft.errors = {};
+				break;
+			case FETCH_POST_FAILED:
+				draft.posts = {};
+				draft.loading = false;
+				draft.errors = action.payload;
+				break;
+			default:
+				break;
+		}
+	});
+
+export const fetchPostPaginatiton = (state = {}, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case FETCH_POST_REQUESTED:
 				draft.posts = [];
@@ -78,10 +109,9 @@ export const fetchPostReducer = (state = fetchPostInitialState, action) => {
 				break;
 		}
 	});
-};
 
-export const createPostReducer = (state = createPostInitialState, action) => {
-	return produce(state, (draft) => {
+export const createPostReducer = (state = createPostInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case CREATE_POST_REQUESTED:
 				draft.posts = {};
@@ -102,10 +132,9 @@ export const createPostReducer = (state = createPostInitialState, action) => {
 				break;
 		}
 	});
-};
 
-export const singlePostReducer = (state = singlePostInitialState, action) => {
-	return produce(state, (draft) => {
+export const singlePostReducer = (state = singlePostInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case SINGLE_POST_REQUESTED:
 				draft.posts = {};
@@ -126,10 +155,9 @@ export const singlePostReducer = (state = singlePostInitialState, action) => {
 				break;
 		}
 	});
-};
 
-export const editPostReducer = (state = editPostInitialState, action) => {
-	return produce(state, (draft) => {
+export const editPostReducer = (state = editPostInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case EDIT_POST_REQUESTED:
 				draft.posts = {};
@@ -150,10 +178,9 @@ export const editPostReducer = (state = editPostInitialState, action) => {
 				break;
 		}
 	});
-};
 
-export const updatePostReducer = (state = updatePostInitialState, action) => {
-	return produce(state, (draft) => {
+export const updatePostReducer = (state = updatePostInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case UPDATE_POST_REQUESTED:
 				draft.posts = {};
@@ -174,10 +201,9 @@ export const updatePostReducer = (state = updatePostInitialState, action) => {
 				break;
 		}
 	});
-};
 
-export const deletePostReducer = (state = deletePostInitialState, action) => {
-	return produce(state, (draft) => {
+export const deletePostReducer = (state = deletePostInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case DELETE_POST_REQUESTED:
 				draft.posts = {};
@@ -198,4 +224,3 @@ export const deletePostReducer = (state = deletePostInitialState, action) => {
 				break;
 		}
 	});
-};

@@ -15,7 +15,7 @@ module.exports = merge(common, {
 		new MiniCssExtractPlugin({
 			filename: 'css/[name].[chunkhash].css',
 			chunkFilename: 'css/[name].[chunkhash].css'
-        }),
+		}),
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, '/public/index.html')
 		}),
@@ -24,8 +24,8 @@ module.exports = merge(common, {
 				{
 					from: path.join(__dirname, 'public'),
 					to: path.join(__dirname, 'dist')
-				},
-			],
+				}
+			]
 		}),
 		new Dotenv({
 			path: './.env.production'
@@ -35,11 +35,7 @@ module.exports = merge(common, {
 		rules: [
 			{
 				test: /\.css|s[ac]ss$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					'css-loader',
-					'sass-loader'
-				]
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
 			}
 		]
 	},
@@ -55,9 +51,9 @@ module.exports = merge(common, {
 					name(module) {
 						const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
 						return `${packageName.replace('@', '')}`;
-					},
-				},
-			},
-		},
+					}
+				}
+			}
+		}
 	}
 });

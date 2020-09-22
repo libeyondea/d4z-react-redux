@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import jwt_decode from 'jwt-decode';
-import setAuthToken from './functions/setAuthToken';
+import setAuthToken from './helpers/setAuthToken';
 import { loginSucceedAction } from './actions/authAction';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/d4z-blog.scss';

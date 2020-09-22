@@ -6,7 +6,7 @@ import {
 	REGISTER_SUCCEED,
 	REGISTER_FAILED
 } from '../constants/authConstant';
-import isEmpty from '../functions/is-empty';
+import isEmpty from '../helpers/is-empty';
 import { produce } from 'immer';
 
 const loginInitialState = {
@@ -22,8 +22,8 @@ const registerInitialState = {
 	errors: {}
 };
 
-const loginReducer = (state = loginInitialState, action) => {
-	return produce(state, (draft) => {
+export const loginReducer = (state = loginInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case LOGIN_REQUESTED:
 				draft.isAuthenticated = false;
@@ -47,10 +47,9 @@ const loginReducer = (state = loginInitialState, action) => {
 				break;
 		}
 	});
-};
 
-const registerReducer = (state = registerInitialState, action) => {
-	return produce(state, (draft) => {
+export const registerReducer = (state = registerInitialState, action) =>
+	produce(state, (draft) => {
 		switch (action.type) {
 			case REGISTER_REQUESTED:
 				draft.user = {};
@@ -71,6 +70,3 @@ const registerReducer = (state = registerInitialState, action) => {
 				break;
 		}
 	});
-};
-
-export { loginReducer, registerReducer };

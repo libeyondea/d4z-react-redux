@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { singlePostThunk, deletePostThunk } from '../../thunks/postThunk';
 import MainLayout from '../../layouts/MainLayout';
@@ -27,12 +27,13 @@ const mapDispatchToProps = {
 	deletePostThunk
 };
 const SinglePost = (props) => {
-	const { singlePostThunk, deletePostThunk, deletePost, singlePost, match, history, log } = props;
-	const { slug } = match.params;
+	const { singlePostThunk, deletePostThunk, deletePost, singlePost, log } = props;
+	const { slug } = useParams();
+	const history = useHistory();
 	useEffect(() => {
 		singlePostThunk(slug);
-	}, [singlePostThunk, slug]);
-	const handleSubmit = (event) => {
+	}, []);
+	const onSubmit = (event) => {
 		event.preventDefault();
 		Swal.fire({
 			title: 'Do you want to delete?',
@@ -53,7 +54,7 @@ const SinglePost = (props) => {
 	};
 	const edLinks = (
 		<div className="clearfix">
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={onSubmit}>
 				<Link className="btn btn-primary float-right" to={`/edit-post/${singlePost.posts.slug}`}>
 					Edit Post
 				</Link>
@@ -127,5 +128,7 @@ const SinglePost = (props) => {
 		</MainLayout>
 	);
 };
+
 SinglePost.propTypes = propTypes;
+
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

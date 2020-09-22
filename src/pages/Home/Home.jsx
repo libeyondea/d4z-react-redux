@@ -11,4 +11,5 @@ const Home = () => {
 		</MainLayout>
 	);
 };
+
 export default Home;

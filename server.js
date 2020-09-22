@@ -1,7 +1,7 @@
-const express = require('express')
-const app = express()
-const path = require('path')
-const port = process.env.PORT || 999
+const express = require('express');
+const app = express();
+const path = require('path');
+const port = process.env.PORT || 999;
 
-app.use('/', express.static(path.join(__dirname, 'dist')))
-app.listen(port, () => console.log("Listening on Port", port)) 
+app.use('/', express.static(path.join(__dirname, 'dist')));
+app.listen(port, () => console.log('Listening on Port', port));

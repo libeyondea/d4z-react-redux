@@ -7,10 +7,10 @@ import {
 	loginFailedAction
 } from '../actions/authAction';
 import axios from 'axios';
-import setAuthToken from '../functions/setAuthToken';
+import setAuthToken from '../helpers/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-const registerThunk = (user, history) => async (dispatch) => {
+export const registerThunk = (user, history) => async (dispatch) => {
 	try {
 		dispatch(registerRequestedAction());
 		const res = await axios.post(`${process.env.API_URL}/users/register`, user);
@@ -25,7 +25,7 @@ const registerThunk = (user, history) => async (dispatch) => {
 	}
 };
 
-const loginThunk = (user) => async (dispatch) => {
+export const loginThunk = (user) => async (dispatch) => {
 	try {
 		dispatch(loginRequestedAction());
 		const res = await axios.post(`${process.env.API_URL}/users/login`, user);
@@ -39,15 +39,13 @@ const loginThunk = (user) => async (dispatch) => {
 			dispatch(loginFailedAction(res.data.errors));
 		}
 	} catch (err) {
-		dispatch(loginFailedAction(res.data.errors));
+		dispatch(loginFailedAction(err.data.errors));
 	}
 };
 
-const logoutUser = (history) => (dispatch) => {
+export const logoutThunk = (history) => (dispatch) => {
 	localStorage.removeItem('jwtToken');
 	setAuthToken(false);
 	dispatch(loginSucceedAction({}));
 	history.push('/login');
 };
-
-export { registerThunk, loginThunk, logoutUser };
