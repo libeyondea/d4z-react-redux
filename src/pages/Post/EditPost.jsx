@@ -1,16 +1,15 @@
-import React, { useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editPostThunk, updatePostThunk } from '../../thunks/postThunk';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers';
-import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import MainLayout from '../../layouts/MainLayout';
 import LoadingEditPost from '../../components/Loading/LoadingEditPost';
-import CustomInput from '../../components/Form/CustomInput';
-import CustomTextarea from '../../components/Form/CustomTextarea';
+import InputForm from '../../components/Form/InputForm';
+import TextareaForm from '../../components/Form/TextareaForm';
+import RichTextEditorForm from '../../components/Form/RichTextEditorForm';
+import SelectInputForm from '../../components/Form/SelectInputForm';
 
 const propTypes = {
 	editPostThunk: PropTypes.func.isRequired,
@@ -29,43 +28,67 @@ const mapDispatchToProps = {
 };
 const EditPost = (props) => {
 	const { editPostThunk, updatePostThunk, editPost, updatePost } = props;
-	const { slug } = useParams();
 	const history = useHistory();
-	useEffect(() => {
-		editPostThunk(slug);
-	}, []);
-	const initialState = {
+	const { slug } = useParams();
+	const [state, setState] = useState({
 		title: '',
 		meta_title: '',
 		meta_description: '',
 		slug: '',
 		summary: '',
-		content: '',
 		image: ''
-	};
-	const schema = Yup.object({
-		title: Yup.string().required('Title is required'),
-		meta_title: Yup.string().required('Meta title is required'),
-		meta_description: Yup.string().required('Meta description is required'),
-		slug: Yup.string().required('Slug is required'),
-		summary: Yup.string().required('Summary is required'),
-		image: Yup.string().required('Image is required'),
-		content: Yup.string().required('Content is required')
 	});
-	const onSubmit = (values) => {
-		const slugNew = values.slug;
+	const [content, setContent] = useState('');
+	const [tag, setTag] = useState(null);
+	const [category, setCategory] = useState(null);
+	useEffect(() => {
+		editPostThunk(slug);
+	}, []);
+	useEffect(() => {
+		setState({
+			title: editPost.posts.title,
+			meta_title: editPost.posts.meta_title,
+			meta_description: editPost.posts.meta_description,
+			slug: editPost.posts.slug,
+			summary: editPost.posts.summary,
+			image: editPost.posts.image
+		});
+		setContent(editPost.posts.content);
+		setTag(editPost.posts.post_tag);
+		setCategory(editPost.posts.post_category);
+	}, [editPost.posts]);
+
+	const handleEditorChange = (content) => {
+		setContent(content);
+	};
+	const handleSelectTagChange = (values) => {
+		setTag(values);
+	};
+	const handleSelectCategoryChange = (values) => {
+		setCategory(values);
+	};
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setState({
+			[name]: value
+		});
+	};
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		const { title, meta_title, meta_description, summary, image } = state;
+		const newSlug = state.slug;
 		const post = {
-			title: values.title,
-			meta_title: values.meta_title,
-			meta_description: values.meta_description,
-			slug: slugNew,
-			summary: values.summary,
-			image: values.image,
-			content: values.content,
-			published: editPost.posts.published,
-			published_at: editPost.posts.published_at,
-			user_id: editPost.posts.user_id
+			title: title,
+			meta_title: meta_title,
+			meta_description: meta_description,
+			slug: newSlug,
+			summary: summary,
+			content: content,
+			image: image,
+			post_tag: tag,
+			post_category: category
 		};
+		console.log(post);
 		Swal.fire({
 			title: 'Do you want to update?',
 			icon: 'question',
@@ -76,16 +99,10 @@ const EditPost = (props) => {
 			cancelButtonText: 'No'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				updatePostThunk(post, history, slug, slugNew);
+				updatePostThunk(post, history, slug, newSlug);
 			}
 		});
 	};
-	const { register, handleSubmit, errors } = useForm({
-		mode: 'all',
-		resolver: yupResolver(schema),
-		defaultValues: initialState,
-		shouldFocusError: true
-	});
 	return (
 		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
@@ -108,93 +125,119 @@ const EditPost = (props) => {
 							<LoadingEditPost />
 						) : (
 							<div className="nht-form">
-								<form onSubmit={handleSubmit(onSubmit)}>
+								<form onSubmit={handleSubmit}>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomTextarea
+											<SelectInputForm
+												id="category"
+												name="category"
+												label="Category"
+												options={editPost.posts.post_category}
+												onChange={handleSelectCategoryChange}
+												value={category}
+												getOptionLabel={(option) => option.category.title}
+												getOptionValue={(option) => option.category_id}
+											/>
+										</div>
+									</div>
+									<div className="control-group">
+										<div className="form-group floating-label-form-group controls">
+											<SelectInputForm
+												id="tag"
+												name="tag"
+												label="Tag"
+												options={editPost.posts.post_tag}
+												onChange={handleSelectTagChange}
+												value={tag}
+												getOptionLabel={(option) => option.tag.title}
+												getOptionValue={(option) => option.tag_id}
+											/>
+										</div>
+									</div>
+									<div className="control-group">
+										<div className="form-group floating-label-form-group controls">
+											<TextareaForm
 												rows="3"
 												label="Title"
 												id="title"
 												name="title"
 												type="text"
-												register={register}
-												error={errors.title}
+												onChange={handleChange}
+												value={state.title}
 											/>
 										</div>
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomTextarea
+											<TextareaForm
 												rows="3"
 												label="Meta title"
 												id="meta_title"
 												name="meta_title"
 												type="text"
-												register={register}
-												error={errors.meta_title}
+												onChange={handleChange}
+												value={state.meta_title}
 											/>
 										</div>
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomTextarea
+											<TextareaForm
 												rows="6"
 												label="Meta description"
 												id="meta_description"
 												name="meta_description"
 												type="text"
-												register={register}
-												error={errors.meta_description}
+												onChange={handleChange}
+												value={state.meta_description}
 											/>
 										</div>
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomInput
+											<InputForm
 												label="Slug"
 												id="slug"
 												name="slug"
 												type="text"
-												register={register}
-												error={errors.slug}
+												onChange={handleChange}
+												value={state.slug}
 											/>
 										</div>
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomTextarea
+											<TextareaForm
 												rows="6"
 												label="Summary"
 												id="summary"
 												name="summary"
 												type="text"
-												register={register}
-												error={errors.summary}
+												onChange={handleChange}
+												value={state.summary}
 											/>
 										</div>
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomTextarea
-												rows="16"
+											<RichTextEditorForm
 												label="Content"
 												id="content"
-												name="content"
-												type="text"
-												register={register}
-												error={errors.content}
+												textareaName="content"
+												onEditorChange={handleEditorChange}
+												value={content}
 											/>
 										</div>
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<CustomInput
+											<InputForm
 												label="Image"
 												id="image"
 												name="image"
 												type="text"
-												register={register}
-												error={errors.image}
+												onChange={handleChange}
+												value={state.image}
 											/>
 										</div>
 									</div>
@@ -210,7 +253,7 @@ const EditPost = (props) => {
 											</button>
 										) : (
 											<button type="submit" className="btn btn-primary">
-												Update
+												Create
 											</button>
 										)}
 									</div>
@@ -223,6 +266,7 @@ const EditPost = (props) => {
 		</MainLayout>
 	);
 };
+
 EditPost.propTypes = propTypes;
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPost);

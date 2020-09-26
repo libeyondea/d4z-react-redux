@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import parse from 'html-react-parser';
 import { singlePostThunk, deletePostThunk } from '../../thunks/postThunk';
 import MainLayout from '../../layouts/MainLayout';
 import LoadingTitlePost from '../../components/Loading/LoadingTitlePost';
@@ -10,12 +11,7 @@ import LoadingContentPost from '../../components/Loading/LoadingContentPost';
 
 const propTypes = {
 	singlePostThunk: PropTypes.func.isRequired,
-	singlePost: PropTypes.object.isRequired,
-	match: PropTypes.shape({
-		params: PropTypes.shape({
-			slug: PropTypes.string.isRequired
-		}).isRequired
-	}).isRequired
+	singlePost: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	singlePost: state.singlePost,
@@ -27,13 +23,13 @@ const mapDispatchToProps = {
 	deletePostThunk
 };
 const SinglePost = (props) => {
-	const { singlePostThunk, deletePostThunk, deletePost, singlePost, log } = props;
-	const { slug } = useParams();
+	const { singlePostThunk, deletePostThunk, singlePost, log, deletePost } = props;
 	const history = useHistory();
+	const { slug } = useParams();
 	useEffect(() => {
 		singlePostThunk(slug);
 	}, []);
-	const onSubmit = (event) => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 		Swal.fire({
 			title: 'Do you want to delete?',
@@ -44,17 +40,14 @@ const SinglePost = (props) => {
 			confirmButtonText: 'Yes',
 			cancelButtonText: 'No'
 		}).then((result) => {
-			if (
-				result.isConfirmed &&
-				(log.user.role_id === 1 || singlePost.posts.user_id === log.user.id)
-			) {
+			if (result.isConfirmed) {
 				deletePostThunk(slug, history);
 			}
 		});
 	};
 	const edLinks = (
 		<div className="clearfix">
-			<form onSubmit={onSubmit}>
+			<form onSubmit={handleSubmit}>
 				<Link className="btn btn-primary float-right" to={`/edit-post/${singlePost.posts.slug}`}>
 					Edit Post
 				</Link>
@@ -75,8 +68,6 @@ const SinglePost = (props) => {
 			</form>
 		</div>
 	);
-	const authLinks =
-		log.user.role_id === 1 || singlePost.posts.user_id === log.user.id ? edLinks : null;
 	return (
 		<MainLayout>
 			<header
@@ -84,7 +75,7 @@ const SinglePost = (props) => {
 				style={
 					singlePost.loading
 						? { backgroundColor: '#343a40' }
-						: { backgroundImage: 'url("/assets/img/post-bg.jpg")' }
+						: { backgroundImage: 'url("/assets/img/react.jpg")' }
 				}
 			>
 				<div className="overlay" />
@@ -98,7 +89,7 @@ const SinglePost = (props) => {
 									<h1>{singlePost.posts.title}</h1>
 									<h2 className="subheading">{singlePost.posts.summary}</h2>
 									<span className="meta">
-										Posted by <a href="!#">{singlePost.posts.user_name}</a> on{' '}
+										Posted by <a href="!#">{singlePost.posts.user.user_name}</a> on{' '}
 										{singlePost.posts.created_at}
 									</span>
 								</div>
@@ -115,10 +106,8 @@ const SinglePost = (props) => {
 								<LoadingContentPost />
 							) : (
 								<>
-									<div>
-										<p>{singlePost.posts.content}</p>
-									</div>
-									{authLinks}
+									<div className="post-content">{parse(singlePost.posts.content)}</div>
+									{(log.user.role_id === 1 || singlePost.posts.user.id === log.user.id) && edLinks}
 								</>
 							)}
 						</div>

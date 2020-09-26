@@ -21,7 +21,7 @@ import {
 import { produce } from 'immer';
 
 const fetchPostInitialState = {
-	posts: {},
+	posts: [],
 	loading: true,
 	errors: {}
 };
@@ -39,15 +39,7 @@ const singlePostInitialState = {
 };
 
 const editPostInitialState = {
-	posts: {
-		title: '',
-		meta_title: '',
-		meta_description: '',
-		slug: '',
-		summary: '',
-		image: '',
-		content: ''
-	},
+	posts: {},
 	loading: true,
 	errors: {}
 };

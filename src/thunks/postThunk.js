@@ -39,6 +39,8 @@ export const createPostThunk = (post, slug, history) => async (dispatch) => {
 		if (res.data.success) {
 			dispatch(createPostSucceedAction(res.data.data));
 			history.push(`/posts/${slug}`);
+		} else {
+			dispatch(updatePostFailedAction(res.data.errors));
 		}
 	} catch (err) {
 		dispatch(createPostFailedAction(err.message));
@@ -65,19 +67,19 @@ export const editPostThunk = (slug) => async (dispatch) => {
 			dispatch(editPostSucceedAction(res.data.data));
 		}
 	} catch (err) {
-		dispatch(editPostFailedAction(err.message));
+		dispatch(editPostFailedAction(err));
 	}
 };
 
-export const updatePostThunk = (post, history, slug, slugNew) => async (dispatch) => {
+export const updatePostThunk = (post, history, slug, newSlug) => async (dispatch) => {
 	try {
 		dispatch(updatePostRequestedAction());
 		const res = await axios.put(`${process.env.API_URL}/posts/${slug}`, post);
 		if (res.data.success) {
 			dispatch(updatePostSucceedAction(res.data.data));
-			history.push(`/posts/${slugNew}`);
+			history.push(`/posts/${newSlug}`);
 		} else {
-			dispatch(updatePostFailedAction(res.data.errs));
+			dispatch(updatePostFailedAction(res.data.errors));
 		}
 	} catch (err) {
 		dispatch(updatePostFailedAction(err.message));
@@ -91,8 +93,6 @@ export const deletePostThunk = (slug, history) => async (dispatch) => {
 		if (res.data.success) {
 			dispatch(deletePostSucceedAction(res.data.data));
 			history.push('/');
-		} else {
-			dispatch(deletePostFailedAction(res.data.errs));
 		}
 	} catch (err) {
 		dispatch(deletePostFailedAction(err.message));

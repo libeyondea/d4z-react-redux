@@ -11,7 +11,7 @@ const AuthRouteLogT = (props) => {
 		<Route
 			{...rest}
 			render={(props) => {
-				if (log.isAuthenticated && localStorage.getItem('jwtToken')) {
+				if (log.isAuthenticated) {
 					return <Component {...props} />;
 				} else {
 					return <Redirect to="/login" />;
@@ -20,4 +20,5 @@ const AuthRouteLogT = (props) => {
 		/>
 	);
 };
+
 export default connect(mapStateToProps)(AuthRouteLogT);

@@ -1,20 +1,21 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutThunk } from '../../thunks/authThunk';
-import { withRouter } from 'react-router-dom';
 
 const propTypes = {
 	logoutThunk: PropTypes.func.isRequired,
 	log: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => ({
+	log: state.log
+});
 const mapDispatchToProps = {
 	logoutThunk
 };
 const Navbar = (props) => {
-	const { logoutThunk, log } = props;
-	const history = useHistory();
+	const { logoutThunk, log, history } = props;
 	const onLogout = (event) => {
 		event.preventDefault();
 		logoutThunk(history);
@@ -76,7 +77,7 @@ const Navbar = (props) => {
 		<nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
 			<div className="container">
 				<Link className="navbar-brand" to="/">
-					NguyenThucOfficial
+					De4thZone
 				</Link>
 				<button
 					className="navbar-toggler navbar-toggler-right"
@@ -98,19 +99,19 @@ const Navbar = (props) => {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="about.html">
+							<Link className="nav-link" to="/">
 								About
-							</a>
+							</Link>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="post.html">
-								Sample Post
-							</a>
-						</li>
-						<li className="nav-item">
-							<a className="nav-link" href="contact.html">
+							<Link className="nav-link" to="/">
 								Contact
-							</a>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link className="nav-link" to="/">
+								Project
+							</Link>
 						</li>
 						{log.isAuthenticated ? authLinks : guestLinks}
 					</ul>
@@ -119,8 +120,7 @@ const Navbar = (props) => {
 		</nav>
 	);
 };
-const mapStateToProps = (state) => ({
-	log: state.log
-});
+
 Navbar.propTypes = propTypes;
+
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

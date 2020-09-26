@@ -15,4 +15,5 @@ const LoadingFetchPost = () => {
 		</div>
 	);
 };
+
 export default LoadingFetchPost;

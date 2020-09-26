@@ -9,4 +9,5 @@ const ErrorRoute = () => {
 		</>
 	);
 };
+
 export default ErrorRoute;

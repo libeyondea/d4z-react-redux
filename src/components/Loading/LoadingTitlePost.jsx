@@ -15,4 +15,5 @@ const LoadingTitlePost = () => {
 		</div>
 	);
 };
+
 export default LoadingTitlePost;

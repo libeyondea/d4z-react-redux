@@ -1,0 +1,36 @@
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+	outline: 0;
+	border-color: #80bdff !important;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.is-invalid-ck-editor {
+	outline: 0;
+	border: 1px solid #ee1d16 !important;
+	box-shadow: 0 0 0 0.2rem rgba(245, 77, 55, 0.25) !important;
+}
+
+.invalid-feedback-ck-editor {
+	display: block;
+	width: 100%;
+	margin-top: 0.25rem;
+	font-size: 80%;
+	color: #dc3545;
+}
+
+.ck.ck-toolbar {
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	border-top-left-radius: 6px !important;
+	border-top-right-radius: 6px !important;
+}
+
+.ck.ck-editor__editable_inline {
+	border: 1px solid #ced4da !important;
+	border-top: 0 !important;
+	border-bottom-left-radius: 6px !important;
+	border-bottom-right-radius: 6px !important;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+	min-height: 333px;
+}

@@ -2,14 +2,14 @@ import React from 'react';
 
 const SideShow = () => {
 	return (
-		<header className="masthead" style={{ backgroundImage: 'url("assets/img/home-bg.jpg")' }}>
+		<header className="masthead" style={{ backgroundImage: 'url("assets/img/react.jpg")' }}>
 			<div className="overlay" />
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
 						<div className="site-heading">
-							<h1>Death Blog</h1>
-							<span className="subheading">A Blog Theme by Start Bootstrap</span>
+							<h1>De4th Zone</h1>
+							<span className="subheading">De4th Zone</span>
 						</div>
 					</div>
 				</div>
@@ -17,4 +17,5 @@ const SideShow = () => {
 		</header>
 	);
 };
+
 export default SideShow;

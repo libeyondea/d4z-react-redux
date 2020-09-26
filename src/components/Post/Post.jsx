@@ -20,10 +20,12 @@ const Post = (props) => {
 				<h3 className="post-subtitle">{post.summary}</h3>
 			</Link>
 			<p className="post-meta">
-				Posted by <a href="!#">{post.user_name}</a> on {post.created_at}
+				Posted by <a href="#!">{post.user.user_name}</a> on {post.created_at}
 			</p>
 		</div>
 	);
 };
+
 Post.propTypes = propTypes;
+
 export default Post;

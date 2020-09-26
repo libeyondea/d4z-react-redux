@@ -18,5 +18,7 @@ const Posts = (props) => {
 	const { posts } = props;
 	return posts.map((val) => <Post key={val.id} post={val} />);
 };
+
 Posts.propTypes = propTypes;
+
 export default Posts;
