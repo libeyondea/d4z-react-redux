@@ -81,7 +81,6 @@ const CreatePost = (props) => {
 			post_tag: tag,
 			post_category: category
 		};
-		console.log(post);
 		Swal.fire({
 			title: 'Do you want to create?',
 			icon: 'question',

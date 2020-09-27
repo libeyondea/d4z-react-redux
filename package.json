@@ -34,6 +34,7 @@
 		"redux": "^4.0.5",
 		"redux-thunk": "^2.3.0",
 		"sweetalert2": "^10.0.2",
+		"sweetalert2-react-content": "^3.2.0",
 		"yup": "^0.29.3"
 	},
 	"devDependencies": {
