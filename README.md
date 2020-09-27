@@ -7,17 +7,17 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors]
-[![Forks][forks-shield]][https://github.com/nhtanonymous/d4z-react-frontend/network/members]
-[![Stargazers][stars-shield]][https://github.com/nhtanonymous/d4z-react-frontend/stargazers]
-[![Issues][issues-shield]][https://github.com/nhtanonymous/d4z-react-frontend/pull]
-[![MIT License][license-shield]][https://lbesson.mit-license.org]
+[![Contributors][contributors-shield]](https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors)
+[![Forks][forks-shield]](https://github.com/nhtanonymous/d4z-react-frontend/network/members)
+[![Stargazers][stars-shield]](https://github.com/nhtanonymous/d4z-react-frontend/stargazers)
+[![Issues][issues-shield]](https://github.com/nhtanonymous/d4z-react-frontend/pull)
+[![MIT License][license-shield]](https://lbesson.mit-license.org)
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/nhtanonymous/d4z-react-frontend">
-    <img src="https://photos.app.goo.gl/b8xwHYnUoUJ2qu527" alt="Logo" width="80" height="80">
+    <img src="https://photos.google.com/share/AF1QipMqbuVmZx6jnnmY7Q_fbKkoOUjL1QTH0utwBiu-7DLWh5jgmumh13LplmVVUTsMZQ/photo/AF1QipPj29f8MYPkFOmGEfdVtsfZBhl3_cxnAin6HO2N?key=YjduN3BnTktoN0ZDeTY1bkpoWktxMXEzZUFSdWd3" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Blog React Redux</h3>
