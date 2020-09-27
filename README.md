@@ -8,8 +8,8 @@
 -->
 
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors/)
-[![Forks][forks-shield]](https://github.com/nhtanonymous/d4z-react-frontend/network/members)
-![Packagist Stars](https://img.shields.io/packagist/stars/nhtanonymous/d4z-react-frontend)
+[![GitHub stars](https://img.shields.io/github/stars/badges/shields.svg?style=social&label=Stars&style=plastic)](https://camo.githubusercontent.com/8dc69b8703edc182129d3a7743de485422e0abc1/68747470733a2f2f696d672e736869656c64732e696f2f7061636b61676973742f73746172732f6e6874616e6f6e796d6f75732f64347a2d72656163742d66726f6e74656e64)
+[![GitHub forks](https://img.shields.io/github/forks/badges/shields.svg?style=social&label=Fork&style=plastic)](https://github.com/nhtanonymous/d4z-react-frontend/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/nhtanonymous/d4z-react-frontend/issues/)
 [![GitHub version](https://badge.fury.io/gh/Naereen%2FStrapDown.js.svg)](https://github.com/nhtanonymous/d4z-react-frontend)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
