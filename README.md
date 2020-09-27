@@ -10,7 +10,7 @@
 [![Contributors][contributors-shield]](https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors)
 [![Forks][forks-shield]](https://github.com/nhtanonymous/d4z-react-frontend/network/members)
 [![Stargazers][stars-shield]](https://github.com/nhtanonymous/d4z-react-frontend/stargazers)
-[![Issues][issues-shield]](https://github.com/nhtanonymous/d4z-react-frontend/pull)
+[![Issues][issues-shield]](https://github.com/nhtanonymous/d4z-react-frontend/issues)
 [![MIT License][license-shield]](https://lbesson.mit-license.org)
 
 <!-- PROJECT LOGO -->
