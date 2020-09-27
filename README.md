@@ -7,18 +7,17 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![Contributors][contributors-shield]][https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors]
+[![Forks][forks-shield]][https://github.com/nhtanonymous/d4z-react-frontend/network/members]
+[![Stargazers][stars-shield]][https://github.com/nhtanonymous/d4z-react-frontend/stargazers]
+[![Issues][issues-shield]][https://github.com/nhtanonymous/d4z-react-frontend/pull]
+[![MIT License][license-shield]][https://lbesson.mit-license.org]
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/nhtanonymous/d4z-react-frontend">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://photos.app.goo.gl/b8xwHYnUoUJ2qu527" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Blog React Redux</h3>
@@ -57,7 +56,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/nhtanonymous/d4z-react-frontend)
+<!--[![Product Name Screen Shot][product-screenshot]](https://github.com/nhtanonymous/d4z-react-frontend)-->
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
