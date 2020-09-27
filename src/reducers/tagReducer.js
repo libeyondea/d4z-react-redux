@@ -6,12 +6,11 @@ const fetchTagInitialState = {
 	loading: true,
 	errors: {}
 };
-
 export const fetchTagReducer = (state = fetchTagInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			case FETCH_TAG_REQUESTED:
-				draft.tags = {};
+				draft.tags = [];
 				draft.loading = true;
 				draft.errors = {};
 				break;
@@ -21,7 +20,7 @@ export const fetchTagReducer = (state = fetchTagInitialState, action) =>
 				draft.errors = {};
 				break;
 			case FETCH_TAG_FAILED:
-				draft.tags = {};
+				draft.tags = [];
 				draft.loading = false;
 				draft.errors = action.payload;
 				break;

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
 import { createPostThunk } from '../../thunks/postThunk';
 import { fetchTagThunk } from '../../thunks/tagThunk';
-import Swal from 'sweetalert2';
+import { fetchCategoryThunk } from '../../thunks/categoryThunk';
 import MainLayout from '../../layouts/MainLayout';
 import InputForm from '../../components/Form/InputForm';
 import TextareaForm from '../../components/Form/TextareaForm';
@@ -14,21 +15,25 @@ import SelectInputForm from '../../components/Form/SelectInputForm';
 const propTypes = {
 	createPostThunk: PropTypes.func.isRequired,
 	fetchTagThunk: PropTypes.func.isRequired,
+	fetchCategoryThunk: PropTypes.func.isRequired,
 	createPost: PropTypes.object.isRequired,
 	fetchTag: PropTypes.object.isRequired,
+	fetchCategory: PropTypes.object.isRequired,
 	log: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	createPost: state.createPost,
 	fetchTag: state.fetchTag,
+	fetchCategory: state.fetchCategory,
 	log: state.log
 });
 const mapDispatchToProps = {
 	createPostThunk,
-	fetchTagThunk
+	fetchTagThunk,
+	fetchCategoryThunk
 };
 const CreatePost = (props) => {
-	const { createPostThunk, fetchTagThunk, createPost, fetchTag } = props;
+	const { createPostThunk, fetchTagThunk, fetchCategoryThunk, fetchCategory, fetchTag, createPost } = props;
 	const history = useHistory();
 	const [state, setState] = useState({
 		title: '',
@@ -44,6 +49,7 @@ const CreatePost = (props) => {
 
 	useEffect(() => {
 		fetchTagThunk();
+		fetchCategoryThunk();
 	}, []);
 	const handleSelectTagChange = (values) => {
 		setTag(values);
@@ -56,9 +62,10 @@ const CreatePost = (props) => {
 	};
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-		setState({
+		setState((prevState) => ({
+			...prevState,
 			[name]: value
-		});
+		}));
 	};
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -109,34 +116,6 @@ const CreatePost = (props) => {
 					<div className="col-lg-8 col-md-10 mx-auto">
 						<div className="nht-form">
 							<form onSubmit={handleSubmit}>
-								<div className="control-group">
-									<div className="form-group floating-label-form-group controls">
-										<SelectInputForm
-											id="category"
-											name="category"
-											label="Category"
-											options={fetchTag.tags}
-											onChange={handleSelectCategoryChange}
-											value={category}
-											getOptionLabel={(option) => option.title}
-											getOptionValue={(option) => option.id}
-										/>
-									</div>
-								</div>
-								<div className="control-group">
-									<div className="form-group floating-label-form-group controls">
-										<SelectInputForm
-											id="tag"
-											name="tag"
-											label="Tag"
-											options={fetchTag.tags}
-											onChange={handleSelectTagChange}
-											value={tag}
-											getOptionLabel={(option) => option.title}
-											getOptionValue={(option) => option.id}
-										/>
-									</div>
-								</div>
 								<div className="control-group">
 									<div className="form-group floating-label-form-group controls">
 										<TextareaForm
@@ -214,6 +193,34 @@ const CreatePost = (props) => {
 								</div>
 								<div className="control-group">
 									<div className="form-group floating-label-form-group controls">
+										<SelectInputForm
+											id="tag"
+											name="tag"
+											label="Tag"
+											options={fetchTag.tags}
+											onChange={handleSelectTagChange}
+											value={tag}
+											getOptionLabel={(option) => option.title}
+											getOptionValue={(option) => option.id}
+										/>
+									</div>
+								</div>
+								<div className="control-group">
+									<div className="form-group floating-label-form-group controls">
+										<SelectInputForm
+											id="category"
+											name="category"
+											label="Category"
+											options={fetchCategory.categories}
+											onChange={handleSelectCategoryChange}
+											value={category}
+											getOptionLabel={(option) => option.title}
+											getOptionValue={(option) => option.id}
+										/>
+									</div>
+								</div>
+								<div className="control-group">
+									<div className="form-group floating-label-form-group controls">
 										<InputForm
 											label="Image"
 											id="image"
@@ -227,11 +234,7 @@ const CreatePost = (props) => {
 								<div className="text-center">
 									{createPost.loading ? (
 										<button type="submit" className="btn btn-primary" disabled>
-											<span
-												className="spinner-border spinner-border-sm mr-1"
-												role="status"
-												aria-hidden="true"
-											/>
+											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 											Loading...
 										</button>
 									) : (

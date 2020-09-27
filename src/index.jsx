@@ -19,13 +19,13 @@ if (localStorage.getItem('jwtToken')) {
 	setAuthToken(localStorage.jwtToken);
 	const decoded = jwt_decode(localStorage.jwtToken);
 	store.dispatch(loginSucceedAction(decoded));
-	//const currentTime = Date.now() / 1000;
-	//if (decoded.exp < currentTime) {
-	//    localStorage.removeItem('jwtToken');
-	//    setAuthToken(false);
-	//    store.dispatch(loginSucceedAction({}));
-	//    window.location.href = '/login';
-	//}
+	const currentTime = Date.now() / 1000;
+	if (decoded.exp < currentTime) {
+		localStorage.removeItem('jwtToken');
+		setAuthToken(false);
+		store.dispatch(loginSucceedAction({}));
+		window.location.href = '/login';
+	}
 }
 ReactDOM.render(
 	<React.StrictMode>

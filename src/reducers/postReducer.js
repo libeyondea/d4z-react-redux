@@ -25,64 +25,35 @@ const fetchPostInitialState = {
 	loading: true,
 	errors: {}
 };
-
 const createPostInitialState = {
 	posts: {},
 	loading: false,
 	errors: {}
 };
-
 const singlePostInitialState = {
 	posts: {},
 	loading: true,
 	errors: {}
 };
-
 const editPostInitialState = {
 	posts: {},
 	loading: true,
 	errors: {}
 };
-
 const updatePostInitialState = {
 	posts: {},
 	loading: false,
 	errors: {}
 };
-
 const deletePostInitialState = {
 	posts: {},
 	loading: false,
 	errors: {}
 };
-
 export const fetchPostReducer = (state = fetchPostInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			case FETCH_POST_REQUESTED:
-				draft.posts = {};
-				draft.loading = true;
-				draft.errors = {};
-				break;
-			case FETCH_POST_SUCCEED:
-				draft.posts = action.payload;
-				draft.loading = false;
-				draft.errors = {};
-				break;
-			case FETCH_POST_FAILED:
-				draft.posts = {};
-				draft.loading = false;
-				draft.errors = action.payload;
-				break;
-			default:
-				break;
-		}
-	});
-
-export const fetchPostPaginatiton = (state = {}, action) =>
-	produce(state, (draft) => {
-		switch (action.type) {
-			case FETCH_POST_REQUESTED:
 				draft.posts = [];
 				draft.loading = true;
 				draft.errors = {};
@@ -101,7 +72,6 @@ export const fetchPostPaginatiton = (state = {}, action) =>
 				break;
 		}
 	});
-
 export const createPostReducer = (state = createPostInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
@@ -124,7 +94,6 @@ export const createPostReducer = (state = createPostInitialState, action) =>
 				break;
 		}
 	});
-
 export const singlePostReducer = (state = singlePostInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
@@ -147,7 +116,6 @@ export const singlePostReducer = (state = singlePostInitialState, action) =>
 				break;
 		}
 	});
-
 export const editPostReducer = (state = editPostInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
@@ -170,7 +138,6 @@ export const editPostReducer = (state = editPostInitialState, action) =>
 				break;
 		}
 	});
-
 export const updatePostReducer = (state = updatePostInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
@@ -193,7 +160,6 @@ export const updatePostReducer = (state = updatePostInitialState, action) =>
 				break;
 		}
 	});
-
 export const deletePostReducer = (state = deletePostInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {

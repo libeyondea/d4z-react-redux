@@ -30,7 +30,7 @@ export const fetchPostFailedAction = (payload) => ({
 	type: FETCH_POST_FAILED,
 	payload
 });
-//
+
 export const createPostRequestedAction = () => ({
 	type: CREATE_POST_REQUESTED
 });
@@ -42,7 +42,7 @@ export const createPostFailedAction = (payload) => ({
 	type: CREATE_POST_FAILED,
 	payload
 });
-//
+
 export const singlePostRequestedAction = () => ({
 	type: SINGLE_POST_REQUESTED
 });
@@ -54,7 +54,7 @@ export const singlePostFailedAction = (payload) => ({
 	type: SINGLE_POST_FAILED,
 	payload
 });
-//
+
 export const editPostRequestedAction = () => ({
 	type: EDIT_POST_REQUESTED
 });
@@ -66,7 +66,7 @@ export const editPostFailedAction = (payload) => ({
 	type: EDIT_POST_FAILED,
 	payload
 });
-//
+
 export const updatePostRequestedAction = () => ({
 	type: UPDATE_POST_REQUESTED
 });
@@ -78,7 +78,7 @@ export const updatePostFailedAction = (payload) => ({
 	type: UPDATE_POST_FAILED,
 	payload
 });
-//
+
 export const deletePostRequestedAction = () => ({
 	type: DELETE_POST_REQUESTED
 });

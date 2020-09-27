@@ -31,7 +31,6 @@ export const fetchPostThunk = () => async (dispatch) => {
 		dispatch(fetchPostFailedAction(err.message));
 	}
 };
-
 export const createPostThunk = (post, slug, history) => async (dispatch) => {
 	try {
 		dispatch(createPostRequestedAction());
@@ -46,7 +45,6 @@ export const createPostThunk = (post, slug, history) => async (dispatch) => {
 		dispatch(createPostFailedAction(err.message));
 	}
 };
-
 export const singlePostThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(singlePostRequestedAction());
@@ -58,7 +56,6 @@ export const singlePostThunk = (slug) => async (dispatch) => {
 		dispatch(singlePostFailedAction(err.message));
 	}
 };
-
 export const editPostThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(editPostRequestedAction());
@@ -70,7 +67,6 @@ export const editPostThunk = (slug) => async (dispatch) => {
 		dispatch(editPostFailedAction(err));
 	}
 };
-
 export const updatePostThunk = (post, history, slug, newSlug) => async (dispatch) => {
 	try {
 		dispatch(updatePostRequestedAction());
@@ -85,7 +81,6 @@ export const updatePostThunk = (post, history, slug, newSlug) => async (dispatch
 		dispatch(updatePostFailedAction(err.message));
 	}
 };
-
 export const deletePostThunk = (slug, history) => async (dispatch) => {
 	try {
 		dispatch(deletePostRequestedAction());

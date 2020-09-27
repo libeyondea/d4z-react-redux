@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import isEmpty from '../../helpers/is-empty';
+import isEmpty from '../../helpers/isEmpty';
 import { fetchPostThunk } from '../../thunks/postThunk';
-import LoadingFetchPost from '../Loading/LoadingFetchPost';
-import EmptyFetchPost from './EmptyFetchPost';
 import Posts from './Posts';
+import EmptyFetchPost from './EmptyFetchPost';
+import FetchPostLoading from '../Loading/FetchPostLoading';
 
 const propTypes = {
 	fetchPostThunk: PropTypes.func.isRequired,
@@ -28,7 +28,7 @@ const FetchPost = (props) => {
 			<div className="row">
 				<div className="col-lg-8 col-md-10 mx-auto">
 					{fetchPost.loading ? (
-						<LoadingFetchPost />
+						<FetchPostLoading />
 					) : (
 						<div>
 							{isEmpty(fetchPost.posts) ? (

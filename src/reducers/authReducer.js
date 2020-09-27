@@ -6,41 +6,39 @@ import {
 	REGISTER_SUCCEED,
 	REGISTER_FAILED
 } from '../constants/authConstant';
-import isEmpty from '../helpers/is-empty';
 import { produce } from 'immer';
+import isEmpty from '../helpers/isEmpty';
 
 const loginInitialState = {
 	isAuthenticated: false,
 	user: {},
-	isLoading: false,
+	loading: false,
 	errors: {}
 };
-
 const registerInitialState = {
 	user: {},
-	isLoading: false,
+	loading: false,
 	errors: {}
 };
-
 export const loginReducer = (state = loginInitialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			case LOGIN_REQUESTED:
 				draft.isAuthenticated = false;
 				draft.user = {};
-				draft.isLoading = true;
+				draft.loading = true;
 				draft.errors = {};
 				break;
 			case LOGIN_SUCCEED:
 				draft.isAuthenticated = !isEmpty(action.payload);
 				draft.user = action.payload;
-				draft.isLoading = false;
+				draft.loading = false;
 				draft.errors = {};
 				break;
 			case LOGIN_FAILED:
 				draft.isAuthenticated = false;
 				draft.user = {};
-				draft.isLoading = false;
+				draft.loading = false;
 				draft.errors = action.payload;
 				break;
 			default:
@@ -53,17 +51,17 @@ export const registerReducer = (state = registerInitialState, action) =>
 		switch (action.type) {
 			case REGISTER_REQUESTED:
 				draft.user = {};
-				draft.isLoading = true;
+				draft.loading = true;
 				draft.errors = {};
 				break;
 			case REGISTER_SUCCEED:
 				draft.user = action.payload;
-				draft.isLoading = false;
+				draft.loading = false;
 				draft.errors = {};
 				break;
 			case REGISTER_FAILED:
 				draft.user = {};
-				draft.isLoading = false;
+				draft.loading = false;
 				draft.errors = action.payload;
 				break;
 			default:

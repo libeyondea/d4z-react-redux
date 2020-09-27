@@ -7,8 +7,8 @@ import {
 	loginFailedAction
 } from '../actions/authAction';
 import axios from 'axios';
-import setAuthToken from '../helpers/setAuthToken';
 import jwt_decode from 'jwt-decode';
+import setAuthToken from '../helpers/setAuthToken';
 
 export const registerThunk = (user, history) => async (dispatch) => {
 	try {
@@ -24,7 +24,6 @@ export const registerThunk = (user, history) => async (dispatch) => {
 		dispatch(registerFailedAction(err.message));
 	}
 };
-
 export const loginThunk = (user) => async (dispatch) => {
 	try {
 		dispatch(loginRequestedAction());
@@ -42,7 +41,6 @@ export const loginThunk = (user) => async (dispatch) => {
 		dispatch(loginFailedAction(err.data.errors));
 	}
 };
-
 export const logoutThunk = (history) => (dispatch) => {
 	localStorage.removeItem('jwtToken');
 	setAuthToken(false);

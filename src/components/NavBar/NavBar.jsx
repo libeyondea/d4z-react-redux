@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link, useHistory, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { logoutThunk } from '../../thunks/authThunk';
 
 const propTypes = {
@@ -15,7 +15,8 @@ const mapDispatchToProps = {
 	logoutThunk
 };
 const Navbar = (props) => {
-	const { logoutThunk, log, history } = props;
+	const { logoutThunk, log } = props;
+	const history = useHistory();
 	const onLogout = (event) => {
 		event.preventDefault();
 		logoutThunk(history);
@@ -23,7 +24,7 @@ const Navbar = (props) => {
 	const authLinks = (
 		<>
 			<li className="nav-item">
-				<Link className="nav-link" to="/create-post">
+				<Link className="nav-link btn btn-primary" to="/create-post">
 					Create post
 				</Link>
 			</li>

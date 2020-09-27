@@ -18,7 +18,7 @@ export const registerFailedAction = (payload) => ({
 	type: REGISTER_FAILED,
 	payload
 });
-//
+
 export const loginRequestedAction = () => ({
 	type: LOGIN_REQUESTED
 });

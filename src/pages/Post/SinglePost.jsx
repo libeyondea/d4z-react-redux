@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import parse from 'html-react-parser';
-import { singlePostThunk, deletePostThunk } from '../../thunks/postThunk';
 import MainLayout from '../../layouts/MainLayout';
-import LoadingTitlePost from '../../components/Loading/LoadingTitlePost';
-import LoadingContentPost from '../../components/Loading/LoadingContentPost';
+import { singlePostThunk, deletePostThunk } from '../../thunks/postThunk';
+import TitlePostLoading from '../../components/Loading/TitlePostLoading';
+import ContentPostLoading from '../../components/Loading/ContentPostLoading';
 
 const propTypes = {
 	singlePostThunk: PropTypes.func.isRequired,
@@ -23,9 +23,9 @@ const mapDispatchToProps = {
 	deletePostThunk
 };
 const SinglePost = (props) => {
-	const { singlePostThunk, deletePostThunk, singlePost, log, deletePost } = props;
-	const history = useHistory();
+	const { singlePostThunk, singlePost, deletePostThunk, deletePost, log } = props;
 	const { slug } = useParams();
+	const history = useHistory();
 	useEffect(() => {
 		singlePostThunk(slug);
 	}, []);
@@ -45,7 +45,7 @@ const SinglePost = (props) => {
 			}
 		});
 	};
-	const edLinks = (
+	const DeleteEditButton = (
 		<div className="clearfix">
 			<form onSubmit={handleSubmit}>
 				<Link className="btn btn-primary float-right" to={`/edit-post/${singlePost.posts.slug}`}>
@@ -53,11 +53,7 @@ const SinglePost = (props) => {
 				</Link>
 				{deletePost.loading ? (
 					<button type="submit" className="btn btn-danger float-right mr-3" disabled>
-						<span
-							className="spinner-border spinner-border-sm mr-1"
-							role="status"
-							aria-hidden="true"
-						/>
+						<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 						Loading...
 					</button>
 				) : (
@@ -73,9 +69,7 @@ const SinglePost = (props) => {
 			<header
 				className="masthead"
 				style={
-					singlePost.loading
-						? { backgroundColor: '#343a40' }
-						: { backgroundImage: 'url("/assets/img/react.jpg")' }
+					singlePost.loading ? { backgroundColor: '#343a40' } : { backgroundImage: 'url("/assets/img/react.jpg")' }
 				}
 			>
 				<div className="overlay" />
@@ -83,14 +77,13 @@ const SinglePost = (props) => {
 					<div className="row">
 						<div className="col-lg-8 col-md-10 mx-auto">
 							{singlePost.loading ? (
-								<LoadingTitlePost />
+								<TitlePostLoading />
 							) : (
 								<div className="post-heading">
 									<h1>{singlePost.posts.title}</h1>
 									<h2 className="subheading">{singlePost.posts.summary}</h2>
 									<span className="meta">
-										Posted by <a href="!#">{singlePost.posts.user.user_name}</a> on{' '}
-										{singlePost.posts.created_at}
+										Posted by <a href="!#">{singlePost.posts.user.user_name}</a> on {singlePost.posts.created_at}
 									</span>
 								</div>
 							)}
@@ -103,11 +96,11 @@ const SinglePost = (props) => {
 					<div className="row">
 						<div className="col-lg-8 col-md-10 mx-auto">
 							{singlePost.loading ? (
-								<LoadingContentPost />
+								<ContentPostLoading />
 							) : (
 								<>
 									<div className="post-content">{parse(singlePost.posts.content)}</div>
-									{(log.user.role_id === 1 || singlePost.posts.user.id === log.user.id) && edLinks}
+									{(log.user.role_id === 1 || singlePost.posts.user.id === log.user.id) && DeleteEditButton}
 								</>
 							)}
 						</div>

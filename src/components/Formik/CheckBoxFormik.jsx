@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 
-const CheckBoxFormik = ({ label, ...props }) => {
+const CheckBoxFormik = ({ errors, label, ...props }) => {
 	const [field, meta] = useField(props);
 	return (
 		<>
@@ -10,6 +10,7 @@ const CheckBoxFormik = ({ label, ...props }) => {
 				{label}
 			</label>
 			{meta.touched && meta.error && <div className="invalid-feedback d-block">{meta.error}</div>}
+			{errors && <div className="invalid-feedback">{errors}</div>}
 		</>
 	);
 };

@@ -1,15 +1,14 @@
 import React from 'react';
-import classnames from 'classnames';
 import { Editor } from '@tinymce/tinymce-react';
 
-const RichTextEditorForm = ({ label, ...props }) => {
+const RichTextEditorForm = ({ valid, errors, label, ...props }) => {
 	return (
 		<>
 			<label htmlFor={props.id || props.name}>{label}</label>
 			<Editor
 				{...props}
 				init={{
-					apiKey: '7tb5sawtkhejvn3yeakoe0wsatx1chxf2a02617fn23psx6c',
+					apiKey: '9ukfllnge5c0jp46sfwh0165kyh4y8mzi1awrimg18puoaia',
 					height: 666,
 					plugins: [
 						'advlist autolink link image lists charmap print preview hr anchor pagebreak',
@@ -29,6 +28,8 @@ const RichTextEditorForm = ({ label, ...props }) => {
 					menubar: 'favs file edit view insert format tools table help'
 				}}
 			/>
+			{valid && <div className="invalid-feedback d-block">{valid}</div>}
+			{errors && <div className="invalid-feedback d-block">{errors}</div>}
 		</>
 	);
 };

@@ -55,21 +55,11 @@ const Login = (props) => {
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
 						<div className="nht-form">
-							<Formik
-								initialValues={initialValues}
-								validationSchema={validationSchema}
-								onSubmit={onSubmit}
-							>
+							<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
 								<Form>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<InputFormik
-												label="Email"
-												id="email"
-												name="email"
-												type="text"
-												errors={log.errors.user}
-											/>
+											<InputFormik label="Email" id="email" name="email" type="text" errors={log.errors.user} />
 										</div>
 									</div>
 									<div className="control-group">
@@ -97,13 +87,9 @@ const Login = (props) => {
 										</div>
 									</div>
 									<div className="text-center">
-										{log.isLoading ? (
+										{log.loading ? (
 											<button type="submit" className="btn btn-primary" disabled>
-												<span
-													className="spinner-border spinner-border-sm mr-1"
-													role="status"
-													aria-hidden="true"
-												/>
+												<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 												Loading...
 											</button>
 										) : (

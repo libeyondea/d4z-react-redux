@@ -1,8 +1,8 @@
 import React from 'react';
 
-const LoadingContentPost = () => {
+const EditPostLoading = () => {
 	return (
-		<div className="post-content">
+		<div>
 			<div className="spinner-grow text-primary mr-4" role="status">
 				<span className="sr-only">Loading...</span>
 			</div>
@@ -16,4 +16,4 @@ const LoadingContentPost = () => {
 	);
 };
 
-export default LoadingContentPost;
+export default EditPostLoading;

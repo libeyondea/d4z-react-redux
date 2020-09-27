@@ -46,24 +46,11 @@ const Register = (props) => {
 			.oneOf([Yup.ref('password')], 'Password is not match'),
 		phone_number: Yup.string().required('Phone number is required'),
 		address: Yup.string().required('Address is required'),
-		gender: Yup.string()
-			.oneOf(['1', '0', 'other'], 'Invalid Gender')
-			.required('Gender is required'),
-		agreeterms: Yup.boolean()
-			.oneOf([true], 'You must agree to terms of service')
-			.required('Required')
+		gender: Yup.string().oneOf(['1', '0', 'other'], 'Invalid Gender').required('Gender is required'),
+		agreeterms: Yup.boolean().oneOf([true], 'You must agree to terms of service').required('Required')
 	});
 	const onSubmit = (values) => {
-		const {
-			first_name,
-			last_name,
-			user_name,
-			email,
-			password,
-			phone_number,
-			address,
-			gender
-		} = values;
+		const { first_name, last_name, user_name, email, password, phone_number, address, gender } = values;
 		const user = {
 			first_name: first_name,
 			last_name: last_name,
@@ -95,20 +82,11 @@ const Register = (props) => {
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
 						<div className="nht-form">
-							<Formik
-								initialValues={initialValues}
-								validationSchema={validationSchema}
-								onSubmit={onSubmit}
-							>
+							<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
 								<Form>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<InputFormik
-												label="First name"
-												id="first_name"
-												name="first_name"
-												type="text"
-											/>
+											<InputFormik label="First name" id="first_name" name="first_name" type="text" />
 										</div>
 									</div>
 									<div className="control-group">
@@ -129,13 +107,7 @@ const Register = (props) => {
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<InputFormik
-												label="Email"
-												id="email"
-												name="email"
-												type="text"
-												errors={reg.errors.email}
-											/>
+											<InputFormik label="Email" id="email" name="email" type="text" errors={reg.errors.email} />
 										</div>
 									</div>
 									<div className="control-group">
@@ -155,12 +127,7 @@ const Register = (props) => {
 									</div>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<InputFormik
-												label="Phone number"
-												id="phone_number"
-												name="phone_number"
-												type="text"
-											/>
+											<InputFormik label="Phone number" id="phone_number" name="phone_number" type="text" />
 										</div>
 									</div>
 									<div className="control-group">
@@ -180,21 +147,13 @@ const Register = (props) => {
 									</div>
 									<div className="control-group">
 										<div className="custom-control custom-checkbox mb-3">
-											<CheckBoxFormik
-												label="Agree to terms of service"
-												id="agreeterms"
-												name="agreeterms"
-											/>
+											<CheckBoxFormik label="Agree to terms of service" id="agreeterms" name="agreeterms" />
 										</div>
 									</div>
 									<div className="text-center">
-										{reg.isLoading ? (
+										{reg.loading ? (
 											<button type="submit" className="btn btn-primary" disabled>
-												<span
-													className="spinner-border spinner-border-sm mr-1"
-													role="status"
-													aria-hidden="true"
-												/>
+												<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 												Loading...
 											</button>
 										) : (
@@ -217,8 +176,7 @@ const Register = (props) => {
 										</a>
 										<hr className="mt-4" />
 										<p>
-											By clicking <em>Register</em> you agree to our{' '}
-											<a href="#!">terms of service</a>
+											By clicking <em>Register</em> you agree to our <a href="#!">terms of service</a>
 										</p>
 									</div>
 								</Form>
