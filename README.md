@@ -7,11 +7,12 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]](https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors)
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/nhtanonymous/d4z-react-frontend/graphs/contributors/)
 [![Forks][forks-shield]](https://github.com/nhtanonymous/d4z-react-frontend/network/members)
-[![Stargazers][stars-shield]](https://github.com/nhtanonymous/d4z-react-frontend/stargazers)
-[![Issues][issues-shield]](https://github.com/nhtanonymous/d4z-react-frontend/issues)
-[![MIT License][license-shield]](https://lbesson.mit-license.org)
+![Packagist Stars](https://img.shields.io/packagist/stars/nhtanonymous/d4z-react-frontend)
+[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/nhtanonymous/d4z-react-frontend/issues/)
+[![GitHub version](https://badge.fury.io/gh/Naereen%2FStrapDown.js.svg)](https://github.com/nhtanonymous/d4z-react-frontend)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 <!-- PROJECT LOGO -->
 <br />
