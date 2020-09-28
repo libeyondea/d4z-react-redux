@@ -10,6 +10,7 @@ import {
 } from './postReducer';
 import { fetchTagReducer } from './tagReducer';
 import { fetchCategoryReducer } from './categoryReducer';
+import { fetchCommentReducer, createCommentReducer } from './commentReducer';
 
 const rootReducer = combineReducers({
 	log: loginReducer,
@@ -21,7 +22,9 @@ const rootReducer = combineReducers({
 	updatePost: updatePostReducer,
 	deletePost: deletePostReducer,
 	fetchTag: fetchTagReducer,
-	fetchCategory: fetchCategoryReducer
+	fetchCategory: fetchCategoryReducer,
+	fetchComment: fetchCommentReducer,
+	createComment: createCommentReducer
 });
 
 export default rootReducer;

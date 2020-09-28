@@ -1,7 +1,7 @@
 import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-const RichTextEditorForm = ({ valid, errors, label, ...props }) => {
+const RichTextEditorForm = ({ valid, errors, height, label, ...props }) => {
 	return (
 		<>
 			<label htmlFor={props.id || props.name}>{label}</label>
@@ -9,7 +9,7 @@ const RichTextEditorForm = ({ valid, errors, label, ...props }) => {
 				{...props}
 				init={{
 					apiKey: '9ukfllnge5c0jp46sfwh0165kyh4y8mzi1awrimg18puoaia',
-					height: 666,
+					height: height,
 					plugins: [
 						'advlist autolink link image lists charmap print preview hr anchor pagebreak',
 						'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',

@@ -8,10 +8,14 @@ import MainLayout from '../../layouts/MainLayout';
 import { singlePostThunk, deletePostThunk } from '../../thunks/postThunk';
 import TitlePostLoading from '../../components/Loading/TitlePostLoading';
 import ContentPostLoading from '../../components/Loading/ContentPostLoading';
+import Comment from '../../components/Comment/Comment';
 
 const propTypes = {
 	singlePostThunk: PropTypes.func.isRequired,
-	singlePost: PropTypes.object.isRequired
+	deletePostThunk: PropTypes.func.isRequired,
+	singlePost: PropTypes.object.isRequired,
+	deletePost: PropTypes.object.isRequired,
+	log: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	singlePost: state.singlePost,
@@ -23,7 +27,7 @@ const mapDispatchToProps = {
 	deletePostThunk
 };
 const SinglePost = (props) => {
-	const { singlePostThunk, singlePost, deletePostThunk, deletePost, log } = props;
+	const { singlePostThunk, deletePostThunk, singlePost, deletePost, log } = props;
 	const { slug } = useParams();
 	const history = useHistory();
 	useEffect(() => {
@@ -46,7 +50,7 @@ const SinglePost = (props) => {
 		});
 	};
 	const DeleteEditButton = (
-		<div className="clearfix">
+		<div className="clearfix mb-4 mt-3">
 			<form onSubmit={handleSubmit}>
 				<Link className="btn btn-primary float-right" to={`/edit-post/${singlePost.posts.slug}`}>
 					Edit Post
@@ -98,11 +102,12 @@ const SinglePost = (props) => {
 							{singlePost.loading ? (
 								<ContentPostLoading />
 							) : (
-								<>
+								<div className="all-post-content border-bottom mb-3">
 									<div className="post-content">{parse(singlePost.posts.content)}</div>
 									{(log.user.role_id === 1 || singlePost.posts.user.id === log.user.id) && DeleteEditButton}
-								</>
+								</div>
 							)}
+							<Comment />
 						</div>
 					</div>
 				</div>

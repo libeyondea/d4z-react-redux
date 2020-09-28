@@ -187,6 +187,7 @@ const CreatePost = (props) => {
 											textareaName="content"
 											onEditorChange={handleEditorChange}
 											value={content}
+											height="666"
 										/>
 									</div>
 								</div>
