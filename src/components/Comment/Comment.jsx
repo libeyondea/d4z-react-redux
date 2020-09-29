@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import classnames from 'classnames';
+import isEmpty from '../../helpers/isEmpty';
 import { fetchCommentThunk, createCommentThunk } from '../../thunks/commentThunk';
 import RichTextEditorForm from '../../components/Form/RichTextEditorForm';
+import CommentLoading from '../../components/Loading/CommentLoading';
 
 const propTypes = {
 	fetchCommentThunk: PropTypes.func.isRequired,
@@ -23,53 +25,112 @@ const mapDispatchToProps = {
 const CreateComment = (props) => {
 	const { fetchCommentThunk, createCommentThunk, fetchComment, createComment } = props;
 	const { slug } = useParams();
-	const [parentCommment, setParentCommment] = useState('');
-	const [childrenCommment, setChildrenCommment] = useState({
-		parent_id: '',
-		content: ''
-	});
 	const [replyBox, setReplyBox] = useState(false);
+	const HandlerOnOffReply = () => {
+		setChildrenComment({
+			parent_id: '',
+			content: ''
+		});
+		setReplyBox(!replyBox);
+		setErrors((prevState) => ({
+			...prevState,
+			childrenComment: ''
+		}));
+	};
 	useEffect(() => {
 		fetchCommentThunk(slug);
 	}, []);
-	const HandlerOnOffReply = () => {
-		setReplyBox(!replyBox);
-	};
-	const handleCommentChange = (content) => {
-		setParentCommment(content);
+	const [errors, setErrors] = useState({
+		childrenComment: '',
+		parentComment: ''
+	});
+	const [parentComment, setParentComment] = useState('');
+	const [childrenComment, setChildrenComment] = useState({
+		parent_id: '',
+		content: ''
+	});
+	const handleParentCommentChange = (content) => {
+		if (isEmpty(content)) {
+			setErrors((prevState) => ({
+				...prevState,
+				parentComment: 'Comment id requied'
+			}));
+		} else {
+			setErrors((prevState) => ({
+				...prevState,
+				parentComment: ''
+			}));
+		}
+		setParentComment(content);
 	};
 	const handleChildrenCommentChange = (event) => {
-		const { name, value } = event.target;
-		setChildrenCommment({
-			parent_id: name,
+		const { id, value } = event.target;
+		if (isEmpty(value)) {
+			setErrors((prevState) => ({
+				...prevState,
+				childrenComment: 'Reply id requied'
+			}));
+		} else {
+			setErrors((prevState) => ({
+				...prevState,
+				childrenComment: ''
+			}));
+		}
+		setChildrenComment({
+			parent_id: id,
 			content: value
 		});
 	};
+	const handleParentCommentSubmit = (event) => {
+		event.preventDefault();
+		if (isEmpty(parentComment)) {
+			setErrors((prevState) => ({
+				...prevState,
+				parentComment: 'Comment id requied'
+			}));
+		} else {
+			const comment = {
+				parent_id: '',
+				content: parentComment
+			};
+			setErrors((prevState) => ({
+				...prevState,
+				childrenComment: ''
+			}));
+			setReplyBox(false);
+			if (createCommentThunk(comment, slug)) {
+				fetchCommentThunk(slug);
+				setParentComment('');
+			}
+		}
+	};
 	const handleChildCommentSubmit = (event) => {
 		event.preventDefault();
-		const comment = {
-			parent_id: childrenCommment.parent_id,
-			content: childrenCommment.content
-		};
-		if (createCommentThunk(comment, slug)) {
-			fetchCommentThunk(slug);
-			setChildrenCommment({
-				parent_id: '',
-				content: ''
+		if (isEmpty(childrenComment.content)) {
+			setErrors((prevState) => ({
+				...prevState,
+				childrenComment: 'Reply id requied'
+			}));
+		} else {
+			const comment = {
+				parent_id: childrenComment.parent_id,
+				content: childrenComment.content
+			};
+			setErrors({
+				childrenComment: '',
+				parentComment: ''
 			});
+			setReplyBox(false);
+			if (createCommentThunk(comment, slug)) {
+				fetchCommentThunk(slug);
+				setChildrenComment({
+					parent_id: '',
+					content: ''
+				});
+			}
 		}
 	};
-	const handleCommentSubmit = (event) => {
-		event.preventDefault();
-		const comment = {
-			parent_id: '',
-			content: parentCommment
-		};
-		if (createCommentThunk(comment, slug)) {
-			fetchCommentThunk(slug);
-			setParentCommment('');
-		}
-	};
+	console.log('VKL');
 	const FetchComment = (comments, class_reply) => {
 		return comments.map((comment) => (
 			<div
@@ -109,10 +170,11 @@ const CreateComment = (props) => {
 								<input
 									type="text"
 									placeholder="Add a reply comment"
-									id={'childComment' + comment.id}
-									name={comment.id}
+									id={comment.id}
+									name="childrenComment"
 									onChange={handleChildrenCommentChange}
 								/>
+								{errors.childrenComment && <div className="invalid-feedback d-block">{errors.childrenComment}</div>}
 								<button type="submit" className="reply-comment btn btn-primary">
 									Reply
 								</button>
@@ -147,17 +209,18 @@ const CreateComment = (props) => {
 			</div>
 			<div className="comment-box add-comment">
 				<div className="nht-form">
-					<form onSubmit={handleCommentSubmit}>
+					<form onSubmit={handleParentCommentSubmit}>
 						<div className="control-group">
 							<div className="form-group floating-label-form-group controls">
 								<RichTextEditorForm
 									label="Comment"
-									id="comment"
-									textareaName="comment"
-									onEditorChange={handleCommentChange}
-									value={parentCommment}
+									id="parentComment"
+									textareaName="parentComment"
+									onEditorChange={handleParentCommentChange}
 									height="200"
+									value={parentComment}
 								/>
+								{errors.parentComment && <div className="invalid-feedback d-block">{errors.parentComment}</div>}
 							</div>
 						</div>
 						<div className="text-right">
@@ -175,7 +238,7 @@ const CreateComment = (props) => {
 					</form>
 				</div>
 			</div>
-			{fetchComment.loading ? <div>Loading.....</div> : FetchComment(fetchComment.comments, false)}
+			{fetchComment.loading ? <CommentLoading /> : FetchComment(fetchComment.comments, false)}
 		</div>
 	);
 };
