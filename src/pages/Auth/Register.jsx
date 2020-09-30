@@ -46,7 +46,7 @@ const Register = (props) => {
 			.oneOf([Yup.ref('password')], 'Password is not match'),
 		phone_number: Yup.string().required('Phone number is required'),
 		address: Yup.string().required('Address is required'),
-		gender: Yup.string().oneOf(['1', '0', '3'], 'Invalid Gender').required('Gender is required'),
+		gender: Yup.string().oneOf(['1', '0', '3'], 'Invalid Gender').required('Required'),
 		agreeterms: Yup.boolean().oneOf([true], 'You must agree to terms of service').required('Required')
 	});
 	const onSubmit = (values) => {

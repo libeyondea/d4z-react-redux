@@ -6,7 +6,7 @@ import parse from 'html-react-parser';
 import classnames from 'classnames';
 import isEmpty from '../../helpers/isEmpty';
 import { fetchCommentThunk, createCommentThunk } from '../../thunks/commentThunk';
-import RichTextEditorForm from '../../components/Form/RichTextEditorForm';
+import RichTextEditorFormik from '../../components/Formik/RichTextEditorFormik';
 import CommentLoading from '../../components/Loading/CommentLoading';
 
 const propTypes = {
@@ -212,7 +212,7 @@ const CreateComment = (props) => {
 					<form onSubmit={handleParentCommentSubmit}>
 						<div className="control-group">
 							<div className="form-group floating-label-form-group controls">
-								<RichTextEditorForm
+								<RichTextEditorFormik
 									label="Comment"
 									id="parentComment"
 									textareaName="parentComment"

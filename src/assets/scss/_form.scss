@@ -20,6 +20,10 @@
 				@include serif-font;
 			}
 		}
+		select.form-control.is-invalid,
+		select.form-control:invalid {
+			background-image: none !important;
+		}
 		label {
 			font-size: 0.85em;
 			line-height: 1.764705882em;

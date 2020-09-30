@@ -9,9 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/d4z-blog.scss';
 import App from './app/App';
 
-window.onbeforeunload = function () {
-	window.scrollTo(0, 0);
-};
 window.addEventListener('storage', function (e) {
 	if (!localStorage.getItem('jwtToken')) {
 		setAuthToken(false);
