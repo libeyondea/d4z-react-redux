@@ -1,0 +1,24 @@
+.nht-form {
+	.floating-label-form-group {
+		.react-tel-input {
+			.flag-dropdown {
+				z-index: 2 !important;
+			}
+			input {
+				width: 100% !important;
+			}
+			.special-label {
+				display: none;
+			}
+			.country-list {
+				.search {
+					padding: 10px 10px 10px 10px !important;
+					box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
+				}
+				.search-box {
+					margin-left: 0 !important;
+				}
+			}
+		}
+	}
+}

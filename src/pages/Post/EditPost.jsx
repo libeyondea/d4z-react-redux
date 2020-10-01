@@ -64,8 +64,8 @@ const EditPost = (props) => {
 		summary: editPost.posts.summary,
 		content: editPost.posts.content,
 		image: editPost.posts.image,
-		tag: [],
-		category: []
+		tag: editPost.posts.tag,
+		category: editPost.posts.category
 	};
 	const validationSchema = Yup.object({
 		title: Yup.string().required('Title is required'),

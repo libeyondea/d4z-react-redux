@@ -25,7 +25,7 @@ const Login = (props) => {
 		password: ''
 	};
 	const validationSchema = Yup.object({
-		email: Yup.string().email('Invalid email').required('Email is required'),
+		email: Yup.string().required('Email is required'),
 		password: Yup.string().required('Password is required')
 	});
 	const onSubmit = (values) => {
@@ -38,7 +38,7 @@ const Login = (props) => {
 	};
 	return (
 		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
+			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
@@ -82,7 +82,7 @@ const Login = (props) => {
 												</label>
 											</div>
 											<span>
-												<a href="!#">Forgot password?</a>
+												<a href="#!">Forgot password?</a>
 											</span>
 										</div>
 									</div>
@@ -101,16 +101,16 @@ const Login = (props) => {
 											Not a member? <Link to="/register">Register</Link>
 										</p>
 										<p>or sign in with:</p>
-										<a href="!#" className="btn-floating btn-fb btn-sm mr-1">
+										<a href="#!" className="btn-floating btn-fb btn-sm mr-1">
 											<i className="fab fa-facebook-f" />
 										</a>
-										<a href="!#" className="btn-floating btn-tw btn-sm mr-1">
+										<a href="#!" className="btn-floating btn-tw btn-sm mr-1">
 											<i className="fab fa-twitter" />
 										</a>
-										<a href="!#" className="btn-floating btn-li btn-sm mr-1">
+										<a href="#!" className="btn-floating btn-li btn-sm mr-1">
 											<i className="fab fa-linkedin-in" />
 										</a>
-										<a href="!#" className="btn-floating btn-git btn-sm">
+										<a href="#!" className="btn-floating btn-git btn-sm">
 											<i className="fab fa-github" />
 										</a>
 									</div>

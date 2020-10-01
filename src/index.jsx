@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/scss/d4z-blog.scss';
 import App from './app/App';
 
+console.log('%c De4th Zone', 'color: red; font-weight: bold; font-size: 100px; text-align: center;');
 window.addEventListener('storage', function (e) {
 	if (!localStorage.getItem('jwtToken')) {
 		setAuthToken(false);
