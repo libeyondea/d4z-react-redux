@@ -1,10 +1,14 @@
 import {
 	fetchCommentRequestedAction,
 	fetchCommentSucceedAction,
+	fetchCommentClearAction,
 	fetchCommentFailedAction,
 	createCommentRequestedAction,
 	createCommentSucceedAction,
-	createCommentFailedAction
+	createCommentFailedAction,
+	createReplyCommentRequestedAction,
+	createReplyCommentSucceedAction,
+	createReplyCommentFailedAction
 } from '../actions/commentAction';
 import axios from 'axios';
 
@@ -19,6 +23,15 @@ export const fetchCommentThunk = (slug) => async (dispatch) => {
 		dispatch(fetchCommentFailedAction(err.message));
 	}
 };
+
+export const fetchCommentClearThunk = () => async (dispatch) => {
+	try {
+		dispatch(fetchCommentClearAction());
+	} catch (err) {
+		dispatch(fetchCommentFailedAction(err.message));
+	}
+};
+
 export const createCommentThunk = (comment, slug) => async (dispatch) => {
 	try {
 		dispatch(createCommentRequestedAction());
@@ -30,5 +43,19 @@ export const createCommentThunk = (comment, slug) => async (dispatch) => {
 		}
 	} catch (err) {
 		dispatch(createCommentFailedAction(err.message));
+	}
+};
+
+export const createReplyCommentThunk = (comment, slug) => async (dispatch) => {
+	try {
+		dispatch(createReplyCommentRequestedAction());
+		const res = await axios.post(`${process.env.API_URL}/comments/reply/${slug}`, comment);
+		if (res.data.success) {
+			dispatch(createReplyCommentSucceedAction(res.data.data));
+		} else {
+			dispatch(createReplyCommentFailedAction(res.data.errors));
+		}
+	} catch (err) {
+		dispatch(createReplyCommentFailedAction(err.message));
 	}
 };

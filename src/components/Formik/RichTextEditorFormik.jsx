@@ -2,13 +2,13 @@ import React from 'react';
 import classnames from 'classnames';
 import { Editor } from '@tinymce/tinymce-react';
 
-const RichTextEditorFormik = ({ touched, errored, height, label, ...props }) => {
+const RichTextEditorFormik = ({ touched, errored, errors, height, label, ...props }) => {
 	return (
 		<>
 			<label htmlFor={props.id || props.name}>{label}</label>
 			<div
 				className={classnames('form-control-tiny-mce', {
-					'is-invalid-tiny-mce': errored && touched
+					'is-invalid-tiny-mce': (errored && touched) || errors
 				})}
 			>
 				<Editor
@@ -36,6 +36,7 @@ const RichTextEditorFormik = ({ touched, errored, height, label, ...props }) => 
 				/>
 			</div>
 			{errored && touched && <div className="invalid-feedback d-block">{errored}</div>}
+			{errors && <div className="invalid-feedback d-block">{errors}</div>}
 		</>
 	);
 };

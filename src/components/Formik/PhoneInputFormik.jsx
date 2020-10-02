@@ -9,7 +9,7 @@ const PhoneInputFormik = ({ touched, errored, errors, label, ...props }) => {
 			<label htmlFor={props.id || props.name}>{label}</label>
 			<PhoneInput
 				{...props}
-				inputClass={classnames({
+				inputClass={classnames('form-control', {
 					'is-invalid': (errored && touched) || errors
 				})}
 				enableSearch={true}

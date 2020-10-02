@@ -4,133 +4,89 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import classnames from 'classnames';
-import isEmpty from '../../helpers/isEmpty';
-import { fetchCommentThunk, createCommentThunk } from '../../thunks/commentThunk';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import {
+	fetchCommentThunk,
+	fetchCommentClearThunk,
+	createCommentThunk,
+	createReplyCommentThunk
+} from '../../thunks/commentThunk';
 import RichTextEditorFormik from '../../components/Formik/RichTextEditorFormik';
 import CommentLoading from '../../components/Loading/CommentLoading';
 
 const propTypes = {
 	fetchCommentThunk: PropTypes.func.isRequired,
+	fetchCommentClearThunk: PropTypes.func.isRequired,
 	createCommentThunk: PropTypes.func.isRequired,
-	createComment: PropTypes.object.isRequired
+	createReplyCommentThunk: PropTypes.func.isRequired,
+	createComment: PropTypes.object.isRequired,
+	createReplyComment: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	fetchComment: state.fetchComment,
-	createComment: state.createComment
+	createComment: state.createComment,
+	createReplyComment: state.createReplyComment
 });
 const mapDispatchToProps = {
 	fetchCommentThunk,
-	createCommentThunk
+	fetchCommentClearThunk,
+	createCommentThunk,
+	createReplyCommentThunk
 };
 const CreateComment = (props) => {
-	const { fetchCommentThunk, createCommentThunk, fetchComment, createComment } = props;
+	const {
+		fetchCommentThunk,
+		fetchCommentClearThunk,
+		createCommentThunk,
+		createReplyCommentThunk,
+		fetchComment,
+		createComment,
+		createReplyComment
+	} = props;
 	const { slug } = useParams();
 	const [replyBox, setReplyBox] = useState(false);
-	const HandlerOnOffReply = () => {
-		setChildrenComment({
-			parent_id: '',
-			content: ''
-		});
-		setReplyBox(!replyBox);
-		setErrors((prevState) => ({
-			...prevState,
-			childrenComment: ''
-		}));
-	};
+	const [parentId, setParentId] = useState('');
 	useEffect(() => {
 		fetchCommentThunk(slug);
+		return () => {
+			fetchCommentClearThunk();
+		};
 	}, []);
-	const [errors, setErrors] = useState({
-		childrenComment: '',
-		parentComment: ''
+	const replyCommentInitialValues = {
+		replyComment: ''
+	};
+	const replyCommentValidationSchema = Yup.object({
+		replyComment: Yup.string().required('Reply is required')
 	});
-	const [parentComment, setParentComment] = useState('');
-	const [childrenComment, setChildrenComment] = useState({
-		parent_id: '',
-		content: ''
+	const handleReplyCommentSubmit = (values, { resetForm }) => {
+		const comment = {
+			parent_id: parentId,
+			content: values.replyComment
+		};
+		//setReplyBox(false);
+		if (createReplyCommentThunk(comment, slug)) {
+			fetchCommentThunk(slug);
+			resetForm({});
+		}
+	};
+
+	const commentInitialValues = {
+		comment: ''
+	};
+	const commentValidationSchema = Yup.object({
+		comment: Yup.string().required('Comment is required')
 	});
-	const handleParentCommentChange = (content) => {
-		if (isEmpty(content)) {
-			setErrors((prevState) => ({
-				...prevState,
-				parentComment: 'Comment id requied'
-			}));
-		} else {
-			setErrors((prevState) => ({
-				...prevState,
-				parentComment: ''
-			}));
-		}
-		setParentComment(content);
-	};
-	const handleChildrenCommentChange = (event) => {
-		const { id, value } = event.target;
-		if (isEmpty(value)) {
-			setErrors((prevState) => ({
-				...prevState,
-				childrenComment: 'Reply id requied'
-			}));
-		} else {
-			setErrors((prevState) => ({
-				...prevState,
-				childrenComment: ''
-			}));
-		}
-		setChildrenComment({
-			parent_id: id,
-			content: value
-		});
-	};
-	const handleParentCommentSubmit = (event) => {
-		event.preventDefault();
-		if (isEmpty(parentComment)) {
-			setErrors((prevState) => ({
-				...prevState,
-				parentComment: 'Comment id requied'
-			}));
-		} else {
-			const comment = {
-				parent_id: '',
-				content: parentComment
-			};
-			setErrors((prevState) => ({
-				...prevState,
-				childrenComment: ''
-			}));
-			setReplyBox(false);
-			if (createCommentThunk(comment, slug)) {
-				fetchCommentThunk(slug);
-				setParentComment('');
-			}
+	const commentOnSubmit = (values, { resetForm }) => {
+		const comment = {
+			content: values.comment
+		};
+		setReplyBox(false);
+		if (createCommentThunk(comment, slug)) {
+			fetchCommentThunk(slug);
+			resetForm({});
 		}
 	};
-	const handleChildCommentSubmit = (event) => {
-		event.preventDefault();
-		if (isEmpty(childrenComment.content)) {
-			setErrors((prevState) => ({
-				...prevState,
-				childrenComment: 'Reply id requied'
-			}));
-		} else {
-			const comment = {
-				parent_id: childrenComment.parent_id,
-				content: childrenComment.content
-			};
-			setErrors({
-				childrenComment: '',
-				parentComment: ''
-			});
-			setReplyBox(false);
-			if (createCommentThunk(comment, slug)) {
-				fetchCommentThunk(slug);
-				setChildrenComment({
-					parent_id: '',
-					content: ''
-				});
-			}
-		}
-	};
-	console.log('VKL');
 	const FetchComment = (comments, class_reply) => {
 		return comments.map((comment) => (
 			<div
@@ -155,7 +111,17 @@ const CreateComment = (props) => {
 						<i className="fa fa-thumbs-down mr-1" aria-hidden="true" />
 						666
 					</button>
-					<button className="comment-reply reply-popup" onClick={HandlerOnOffReply}>
+					<button
+						className="comment-reply reply-popup"
+						onClick={() => {
+							if (!replyBox) {
+								setParentId(comment.id);
+							} else {
+								setParentId('');
+							}
+							setReplyBox(!replyBox);
+						}}
+					>
 						<i className="fa fa-reply-all mr-1" aria-hidden="true" />
 						Reply
 					</button>
@@ -166,22 +132,50 @@ const CreateComment = (props) => {
 							<img src="/assets/img/user-icon.jpg" className="img-fluid" />
 						</span>
 						<span className="commenter-name">
-							<form onSubmit={handleChildCommentSubmit}>
-								<input
-									type="text"
-									placeholder="Add a reply comment"
-									id={comment.id}
-									name="childrenComment"
-									onChange={handleChildrenCommentChange}
-								/>
-								{errors.childrenComment && <div className="invalid-feedback d-block">{errors.childrenComment}</div>}
-								<button type="submit" className="reply-comment btn btn-primary">
-									Reply
-								</button>
-								<a onClick={HandlerOnOffReply} className="reply-comment btn btn-light reply-popup">
-									Cancel
-								</a>
-							</form>
+							<Formik
+								initialValues={replyCommentInitialValues}
+								validationSchema={replyCommentValidationSchema}
+								onSubmit={handleReplyCommentSubmit}
+							>
+								{({ values, errors, touched, handleSubmit, handleChange, handleBlur }) => (
+									<form onSubmit={handleSubmit}>
+										<input
+											type="text"
+											placeholder="Add a reply comment"
+											name="replyComment"
+											onChange={handleChange}
+											onBlur={handleBlur}
+											value={values.replyComment}
+										/>
+										{errors.replyComment && touched.replyComment && (
+											<div className="invalid-feedback d-block">{errors.replyComment}</div>
+										)}
+										{createReplyComment.loading ? (
+											<button type="submit" className="reply-comment btn btn-primary" disabled>
+												<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
+												Loading...
+											</button>
+										) : (
+											<button type="submit" className="reply-comment btn btn-primary">
+												Reply
+											</button>
+										)}
+										<a
+											onClick={() => {
+												if (!replyBox) {
+													setParentId(comment.id);
+												} else {
+													setParentId('');
+												}
+												setReplyBox(!replyBox);
+											}}
+											className="reply-comment btn btn-light reply-popup"
+										>
+											Cancel
+										</a>
+									</form>
+								)}
+							</Formik>
 						</span>
 					</div>
 				)}
@@ -189,8 +183,8 @@ const CreateComment = (props) => {
 			</div>
 		));
 	};
-	return (
-		<div className="comments">
+	const CommentForm = (
+		<>
 			<div className="comments-details">
 				<span className="total-comments comments-sort">666 Comments</span>
 				<span className="dropdown">
@@ -209,36 +203,51 @@ const CreateComment = (props) => {
 			</div>
 			<div className="comment-box add-comment">
 				<div className="nht-form">
-					<form onSubmit={handleParentCommentSubmit}>
-						<div className="control-group">
-							<div className="form-group floating-label-form-group controls">
-								<RichTextEditorFormik
-									label="Comment"
-									id="parentComment"
-									textareaName="parentComment"
-									onEditorChange={handleParentCommentChange}
-									height="200"
-									value={parentComment}
-								/>
-								{errors.parentComment && <div className="invalid-feedback d-block">{errors.parentComment}</div>}
-							</div>
-						</div>
-						<div className="text-right">
-							{createComment.loading ? (
-								<button type="submit" className="btn btn-primary" disabled>
-									<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
-									Loading...
-								</button>
-							) : (
-								<button type="submit" className="btn btn-primary">
-									Comment
-								</button>
-							)}
-						</div>
-					</form>
+					<Formik
+						initialValues={commentInitialValues}
+						validationSchema={commentValidationSchema}
+						onSubmit={commentOnSubmit}
+					>
+						{({ values, errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (
+							<form onSubmit={handleSubmit}>
+								<div className="control-group">
+									<div className="form-group floating-label-form-group controls">
+										<RichTextEditorFormik
+											label="Comment"
+											id="comment"
+											textareaName="comment"
+											onEditorChange={(selectedValue) => setFieldValue('comment', selectedValue)}
+											onBlur={() => setFieldTouched('comment', true)}
+											value={values.comment}
+											height="333"
+											errored={errors.comment}
+											touched={touched.comment}
+										/>
+									</div>
+								</div>
+								<div className="text-right">
+									{createComment.loading ? (
+										<button type="submit" className="btn btn-primary" disabled>
+											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
+											Loading...
+										</button>
+									) : (
+										<button type="submit" className="btn btn-primary">
+											Comment
+										</button>
+									)}
+								</div>
+							</form>
+						)}
+					</Formik>
 				</div>
 			</div>
-			{fetchComment.loading ? <CommentLoading /> : FetchComment(fetchComment.comments, false)}
+		</>
+	);
+	return (
+		<div className="comments">
+			{CommentForm}
+			{FetchComment(fetchComment.comments, false)}
 		</div>
 	);
 };
