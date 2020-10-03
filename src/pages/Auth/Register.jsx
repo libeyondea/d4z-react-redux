@@ -13,16 +13,16 @@ import PhoneInputFormik from '../../components/Formik/PhoneInputFormik';
 
 const propTypes = {
 	registerThunk: PropTypes.func.isRequired,
-	reg: PropTypes.object.isRequired
+	register: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-	reg: state.reg
+	register: state.auth.register
 });
 const mapDispatchToProps = {
 	registerThunk
 };
 const Register = (props) => {
-	const { registerThunk, reg } = props;
+	const { registerThunk, register } = props;
 	const history = useHistory();
 	const initialValues = {
 		first_name: '',
@@ -124,13 +124,19 @@ const Register = (props) => {
 													id="user_name"
 													name="user_name"
 													type="text"
-													errors={reg.errors.user_name}
+													errors={register.errorMessage.user_name}
 												/>
 											</div>
 										</div>
 										<div className="control-group">
 											<div className="form-group floating-label-form-group controls">
-												<InputFormik label="Email" id="email" name="email" type="text" errors={reg.errors.email} />
+												<InputFormik
+													label="Email"
+													id="email"
+													name="email"
+													type="text"
+													errors={register.errorMessage.email}
+												/>
 											</div>
 										</div>
 										<div className="control-group">
@@ -158,10 +164,7 @@ const Register = (props) => {
 													}}
 													placeholder="84 336 077 131"
 													country={'vn'}
-													onChange={(value) => {
-														console.log(value);
-														setFieldValue('phone_number', value);
-													}}
+													onChange={(value) => setFieldValue('phone_number', value)}
 													onBlur={() => setFieldTouched('phone_number', true)}
 													value={values.phone_number}
 													errored={errors.phone_number}
@@ -190,7 +193,7 @@ const Register = (props) => {
 											</div>
 										</div>
 										<div className="text-center">
-											{reg.loading ? (
+											{register.isLoading ? (
 												<button type="submit" className="btn btn-primary" disabled>
 													<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 													Loading...

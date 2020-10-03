@@ -2,7 +2,7 @@ import React from 'react';
 
 const ContentPostLoading = () => {
 	return (
-		<div className="all-post-content mb-4">
+		<div className="all-post-content">
 			<div className="spinner-grow text-primary mr-4" role="status">
 				<span className="sr-only">Loading...</span>
 			</div>

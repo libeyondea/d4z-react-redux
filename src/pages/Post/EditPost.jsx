@@ -6,9 +6,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import MainLayout from '../../layouts/MainLayout';
-import { editPostThunk, updatePostThunk } from '../../thunks/postThunk';
-import { fetchTagThunk } from '../../thunks/tagThunk';
-import { fetchCategoryThunk } from '../../thunks/categoryThunk';
+import { editPostThunk, updatePostThunk, editPostResetedThunk } from '../../thunks/postThunk';
+import { fetchTagThunk, fetchTagResetedThunk } from '../../thunks/tagThunk';
+import { fetchCategoryThunk, fetchCategoryResetedThunk } from '../../thunks/categoryThunk';
 import isEmpty from '../../helpers/isEmpty';
 import EditPostLoading from '../../components/Loading/EditPostLoading';
 import InputFormik from '../../components/Formik/InputFormik';
@@ -20,23 +20,29 @@ const propTypes = {
 	editPostThunk: PropTypes.func.isRequired,
 	fetchTagThunk: PropTypes.func.isRequired,
 	fetchCategoryThunk: PropTypes.func.isRequired,
+	fetchTagResetedThunk: PropTypes.func.isRequired,
+	fetchCategoryResetedThunk: PropTypes.func.isRequired,
 	updatePostThunk: PropTypes.func.isRequired,
+	editPostResetedThunk: PropTypes.func.isRequired,
 	editPost: PropTypes.object.isRequired,
 	fetchTag: PropTypes.object.isRequired,
 	fetchCategory: PropTypes.object.isRequired,
 	updatePost: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-	editPost: state.editPost,
-	fetchTag: state.fetchTag,
-	fetchCategory: state.fetchCategory,
-	updatePost: state.updatePost
+	editPost: state.posts.editPost,
+	updatePost: state.posts.updatePost,
+	fetchTag: state.tags.fetchTag,
+	fetchCategory: state.categories.fetchCategory
 });
 const mapDispatchToProps = {
 	editPostThunk,
+	updatePostThunk,
+	fetchTagResetedThunk,
+	fetchCategoryResetedThunk,
+	editPostResetedThunk,
 	fetchTagThunk,
-	fetchCategoryThunk,
-	updatePostThunk
+	fetchCategoryThunk
 };
 const EditPost = (props) => {
 	const {
@@ -44,6 +50,9 @@ const EditPost = (props) => {
 		fetchTagThunk,
 		fetchCategoryThunk,
 		updatePostThunk,
+		fetchTagResetedThunk,
+		fetchCategoryResetedThunk,
+		editPostResetedThunk,
 		editPost,
 		fetchTag,
 		fetchCategory,
@@ -55,24 +64,44 @@ const EditPost = (props) => {
 		editPostThunk(slug);
 		fetchTagThunk();
 		fetchCategoryThunk();
+		return () => {
+			editPostResetedThunk();
+			fetchTagResetedThunk();
+			fetchCategoryResetedThunk();
+		};
 	}, []);
 	const initialValues = {
-		title: editPost.posts.title,
-		meta_title: editPost.posts.meta_title,
-		meta_description: editPost.posts.meta_description,
-		slug: editPost.posts.slug,
-		summary: editPost.posts.summary,
-		content: editPost.posts.content,
-		image: editPost.posts.image,
-		tag: editPost.posts.tag,
-		category: editPost.posts.category
+		title: editPost.post.title,
+		meta_title: editPost.post.meta_title,
+		meta_description: editPost.post.meta_description,
+		slug: editPost.post.slug,
+		summary: editPost.post.summary,
+		content: editPost.post.content,
+		image: editPost.post.image,
+		tag: editPost.post.tag,
+		category: editPost.post.category
 	};
 	const validationSchema = Yup.object({
-		title: Yup.string().required('Title is required'),
-		meta_title: Yup.string().required('Meta title is required'),
-		meta_description: Yup.string().required('Meta description is required'),
-		slug: Yup.string().required('Slug is required'),
-		summary: Yup.string().required('Summary is required'),
+		title: Yup.string()
+			.min(6, 'Title must be at least 6 characters')
+			.max(100, 'Title must be at most 100 characters')
+			.required('Title is required'),
+		meta_title: Yup.string()
+			.min(6, 'Meta title must be at least 6 characters')
+			.max(200, 'Meta title must be at most 200 characters')
+			.required('Meta title is required'),
+		meta_description: Yup.string()
+			.min(6, 'Meta description must be at least 6 characters')
+			.max(666, 'Meta description must be at most 666 characters')
+			.required('Meta description is required'),
+		slug: Yup.string()
+			.min(6, 'Slug must be at least 6 characters')
+			.max(100, 'Slug must be at most 100 characters')
+			.required('Slug is required'),
+		summary: Yup.string()
+			.min(6, 'Summary must be at least 6 characters')
+			.max(666, 'Summary must be at most 666 characters')
+			.required('Summary is required'),
 		content: Yup.string().required('Content is required'),
 		image: Yup.string().required('Image is required'),
 		tag: Yup.array()
@@ -123,7 +152,7 @@ const EditPost = (props) => {
 	};
 	return (
 		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/home-bg.jpg")' }}>
+			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
@@ -139,7 +168,7 @@ const EditPost = (props) => {
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
-						{editPost.loading ? (
+						{editPost.isLoading || isEmpty(editPost.post) ? (
 							<EditPostLoading />
 						) : (
 							<div className="nht-form">
@@ -198,7 +227,7 @@ const EditPost = (props) => {
 														id="tag"
 														name="tag"
 														label="Tag"
-														options={fetchTag.tags}
+														options={fetchTag.tag}
 														onChange={(selectedValue) => {
 															if (isEmpty(selectedValue)) {
 																selectedValue = [];
@@ -220,7 +249,7 @@ const EditPost = (props) => {
 														id="category"
 														name="category"
 														label="Category"
-														options={fetchCategory.categories || []}
+														options={fetchCategory.category}
 														onChange={(selectedValue) => {
 															if (isEmpty(selectedValue)) {
 																selectedValue = [];
@@ -242,7 +271,7 @@ const EditPost = (props) => {
 												</div>
 											</div>
 											<div className="text-center">
-												{updatePost.loading ? (
+												{updatePost.isLoading ? (
 													<button type="submit" className="btn btn-primary" disabled>
 														<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 														Loading...

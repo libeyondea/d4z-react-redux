@@ -1,70 +1,89 @@
 import {
+	REGISTER_REQUESTED,
+	REGISTER_SUCCEED,
+	REGISTER_FAILED,
+	REGISTER_RESETED,
 	LOGIN_REQUESTED,
 	LOGIN_SUCCEED,
 	LOGIN_FAILED,
-	REGISTER_REQUESTED,
-	REGISTER_SUCCEED,
-	REGISTER_FAILED
+	LOGIN_RESETED
 } from '../constants/authConstant';
 import { produce } from 'immer';
-import isEmpty from '../helpers/isEmpty';
 
-const loginInitialState = {
-	isAuthenticated: false,
-	user: {},
-	loading: false,
-	errors: {}
+const initialState = {
+	register: {
+		user: {},
+		isLoading: false,
+		isError: false,
+		errorMessage: {}
+	},
+	login: {
+		isAuthenticated: false,
+		user: {},
+		isLoading: false,
+		isError: false,
+		errorMessage: {}
+	}
 };
-const registerInitialState = {
-	user: {},
-	loading: false,
-	errors: {}
-};
-export const loginReducer = (state = loginInitialState, action) =>
-	produce(state, (draft) => {
-		switch (action.type) {
-			case LOGIN_REQUESTED:
-				draft.isAuthenticated = false;
-				draft.user = {};
-				draft.loading = true;
-				draft.errors = {};
-				break;
-			case LOGIN_SUCCEED:
-				draft.isAuthenticated = !isEmpty(action.payload);
-				draft.user = action.payload;
-				draft.loading = false;
-				draft.errors = {};
-				break;
-			case LOGIN_FAILED:
-				draft.isAuthenticated = false;
-				draft.user = {};
-				draft.loading = false;
-				draft.errors = action.payload;
-				break;
-			default:
-				break;
-		}
-	});
-
-export const registerReducer = (state = registerInitialState, action) =>
+const authReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			case REGISTER_REQUESTED:
-				draft.user = {};
-				draft.loading = true;
-				draft.errors = {};
+				draft.register.user = {};
+				draft.register.isLoading = true;
+				draft.register.isError = false;
+				draft.register.errorMessage = {};
 				break;
 			case REGISTER_SUCCEED:
-				draft.user = action.payload;
-				draft.loading = false;
-				draft.errors = {};
+				draft.register.user = action.payload;
+				draft.register.isLoading = false;
+				draft.register.isError = false;
+				draft.register.errorMessage = {};
 				break;
 			case REGISTER_FAILED:
-				draft.user = {};
-				draft.loading = false;
-				draft.errors = action.payload;
+				draft.register.user = {};
+				draft.register.isLoading = false;
+				draft.register.isError = true;
+				draft.register.errorMessage = action.payload;
+				break;
+			case REGISTER_RESETED:
+				draft.register.user = {};
+				draft.register.isLoading = false;
+				draft.register.isError = false;
+				draft.register.errorMessage = {};
+				break;
+
+			case LOGIN_REQUESTED:
+				draft.login.isAuthenticated = false;
+				draft.login.user = {};
+				draft.login.isLoading = true;
+				draft.login.isError = false;
+				draft.login.errorMessage = {};
+				break;
+			case LOGIN_SUCCEED:
+				draft.login.isAuthenticated = action.payload.isAuthenticated;
+				draft.login.user = action.payload.user;
+				draft.login.isLoading = false;
+				draft.login.isError = false;
+				draft.login.errorMessage = {};
+				break;
+			case LOGIN_FAILED:
+				draft.login.isAuthenticated = false;
+				draft.login.user = {};
+				draft.login.isLoading = false;
+				draft.login.isError = true;
+				draft.login.errorMessage = action.payload;
+				break;
+			case LOGIN_RESETED: // Logout here
+				draft.login.isAuthenticated = false;
+				draft.login.user = {};
+				draft.login.isLoading = false;
+				draft.login.isError = false;
+				draft.login.errorMessage = {};
 				break;
 			default:
 				break;
 		}
 	});
+
+export default authReducer;

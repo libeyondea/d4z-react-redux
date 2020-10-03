@@ -3,20 +3,25 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
-	log: state.log
+	login: state.auth.login
 });
 const AuthRouteLogF = (props) => {
-	const { log, component: Component, ...rest } = props;
+	const { login, component: Component, ...rest } = props;
 	return (
 		<Route
 			{...rest}
-			render={(props) => {
-				if (log.isAuthenticated) {
-					return <Redirect to="/" />;
-				} else {
-					return <Component {...props} />;
-				}
-			}}
+			render={(props) =>
+				login.isAuthenticated ? (
+					<Redirect
+						to={{
+							pathname: '/',
+							state: { from: props.location }
+						}}
+					/>
+				) : (
+					<Component {...props} />
+				)
+			}
 		/>
 	);
 };

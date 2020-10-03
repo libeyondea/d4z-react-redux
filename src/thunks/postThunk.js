@@ -2,21 +2,27 @@ import {
 	fetchPostRequestedAction,
 	fetchPostSucceedAction,
 	fetchPostFailedAction,
+	fetchPostResetedAction,
 	createPostRequestedAction,
 	createPostSucceedAction,
 	createPostFailedAction,
+	createPostResetedAction,
 	singlePostRequestedAction,
 	singlePostSucceedAction,
 	singlePostFailedAction,
+	singlePostResetedAction,
 	editPostRequestedAction,
 	editPostSucceedAction,
 	editPostFailedAction,
+	editPostResetedAction,
 	updatePostRequestedAction,
 	updatePostSucceedAction,
 	updatePostFailedAction,
+	updatePostResetedAction,
 	deletePostRequestedAction,
 	deletePostSucceedAction,
-	deletePostFailedAction
+	deletePostFailedAction,
+	deletePostResetedAction
 } from '../actions/postAction';
 import axios from 'axios';
 
@@ -31,6 +37,11 @@ export const fetchPostThunk = () => async (dispatch) => {
 		dispatch(fetchPostFailedAction(err.message));
 	}
 };
+
+export const fetchPostResetedThunk = () => (dispatch) => {
+	dispatch(fetchPostResetedAction());
+};
+
 export const createPostThunk = (post, slug, history) => async (dispatch) => {
 	try {
 		dispatch(createPostRequestedAction());
@@ -39,12 +50,17 @@ export const createPostThunk = (post, slug, history) => async (dispatch) => {
 			dispatch(createPostSucceedAction(res.data.data));
 			history.push(`/posts/${slug}`);
 		} else {
-			dispatch(updatePostFailedAction(res.data.errors));
+			dispatch(updatePostFailedAction(res.data.errorMessage));
 		}
 	} catch (err) {
 		dispatch(createPostFailedAction(err.message));
 	}
 };
+
+export const createPostResetedThunk = () => (dispatch) => {
+	dispatch(createPostResetedAction());
+};
+
 export const singlePostThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(singlePostRequestedAction());
@@ -56,6 +72,11 @@ export const singlePostThunk = (slug) => async (dispatch) => {
 		dispatch(singlePostFailedAction(err.message));
 	}
 };
+
+export const singlePostResetedThunk = () => (dispatch) => {
+	dispatch(singlePostResetedAction());
+};
+
 export const editPostThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(editPostRequestedAction());
@@ -67,6 +88,11 @@ export const editPostThunk = (slug) => async (dispatch) => {
 		dispatch(editPostFailedAction(err));
 	}
 };
+
+export const editPostResetedThunk = () => (dispatch) => {
+	dispatch(editPostResetedAction());
+};
+
 export const updatePostThunk = (post, history, slug, newSlug) => async (dispatch) => {
 	try {
 		dispatch(updatePostRequestedAction());
@@ -75,12 +101,17 @@ export const updatePostThunk = (post, history, slug, newSlug) => async (dispatch
 			dispatch(updatePostSucceedAction(res.data.data));
 			history.push(`/posts/${newSlug}`);
 		} else {
-			dispatch(updatePostFailedAction(res.data.errors));
+			dispatch(updatePostFailedAction(res.data.errorMessage));
 		}
 	} catch (err) {
 		dispatch(updatePostFailedAction(err.message));
 	}
 };
+
+export const updatePostResetedThunk = () => (dispatch) => {
+	dispatch(updatePostResetedAction());
+};
+
 export const deletePostThunk = (slug, history) => async (dispatch) => {
 	try {
 		dispatch(deletePostRequestedAction());
@@ -92,4 +123,8 @@ export const deletePostThunk = (slug, history) => async (dispatch) => {
 	} catch (err) {
 		dispatch(deletePostFailedAction(err.message));
 	}
+};
+
+export const deletePostResetedThunk = () => (dispatch) => {
+	dispatch(deletePostResetedAction());
 };

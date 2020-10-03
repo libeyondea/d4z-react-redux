@@ -1,14 +1,16 @@
 import {
 	fetchCommentRequestedAction,
 	fetchCommentSucceedAction,
-	fetchCommentClearAction,
+	fetchCommentResetedAction,
 	fetchCommentFailedAction,
 	createCommentRequestedAction,
 	createCommentSucceedAction,
 	createCommentFailedAction,
+	createCommentResetedAction,
 	createReplyCommentRequestedAction,
 	createReplyCommentSucceedAction,
-	createReplyCommentFailedAction
+	createReplyCommentFailedAction,
+	createReplyCommentResetedAction
 } from '../actions/commentAction';
 import axios from 'axios';
 
@@ -24,12 +26,8 @@ export const fetchCommentThunk = (slug) => async (dispatch) => {
 	}
 };
 
-export const fetchCommentClearThunk = () => async (dispatch) => {
-	try {
-		dispatch(fetchCommentClearAction());
-	} catch (err) {
-		dispatch(fetchCommentFailedAction(err.message));
-	}
+export const fetchCommentResetedThunk = () => (dispatch) => {
+	dispatch(fetchCommentResetedAction());
 };
 
 export const createCommentThunk = (comment, slug) => async (dispatch) => {
@@ -46,6 +44,10 @@ export const createCommentThunk = (comment, slug) => async (dispatch) => {
 	}
 };
 
+export const createCommentResetedThunk = () => (dispatch) => {
+	dispatch(createCommentResetedAction());
+};
+
 export const createReplyCommentThunk = (comment, slug) => async (dispatch) => {
 	try {
 		dispatch(createReplyCommentRequestedAction());
@@ -58,4 +60,8 @@ export const createReplyCommentThunk = (comment, slug) => async (dispatch) => {
 	} catch (err) {
 		dispatch(createReplyCommentFailedAction(err.message));
 	}
+};
+
+export const createReplyCommentResetedThunk = () => (dispatch) => {
+	dispatch(createReplyCommentResetedAction());
 };

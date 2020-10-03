@@ -1,31 +1,16 @@
 import { combineReducers } from 'redux';
-import { loginReducer, registerReducer } from './authReducer';
-import {
-	fetchPostReducer,
-	createPostReducer,
-	singlePostReducer,
-	editPostReducer,
-	updatePostReducer,
-	deletePostReducer
-} from './postReducer';
-import { fetchTagReducer } from './tagReducer';
-import { fetchCategoryReducer } from './categoryReducer';
-import { fetchCommentReducer, createCommentReducer, createReplyCommentReducer } from './commentReducer';
+import authReducer from './authReducer';
+import postReducer from './postReducer';
+import tagReducer from './tagReducer';
+import categoryReducer from './categoryReducer';
+import commentReducer from './commentReducer';
 
 const rootReducer = combineReducers({
-	log: loginReducer,
-	reg: registerReducer,
-	fetchPost: fetchPostReducer,
-	createPost: createPostReducer,
-	singlePost: singlePostReducer,
-	editPost: editPostReducer,
-	updatePost: updatePostReducer,
-	deletePost: deletePostReducer,
-	fetchTag: fetchTagReducer,
-	fetchCategory: fetchCategoryReducer,
-	fetchComment: fetchCommentReducer,
-	createComment: createCommentReducer,
-	createReplyComment: createReplyCommentReducer
+	auth: authReducer,
+	posts: postReducer,
+	tags: tagReducer,
+	categories: categoryReducer,
+	comments: commentReducer
 });
 
 export default rootReducer;

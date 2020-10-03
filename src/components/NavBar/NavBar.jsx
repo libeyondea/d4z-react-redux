@@ -6,16 +6,16 @@ import { logoutThunk } from '../../thunks/authThunk';
 
 const propTypes = {
 	logoutThunk: PropTypes.func.isRequired,
-	log: PropTypes.object.isRequired
+	login: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-	log: state.log
+	login: state.auth.login
 });
 const mapDispatchToProps = {
 	logoutThunk
 };
 const Navbar = (props) => {
-	const { logoutThunk, log } = props;
+	const { logoutThunk, login } = props;
 	const history = useHistory();
 	const onLogout = (event) => {
 		event.preventDefault();
@@ -37,11 +37,11 @@ const Navbar = (props) => {
 					aria-haspopup="true"
 					aria-expanded="true"
 				>
-					<span className="mr-1">{log.user.user_name}</span>
+					<span className="mr-1">{login.user.user_name}</span>
 					<img
 						src="http://www.gravatar.com/avatar/08807ef52c734e34520bbfee71c060b7?s=200&r=pg&d=mm"
-						alt={log.user.user_name}
-						title={log.user.user_name}
+						alt={login.user.user_name}
+						title={login.user.user_name}
 						className="rounded-circle"
 						style={{
 							width: '20px',
@@ -114,7 +114,7 @@ const Navbar = (props) => {
 								Project
 							</Link>
 						</li>
-						{log.isAuthenticated ? authLinks : guestLinks}
+						{login.isAuthenticated ? authLinks : guestLinks}
 					</ul>
 				</div>
 			</div>

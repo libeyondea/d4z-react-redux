@@ -8,36 +8,35 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {
 	fetchCommentThunk,
-	fetchCommentClearThunk,
+	createReplyCommentThunk,
 	createCommentThunk,
-	createReplyCommentThunk
+	fetchCommentResetedThunk
 } from '../../thunks/commentThunk';
 import RichTextEditorFormik from '../../components/Formik/RichTextEditorFormik';
-import CommentLoading from '../../components/Loading/CommentLoading';
 
 const propTypes = {
 	fetchCommentThunk: PropTypes.func.isRequired,
-	fetchCommentClearThunk: PropTypes.func.isRequired,
+	fetchCommentResetedThunk: PropTypes.func.isRequired,
 	createCommentThunk: PropTypes.func.isRequired,
 	createReplyCommentThunk: PropTypes.func.isRequired,
 	createComment: PropTypes.object.isRequired,
 	createReplyComment: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-	fetchComment: state.fetchComment,
-	createComment: state.createComment,
-	createReplyComment: state.createReplyComment
+	fetchComment: state.comments.fetchComment,
+	createComment: state.comments.createComment,
+	createReplyComment: state.comments.createReplyComment
 });
 const mapDispatchToProps = {
 	fetchCommentThunk,
-	fetchCommentClearThunk,
+	fetchCommentResetedThunk,
 	createCommentThunk,
 	createReplyCommentThunk
 };
 const CreateComment = (props) => {
 	const {
 		fetchCommentThunk,
-		fetchCommentClearThunk,
+		fetchCommentResetedThunk,
 		createCommentThunk,
 		createReplyCommentThunk,
 		fetchComment,
@@ -50,7 +49,7 @@ const CreateComment = (props) => {
 	useEffect(() => {
 		fetchCommentThunk(slug);
 		return () => {
-			fetchCommentClearThunk();
+			fetchCommentResetedThunk();
 		};
 	}, []);
 	const replyCommentInitialValues = {
@@ -64,7 +63,7 @@ const CreateComment = (props) => {
 			parent_id: parentId,
 			content: values.replyComment
 		};
-		//setReplyBox(false);
+		setReplyBox(false);
 		if (createReplyCommentThunk(comment, slug)) {
 			fetchCommentThunk(slug);
 			resetForm({});
@@ -150,7 +149,7 @@ const CreateComment = (props) => {
 										{errors.replyComment && touched.replyComment && (
 											<div className="invalid-feedback d-block">{errors.replyComment}</div>
 										)}
-										{createReplyComment.loading ? (
+										{createReplyComment.isLoading ? (
 											<button type="submit" className="reply-comment btn btn-primary" disabled>
 												<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 												Loading...
@@ -226,7 +225,7 @@ const CreateComment = (props) => {
 									</div>
 								</div>
 								<div className="text-right">
-									{createComment.loading ? (
+									{createComment.isLoading ? (
 										<button type="submit" className="btn btn-primary" disabled>
 											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 											Loading...
@@ -247,7 +246,7 @@ const CreateComment = (props) => {
 	return (
 		<div className="comments">
 			{CommentForm}
-			{FetchComment(fetchComment.comments, false)}
+			{FetchComment(fetchComment.comment, false)}
 		</div>
 	);
 };

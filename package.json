@@ -1,6 +1,6 @@
 {
 	"name": "d4z-react-frontend",
-	"version": "1.0.2",
+	"version": "1.0.5",
 	"description": "d4z-react-frontend",
 	"main": "src/index.js",
 	"scripts": {

@@ -1,102 +1,120 @@
 import {
 	FETCH_COMMENT_REQUESTED,
 	FETCH_COMMENT_SUCCEED,
-	FETCH_COMMENT_CLEAR,
 	FETCH_COMMENT_FAILED,
+	FETCH_COMMENT_RESETED,
 	CREATE_COMMENT_REQUESTED,
 	CREATE_COMMENT_SUCCEED,
 	CREATE_COMMENT_FAILED,
+	CREATE_COMMENT_RESETED,
 	CREATE_REPLY_COMMENT_REQUESTED,
 	CREATE_REPLY_COMMENT_SUCCEED,
-	CREATE_REPLY_COMMENT_FAILED
+	CREATE_REPLY_COMMENT_FAILED,
+	CREATE_REPLY_COMMENT_RESETED
 } from '../constants/commentConstant';
 import { produce } from 'immer';
 
-const fetchCommentInitialState = {
-	comments: [],
-	loading: true,
-	errors: {}
+const initialState = {
+	fetchComment: {
+		comment: [],
+		isLoading: false,
+		isError: false,
+		errorMessage: null
+	},
+	createComment: {
+		comment: {},
+		isLoading: false,
+		isError: false,
+		errorMessage: null
+	},
+	createReplyComment: {
+		comment: {},
+		isLoading: false,
+		isError: false,
+		errorMessage: null
+	}
 };
-const createCommentInitialState = {
-	comments: {},
-	loading: false,
-	errors: {}
-};
-const createReplyCommentInitialState = {
-	comments: {},
-	loading: false,
-	errors: {}
-};
-export const fetchCommentReducer = (state = fetchCommentInitialState, action) =>
+const commentReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
+			// FETCH_COMMENT
 			case FETCH_COMMENT_REQUESTED:
-				draft.comments = draft.comments; //fetch comments auto display
-				draft.loading = true;
-				draft.errors = {};
+				//draft.fetchComment.comment = [];
+				draft.fetchComment.isLoading = true;
+				draft.fetchComment.isError = false;
+				draft.fetchComment.errorMessage = null;
 				break;
 			case FETCH_COMMENT_SUCCEED:
-				draft.comments = action.payload;
-				draft.loading = false;
-				draft.errors = {};
-				break;
-			case FETCH_COMMENT_CLEAR:
-				draft.comments = [];
-				draft.loading = true;
-				draft.errors = {};
+				draft.fetchComment.comment = action.payload;
+				draft.fetchComment.isLoading = false;
+				draft.fetchComment.isError = false;
+				draft.fetchComment.errorMessage = null;
 				break;
 			case FETCH_COMMENT_FAILED:
-				draft.comments = [];
-				draft.loading = false;
-				draft.errors = action.payload;
+				draft.fetchComment.comment = [];
+				draft.fetchComment.isLoading = false;
+				draft.fetchComment.isError = true;
+				draft.fetchComment.errorMessage = action.payload;
 				break;
-			default:
+			case FETCH_COMMENT_RESETED:
+				draft.fetchComment.comment = [];
+				draft.fetchComment.isLoading = false;
+				draft.fetchComment.isError = false;
+				draft.fetchComment.errorMessage = null;
 				break;
-		}
-	});
-
-export const createCommentReducer = (state = createCommentInitialState, action) =>
-	produce(state, (draft) => {
-		switch (action.type) {
+			// CREATE_COMMENT
 			case CREATE_COMMENT_REQUESTED:
-				draft.comments = {};
-				draft.loading = true;
-				draft.errors = {};
+				draft.createComment.comment = {};
+				draft.createComment.isLoading = true;
+				draft.createComment.isError = false;
+				draft.createComment.errorMessage = null;
 				break;
 			case CREATE_COMMENT_SUCCEED:
-				draft.comments = action.payload;
-				draft.loading = false;
-				draft.errors = {};
+				draft.createComment.comment = action.payload;
+				draft.createComment.isLoading = false;
+				draft.createComment.isError = false;
+				draft.createComment.errorMessage = null;
 				break;
 			case CREATE_COMMENT_FAILED:
-				draft.comments = {};
-				draft.loading = false;
-				draft.errors = action.payload;
+				draft.createComment.comment = {};
+				draft.createComment.isLoading = false;
+				draft.createComment.isError = true;
+				draft.createComment.errorMessage = action.payload;
+				break;
+			case CREATE_COMMENT_RESETED:
+				draft.createComment.comment = {};
+				draft.createComment.isLoading = false;
+				draft.createComment.isError = false;
+				draft.createComment.errorMessage = null;
+				break;
+			// CREATE_REPLY_COMMENT
+			case CREATE_REPLY_COMMENT_REQUESTED:
+				draft.createReplyComment.comment = {};
+				draft.createReplyComment.isLoading = true;
+				draft.createReplyComment.isError = false;
+				draft.createReplyComment.errorMessage = null;
+				break;
+			case CREATE_REPLY_COMMENT_SUCCEED:
+				draft.createReplyComment.comment = action.payload;
+				draft.createReplyComment.isLoading = false;
+				draft.createReplyComment.isError = false;
+				draft.createReplyComment.errorMessage = null;
+				break;
+			case CREATE_REPLY_COMMENT_FAILED:
+				draft.createReplyComment.comment = {};
+				draft.createReplyComment.isLoading = false;
+				draft.createReplyComment.isError = true;
+				draft.createReplyComment.errorMessage = action.payload;
+				break;
+			case CREATE_REPLY_COMMENT_RESETED:
+				draft.createReplyComment.comment = {};
+				draft.createReplyComment.isLoading = false;
+				draft.createReplyComment.isError = false;
+				draft.createReplyComment.errorMessage = null;
 				break;
 			default:
 				break;
 		}
 	});
 
-export const createReplyCommentReducer = (state = createReplyCommentInitialState, action) =>
-	produce(state, (draft) => {
-		switch (action.type) {
-			case CREATE_REPLY_COMMENT_REQUESTED:
-				draft.comments = {};
-				draft.loading = true;
-				draft.errors = {};
-				break;
-			case CREATE_REPLY_COMMENT_SUCCEED:
-				draft.comments = action.payload;
-				draft.loading = false;
-				draft.errors = {};
-				break;
-			case CREATE_REPLY_COMMENT_FAILED:
-				draft.comments = {};
-				draft.loading = false;
-				draft.errors = action.payload;
-				break;
-			default:
-				break;
-		}
-	});
+export default commentReducer;

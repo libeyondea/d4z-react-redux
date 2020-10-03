@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,8 +7,8 @@ import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import MainLayout from '../../layouts/MainLayout';
 import { createPostThunk } from '../../thunks/postThunk';
-import { fetchTagThunk } from '../../thunks/tagThunk';
-import { fetchCategoryThunk } from '../../thunks/categoryThunk';
+import { fetchTagThunk, fetchTagResetedThunk } from '../../thunks/tagThunk';
+import { fetchCategoryThunk, fetchCategoryResetedThunk } from '../../thunks/categoryThunk';
 import isEmpty from '../../helpers/isEmpty';
 import InputFormik from '../../components/Formik/InputFormik';
 import TextareaFormik from '../../components/Formik/TextareaFormik';
@@ -19,26 +19,43 @@ const propTypes = {
 	createPostThunk: PropTypes.func.isRequired,
 	fetchTagThunk: PropTypes.func.isRequired,
 	fetchCategoryThunk: PropTypes.func.isRequired,
+	fetchTagResetedThunk: PropTypes.func.isRequired,
+	fetchCategoryResetedThunk: PropTypes.func.isRequired,
 	createPost: PropTypes.object.isRequired,
 	fetchTag: PropTypes.object.isRequired,
 	fetchCategory: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-	createPost: state.createPost,
-	fetchTag: state.fetchTag,
-	fetchCategory: state.fetchCategory
+	createPost: state.posts.createPost,
+	fetchTag: state.tags.fetchTag,
+	fetchCategory: state.categories.fetchCategory
 });
 const mapDispatchToProps = {
 	createPostThunk,
 	fetchTagThunk,
-	fetchCategoryThunk
+	fetchCategoryThunk,
+	fetchTagResetedThunk,
+	fetchCategoryResetedThunk
 };
 const CreatePost = (props) => {
-	const { createPostThunk, fetchTagThunk, fetchCategoryThunk, fetchCategory, fetchTag, createPost } = props;
+	const {
+		createPostThunk,
+		fetchTagThunk,
+		fetchCategoryThunk,
+		fetchCategory,
+		fetchTagResetedThunk,
+		fetchCategoryResetedThunk,
+		fetchTag,
+		createPost
+	} = props;
 	const history = useHistory();
 	useEffect(() => {
 		fetchTagThunk();
 		fetchCategoryThunk();
+		return () => {
+			fetchTagResetedThunk();
+			fetchCategoryResetedThunk();
+		};
 	}, []);
 	const initialValues = {
 		title: '',
@@ -52,11 +69,26 @@ const CreatePost = (props) => {
 		category: []
 	};
 	const validationSchema = Yup.object({
-		title: Yup.string().required('Title is required'),
-		meta_title: Yup.string().required('Meta title is required'),
-		meta_description: Yup.string().required('Meta description is required'),
-		slug: Yup.string().required('Slug is required'),
-		summary: Yup.string().required('Summary is required'),
+		title: Yup.string()
+			.min(6, 'Title must be at least 6 characters')
+			.max(100, 'Title must be at most 100 characters')
+			.required('Title is required'),
+		meta_title: Yup.string()
+			.min(6, 'Meta title must be at least 6 characters')
+			.max(200, 'Meta title must be at most 200 characters')
+			.required('Meta title is required'),
+		meta_description: Yup.string()
+			.min(6, 'Meta description must be at least 6 characters')
+			.max(666, 'Meta description must be at most 666 characters')
+			.required('Meta description is required'),
+		slug: Yup.string()
+			.min(6, 'Slug must be at least 6 characters')
+			.max(100, 'Slug must be at most 100 characters')
+			.required('Slug is required'),
+		summary: Yup.string()
+			.min(6, 'Summary must be at least 6 characters')
+			.max(666, 'Summary must be at most 666 characters')
+			.required('Summary is required'),
 		content: Yup.string().required('Content is required'),
 		image: Yup.string().required('Image is required'),
 		tag: Yup.array()
@@ -89,7 +121,6 @@ const CreatePost = (props) => {
 			tag: tag,
 			category: category
 		};
-		console.log(post);
 		Swal.fire({
 			title: 'Do you want to create?',
 			icon: 'question',
@@ -178,7 +209,7 @@ const CreatePost = (props) => {
 													id="tag"
 													name="tag"
 													label="Tag"
-													options={fetchTag.tags}
+													options={fetchTag.tag}
 													onChange={(selectedValue) => {
 														if (isEmpty(selectedValue)) {
 															selectedValue = [];
@@ -200,7 +231,7 @@ const CreatePost = (props) => {
 													id="category"
 													name="category"
 													label="Category"
-													options={fetchCategory.categories}
+													options={fetchCategory.category}
 													onChange={(selectedValue) => {
 														if (isEmpty(selectedValue)) {
 															selectedValue = [];
@@ -222,7 +253,7 @@ const CreatePost = (props) => {
 											</div>
 										</div>
 										<div className="text-center">
-											{createPost.loading ? (
+											{createPost.isLoading ? (
 												<button type="submit" className="btn btn-primary" disabled>
 													<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 													Loading...

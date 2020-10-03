@@ -10,16 +10,16 @@ import InputFormik from '../../components/Formik/InputFormik';
 
 const propTypes = {
 	loginThunk: PropTypes.func.isRequired,
-	log: PropTypes.object.isRequired
+	login: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-	log: state.log
+	login: state.auth.login
 });
 const mapDispatchToProps = {
 	loginThunk
 };
 const Login = (props) => {
-	const { loginThunk, log } = props;
+	const { loginThunk, login } = props;
 	const initialValues = {
 		email: '',
 		password: ''
@@ -59,7 +59,7 @@ const Login = (props) => {
 								<Form>
 									<div className="control-group">
 										<div className="form-group floating-label-form-group controls">
-											<InputFormik label="Email" id="email" name="email" type="text" errors={log.errors.user} />
+											<InputFormik label="Email" id="email" name="email" type="text" errors={login.errorMessage.user} />
 										</div>
 									</div>
 									<div className="control-group">
@@ -69,7 +69,7 @@ const Login = (props) => {
 												id="password"
 												name="password"
 												type="password"
-												errors={log.errors.user}
+												errors={login.errorMessage.user}
 											/>
 										</div>
 									</div>
@@ -87,7 +87,7 @@ const Login = (props) => {
 										</div>
 									</div>
 									<div className="text-center">
-										{log.loading ? (
+										{login.isLoading ? (
 											<button type="submit" className="btn btn-primary" disabled>
 												<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 												Loading...

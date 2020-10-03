@@ -2,9 +2,11 @@ import {
 	registerRequestedAction,
 	registerSucceedAction,
 	registerFailedAction,
+	registerResetedAction,
 	loginRequestedAction,
 	loginSucceedAction,
-	loginFailedAction
+	loginFailedAction,
+	loginResetedAction
 } from '../actions/authAction';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
@@ -18,12 +20,17 @@ export const registerThunk = (user, history) => async (dispatch) => {
 			dispatch(registerSucceedAction(res.data.data));
 			history.push('/login');
 		} else {
-			dispatch(registerFailedAction(res.data.errors));
+			dispatch(registerFailedAction(res.data.errorMessage));
 		}
 	} catch (err) {
 		dispatch(registerFailedAction(err.message));
 	}
 };
+
+export const registerResetedThunk = () => (dispatch) => {
+	dispatch(registerResetedAction());
+};
+
 export const loginThunk = (user) => async (dispatch) => {
 	try {
 		dispatch(loginRequestedAction());
@@ -33,17 +40,18 @@ export const loginThunk = (user) => async (dispatch) => {
 			localStorage.setItem('jwtToken', token);
 			setAuthToken(token);
 			const decoded = jwt_decode(token);
-			dispatch(loginSucceedAction(decoded));
+			dispatch(loginSucceedAction(true, decoded));
 		} else {
-			dispatch(loginFailedAction(res.data.errors));
+			dispatch(loginFailedAction(res.data.errorMessage));
 		}
 	} catch (err) {
-		dispatch(loginFailedAction(err.data.errors));
+		dispatch(loginFailedAction(err.message));
 	}
 };
+
 export const logoutThunk = (history) => (dispatch) => {
 	localStorage.removeItem('jwtToken');
 	setAuthToken(false);
-	dispatch(loginSucceedAction({}));
+	dispatch(loginResetedAction());
 	history.push('/login');
 };
