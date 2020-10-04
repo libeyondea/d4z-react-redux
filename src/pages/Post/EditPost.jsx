@@ -156,7 +156,7 @@ const EditPost = (props) => {
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
+						<div className="col-lg-12 col-md-12">
 							<div className="site-heading">
 								<h1>Edit Post</h1>
 								<span className="subheading">Admin</span>
@@ -167,7 +167,7 @@ const EditPost = (props) => {
 			</header>
 			<div className="container">
 				<div className="row">
-					<div className="col-lg-8 col-md-10 mx-auto">
+					<div className="col-lg-12 col-md-12">
 						{editPost.isLoading || isEmpty(editPost.post) ? (
 							<EditPostLoading />
 						) : (

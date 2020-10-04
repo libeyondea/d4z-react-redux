@@ -66,7 +66,7 @@ const SinglePost = (props) => {
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
+						<div className="col-lg-12 col-md-12">
 							{singlePost.isLoading || isEmpty(singlePost.post) ? (
 								<TitlePostLoading />
 							) : (
@@ -85,7 +85,7 @@ const SinglePost = (props) => {
 			<article>
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
+						<div className="col-lg-12 col-md-12">
 							{singlePost.isLoading || isEmpty(singlePost.post) ? (
 								<ContentPostLoading />
 							) : (

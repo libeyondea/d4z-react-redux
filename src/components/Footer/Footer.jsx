@@ -32,7 +32,7 @@ const Footer = () => {
 								</a>
 							</li>
 						</ul>
-						<p className="copyright text-muted">
+						<p className="copyright text-muted mt-4">
 							Copyright © <a href="#!">De4thZone.Com</a> 2020
 						</p>
 					</div>

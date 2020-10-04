@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Switch } from 'react-router-dom';
 import HomeRoute from './HomeRoute';
 import AuthRoute from './AuthRoute';
+import UserRoute from './UserRoute';
 import PostRoute from './PostRoute';
 import ErrorRoute from './ErrorRoute';
 
@@ -10,6 +11,7 @@ const Routes = () => {
 		<Switch>
 			<HomeRoute />
 			<AuthRoute />
+			<UserRoute />
 			<PostRoute />
 			<ErrorRoute />
 		</Switch>

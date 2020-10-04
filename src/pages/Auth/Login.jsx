@@ -42,7 +42,7 @@ const Login = (props) => {
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
+						<div className="col-lg-12 col-md-12">
 							<div className="site-heading">
 								<h1>Login</h1>
 								<span className="subheading">Login Now</span>
@@ -97,7 +97,7 @@ const Login = (props) => {
 												Login
 											</button>
 										)}
-										<p>
+										<p className="mt-5">
 											Not a member? <Link to="/register">Register</Link>
 										</p>
 										<p>or sign in with:</p>

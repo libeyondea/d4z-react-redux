@@ -91,7 +91,7 @@ const Register = (props) => {
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
+						<div className="col-lg-12 col-md-12">
 							<div className="site-heading">
 								<h1>Register</h1>
 								<span className="subheading">Register Now</span>
@@ -203,7 +203,7 @@ const Register = (props) => {
 													Register
 												</button>
 											)}
-											<p>or register with:</p>
+											<p className="mt-5">or register with:</p>
 											<a href="#!" className="btn-floating btn-fb btn-sm mr-1">
 												<i className="fab fa-facebook-f" />
 											</a>

@@ -141,7 +141,7 @@ const CreatePost = (props) => {
 				<div className="overlay" />
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
+						<div className="col-lg-12 col-md-12">
 							<div className="site-heading">
 								<h1>Create Post</h1>
 								<span className="subheading">D4Z</span>
@@ -152,7 +152,7 @@ const CreatePost = (props) => {
 			</header>
 			<div className="container">
 				<div className="row">
-					<div className="col-lg-8 col-md-10 mx-auto">
+					<div className="col-lg-12 col-md-12">
 						<div className="nht-form">
 							<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
 								{({ values, errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (

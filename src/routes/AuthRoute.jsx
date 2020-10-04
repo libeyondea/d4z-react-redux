@@ -6,8 +6,8 @@ import AuthRouteLogF from '../guards/AuthRouteLogF';
 const AuthRoute = () => {
 	return (
 		<>
-			<AuthRouteLogF path="/login" component={Login} />
 			<AuthRouteLogF path="/register" component={Register} />
+			<AuthRouteLogF path="/login" component={Login} />
 		</>
 	);
 };

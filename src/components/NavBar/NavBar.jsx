@@ -50,9 +50,9 @@ const Navbar = (props) => {
 					/>
 				</a>
 				<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-					<a className="dropdown-item" href="#!">
-						Info
-					</a>
+					<Link className="dropdown-item" to={`/users/${login.user.id}/@${login.user.user_name}`}>
+						Profile
+					</Link>
 					<a className="dropdown-item" href="#!" onClick={onLogout.bind(this)}>
 						Logout
 					</a>
@@ -110,8 +110,8 @@ const Navbar = (props) => {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" to="/">
-								Project
+							<Link className="nav-link" to="/users">
+								Users
 							</Link>
 						</li>
 						{login.isAuthenticated ? authLinks : guestLinks}
