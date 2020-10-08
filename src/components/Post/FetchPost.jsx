@@ -25,7 +25,7 @@ const FetchPost = (props) => {
 		return () => {
 			fetchPostResetedThunk();
 		};
-	}, []);
+	}, [fetchPostResetedThunk, fetchPostThunk]);
 	return (
 		<div className="container">
 			<div className="row">
@@ -36,7 +36,7 @@ const FetchPost = (props) => {
 						<div>
 							{fetchPost.post.map((item) => (
 								<div className="post-preview border-bottom mb-3" key={item.id}>
-									<Link to={`/posts/${item.slug}`}>
+									<Link to={`/posts/${item.id}/${item.slug}`}>
 										<h2 className="post-title">{item.title}</h2>
 										<h3 className="post-subtitle">{item.summary}</h3>
 									</Link>

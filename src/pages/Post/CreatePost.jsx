@@ -56,7 +56,7 @@ const CreatePost = (props) => {
 			fetchTagResetedThunk();
 			fetchCategoryResetedThunk();
 		};
-	}, []);
+	}, [fetchCategoryResetedThunk, fetchCategoryThunk, fetchTagResetedThunk, fetchTagThunk]);
 	const initialValues = {
 		title: '',
 		meta_title: '',
@@ -95,7 +95,7 @@ const CreatePost = (props) => {
 			.min(1, 'Pick at least 1 tag')
 			.of(
 				Yup.object().shape({
-					id: Yup.number().required().positive().integer(),
+					id: Yup.string().required(),
 					title: Yup.string().required()
 				})
 			),
@@ -103,7 +103,7 @@ const CreatePost = (props) => {
 			.min(1, 'Pick at least 1 category')
 			.of(
 				Yup.object().shape({
-					id: Yup.number().required().positive().integer(),
+					id: Yup.string().required(),
 					title: Yup.string().required()
 				})
 			)
@@ -121,6 +121,7 @@ const CreatePost = (props) => {
 			tag: tag,
 			category: category
 		};
+		console.log(post);
 		Swal.fire({
 			title: 'Do you want to create?',
 			icon: 'question',

@@ -58,10 +58,10 @@ const EditPost = (props) => {
 		fetchCategory,
 		updatePost
 	} = props;
-	const { slug } = useParams();
+	const { id } = useParams();
 	const history = useHistory();
 	useEffect(() => {
-		editPostThunk(slug);
+		editPostThunk(id);
 		fetchTagThunk();
 		fetchCategoryThunk();
 		return () => {
@@ -69,7 +69,15 @@ const EditPost = (props) => {
 			fetchTagResetedThunk();
 			fetchCategoryResetedThunk();
 		};
-	}, []);
+	}, [
+		editPostResetedThunk,
+		editPostThunk,
+		fetchCategoryResetedThunk,
+		fetchCategoryThunk,
+		fetchTagResetedThunk,
+		fetchTagThunk,
+		id
+	]);
 	const initialValues = {
 		title: editPost.post.title,
 		meta_title: editPost.post.meta_title,
@@ -108,7 +116,7 @@ const EditPost = (props) => {
 			.min(1, 'Pick at least 1 tag')
 			.of(
 				Yup.object().shape({
-					id: Yup.number().required().positive().integer(),
+					id: Yup.string().required(),
 					title: Yup.string().required()
 				})
 			),
@@ -116,19 +124,18 @@ const EditPost = (props) => {
 			.min(1, 'Pick at least 1 category')
 			.of(
 				Yup.object().shape({
-					id: Yup.number().required().positive().integer(),
+					id: Yup.string().required(),
 					title: Yup.string().required()
 				})
 			)
 	});
 	const onSubmit = (values) => {
-		const { title, meta_title, meta_description, summary, content, image, tag, category } = values;
-		const newSlug = values.slug;
+		const { title, meta_title, meta_description, summary, content, image, tag, category, slug } = values;
 		const post = {
 			title: title,
 			meta_title: meta_title,
 			meta_description: meta_description,
-			slug: newSlug,
+			slug: slug,
 			summary: summary,
 			content: content,
 			image: image,
@@ -146,7 +153,7 @@ const EditPost = (props) => {
 			cancelButtonText: 'No'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				updatePostThunk(post, history, slug, newSlug);
+				updatePostThunk(post, history, id, slug);
 			}
 		});
 	};

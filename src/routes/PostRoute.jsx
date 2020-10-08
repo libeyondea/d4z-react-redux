@@ -8,9 +8,9 @@ import EditPost from '../pages/Post/EditPost';
 const Routes = () => {
 	return (
 		<>
-			<AuthRouteLogT path="/create-post" component={CreatePost} />
-			<Route path="/posts/:slug" component={SinglePost} />
-			<AuthRouteLogT path="/edit-post/:slug" component={EditPost} />
+			<AuthRouteLogT exact path="/posts/create" component={CreatePost} />
+			<Route exact path="/posts/:id/:slug" component={SinglePost} />
+			<AuthRouteLogT exact path="/posts/:id/:slug/edit" component={EditPost} />
 		</>
 	);
 };

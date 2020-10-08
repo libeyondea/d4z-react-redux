@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
@@ -41,17 +40,17 @@ const CreateComment = (props) => {
 		createReplyCommentThunk,
 		fetchComment,
 		createComment,
-		createReplyComment
+		createReplyComment,
+		postId
 	} = props;
-	const { slug } = useParams();
 	const [replyBox, setReplyBox] = useState(false);
 	const [parentId, setParentId] = useState('');
 	useEffect(() => {
-		fetchCommentThunk(slug);
+		fetchCommentThunk(postId);
 		return () => {
 			fetchCommentResetedThunk();
 		};
-	}, []);
+	}, [fetchCommentResetedThunk, fetchCommentThunk, postId]);
 	const replyCommentInitialValues = {
 		replyComment: ''
 	};
@@ -64,8 +63,8 @@ const CreateComment = (props) => {
 			content: values.replyComment
 		};
 		setReplyBox(false);
-		if (createReplyCommentThunk(comment, slug)) {
-			fetchCommentThunk(slug);
+		if (createReplyCommentThunk(comment, postId)) {
+			fetchCommentThunk(postId);
 			resetForm({});
 		}
 	};
@@ -81,8 +80,8 @@ const CreateComment = (props) => {
 			content: values.comment
 		};
 		setReplyBox(false);
-		if (createCommentThunk(comment, slug)) {
-			fetchCommentThunk(slug);
+		if (createCommentThunk(comment, postId)) {
+			fetchCommentThunk(postId);
 			resetForm({});
 		}
 	};
@@ -95,7 +94,7 @@ const CreateComment = (props) => {
 				key={comment.id}
 			>
 				<span className="commenter-pic">
-					<img src="/assets/img/user-icon.jpg" className="img-fluid" />
+					<img src="/assets/img/user-icon.jpg" className="img-fluid" alt="" />
 				</span>
 				<span className="commenter-name">
 					<a href="#!">{comment.user.user_name}</a> <span className="comment-time">{comment.created_at}</span>
@@ -128,7 +127,7 @@ const CreateComment = (props) => {
 				{replyBox && (
 					<div className="comment-box add-comment reply-box">
 						<span className="commenter-pic">
-							<img src="/assets/img/user-icon.jpg" className="img-fluid" />
+							<img src="/assets/img/user-icon.jpg" className="img-fluid" alt="" />
 						</span>
 						<span className="commenter-name">
 							<Formik
@@ -160,6 +159,7 @@ const CreateComment = (props) => {
 											</button>
 										)}
 										<a
+											href="#!"
 											onClick={() => {
 												if (!replyBox) {
 													setParentId(comment.id);
@@ -191,10 +191,10 @@ const CreateComment = (props) => {
 						Sort By <span className="caret" />
 					</button>
 					<div className="dropdown-menu">
-						<a href="#" className="dropdown-item">
+						<a href="#!" className="dropdown-item">
 							Top Comments
 						</a>
-						<a href="#" className="dropdown-item">
+						<a href="#!" className="dropdown-item">
 							Newest First
 						</a>
 					</div>

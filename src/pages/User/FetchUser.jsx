@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from '../../helpers/isEmpty';
@@ -25,7 +24,7 @@ const FetchUser = (props) => {
 		return () => {
 			fetchUserResetedThunk();
 		};
-	}, []);
+	}, [fetchUserResetedThunk, fetchUserThunk]);
 	return (
 		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
@@ -51,7 +50,7 @@ const FetchUser = (props) => {
 								<div className="col-md-4 grid-card-user" key={item.id}>
 									<div className="card p-3">
 										<div className="d-flex flex-row mb-3">
-											<img src="https://i.imgur.com/ccMhxvC.png" width={70} />
+											<img src="https://i.imgur.com/ccMhxvC.png" width={70} alt="" />
 											<div className="d-flex flex-column ml-2">
 												<span>
 													{item.last_name} {item.first_name}

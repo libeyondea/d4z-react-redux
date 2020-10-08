@@ -48,7 +48,8 @@ export const createUserThunk = (user, slug, history) => async (dispatch) => {
 		const res = await axios.post(`${process.env.API_URL}/users`, user);
 		if (res.data.success) {
 			dispatch(createUserSucceedAction(res.data.data));
-			history.push(`/users/${slug}`);
+			history.push('/');
+			//history.push(`/users/${id}/${slug}`);
 		} else {
 			dispatch(updateUserFailedAction(res.data.errorMessage));
 		}

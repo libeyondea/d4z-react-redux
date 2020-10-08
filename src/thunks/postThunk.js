@@ -48,7 +48,8 @@ export const createPostThunk = (post, slug, history) => async (dispatch) => {
 		const res = await axios.post(`${process.env.API_URL}/posts`, post);
 		if (res.data.success) {
 			dispatch(createPostSucceedAction(res.data.data));
-			history.push(`/posts/${slug}`);
+			history.push('/');
+			//history.push(`/posts/${id}/${slug}`);
 		} else {
 			dispatch(updatePostFailedAction(res.data.errorMessage));
 		}
@@ -61,10 +62,10 @@ export const createPostResetedThunk = () => (dispatch) => {
 	dispatch(createPostResetedAction());
 };
 
-export const singlePostThunk = (slug) => async (dispatch) => {
+export const singlePostThunk = (id) => async (dispatch) => {
 	try {
 		dispatch(singlePostRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/posts/${slug}`);
+		const res = await axios.get(`${process.env.API_URL}/posts/${id}`);
 		if (res.data.success) {
 			dispatch(singlePostSucceedAction(res.data.data));
 		}
@@ -77,10 +78,10 @@ export const singlePostResetedThunk = () => (dispatch) => {
 	dispatch(singlePostResetedAction());
 };
 
-export const editPostThunk = (slug) => async (dispatch) => {
+export const editPostThunk = (id) => async (dispatch) => {
 	try {
 		dispatch(editPostRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/posts/${slug}/edit`);
+		const res = await axios.get(`${process.env.API_URL}/posts/${id}/edit`);
 		if (res.data.success) {
 			dispatch(editPostSucceedAction(res.data.data));
 		}
@@ -93,13 +94,13 @@ export const editPostResetedThunk = () => (dispatch) => {
 	dispatch(editPostResetedAction());
 };
 
-export const updatePostThunk = (post, history, slug, newSlug) => async (dispatch) => {
+export const updatePostThunk = (post, history, id, slug) => async (dispatch) => {
 	try {
 		dispatch(updatePostRequestedAction());
-		const res = await axios.put(`${process.env.API_URL}/posts/${slug}`, post);
+		const res = await axios.put(`${process.env.API_URL}/posts/${id}`, post);
 		if (res.data.success) {
 			dispatch(updatePostSucceedAction(res.data.data));
-			history.push(`/posts/${newSlug}`);
+			history.push(`/posts/${id}/${slug}`);
 		} else {
 			dispatch(updatePostFailedAction(res.data.errorMessage));
 		}
@@ -112,10 +113,10 @@ export const updatePostResetedThunk = () => (dispatch) => {
 	dispatch(updatePostResetedAction());
 };
 
-export const deletePostThunk = (slug, history) => async (dispatch) => {
+export const deletePostThunk = (id, history) => async (dispatch) => {
 	try {
 		dispatch(deletePostRequestedAction());
-		const res = await axios.delete(`${process.env.API_URL}/posts/${slug}`);
+		const res = await axios.delete(`${process.env.API_URL}/posts/${id}`);
 		if (res.data.success) {
 			dispatch(deletePostSucceedAction(res.data.data));
 			history.push('/');

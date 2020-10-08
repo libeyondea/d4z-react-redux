@@ -31,14 +31,14 @@ const mapDispatchToProps = {
 };
 const SinglePost = (props) => {
 	const { singlePostThunk, deletePostThunk, singlePostResetedThunk, singlePost, deletePost, login } = props;
-	const { slug } = useParams();
+	const { id } = useParams();
 	const history = useHistory();
 	useEffect(() => {
-		singlePostThunk(slug);
+		singlePostThunk(id);
 		return () => {
 			singlePostResetedThunk();
 		};
-	}, []);
+	}, [id, singlePostResetedThunk, singlePostThunk]);
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		Swal.fire({
@@ -51,7 +51,7 @@ const SinglePost = (props) => {
 			cancelButtonText: 'No'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				deletePostThunk(slug, history);
+				deletePostThunk(id, history);
 			}
 		});
 	};
@@ -92,10 +92,13 @@ const SinglePost = (props) => {
 								<>
 									<div className="all-post-content border-bottom mb-3">
 										<div className="post-content">{parse(singlePost.post.content)}</div>
-										{(login.user.role_id === 1 || singlePost.post.user.id === login.user.id) && (
+										{(login.user.role === 'admin' || singlePost.post.user.id === login.user.id) && (
 											<div className="clearfix mb-4 mt-3">
 												<form onSubmit={handleSubmit}>
-													<Link className="btn btn-primary float-right" to={`/edit-post/${singlePost.post.slug}`}>
+													<Link
+														className="btn btn-primary float-right"
+														to={`/posts/${singlePost.post.id}/${singlePost.post.slug}/edit`}
+													>
 														Edit Post
 													</Link>
 													{deletePost.isLoading ? (
@@ -116,7 +119,7 @@ const SinglePost = (props) => {
 											</div>
 										)}
 									</div>
-									<Comment />
+									<Comment postId={id} />
 								</>
 							)}
 						</div>

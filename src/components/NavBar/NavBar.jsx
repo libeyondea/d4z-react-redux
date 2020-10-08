@@ -24,7 +24,7 @@ const Navbar = (props) => {
 	const authLinks = (
 		<>
 			<li className="nav-item">
-				<Link className="nav-link btn btn-primary" to="/create-post">
+				<Link className="nav-link btn btn-primary" to="/posts/create">
 					Create post
 				</Link>
 			</li>
@@ -34,7 +34,6 @@ const Navbar = (props) => {
 					className="nav-link dropdown-toggle"
 					id="navbarDropdownUser"
 					data-toggle="dropdown"
-					aria-haspopup="true"
 					aria-expanded="true"
 				>
 					<span className="mr-1">{login.user.user_name}</span>
@@ -50,7 +49,7 @@ const Navbar = (props) => {
 					/>
 				</a>
 				<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-					<Link className="dropdown-item" to={`/users/${login.user.id}/@${login.user.user_name}`}>
+					<Link className="dropdown-item" to={`/users/${login.user.id}/${login.user.user_name}`}>
 						Profile
 					</Link>
 					<a className="dropdown-item" href="#!" onClick={onLogout.bind(this)}>

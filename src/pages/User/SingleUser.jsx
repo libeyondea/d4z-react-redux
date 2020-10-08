@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from '../../helpers/isEmpty';
@@ -29,7 +29,7 @@ const SingleUser = (props) => {
 		return () => {
 			singleUserResetedThunk();
 		};
-	}, []);
+	}, [id, singleUserResetedThunk, singleUserThunk, user_name]);
 	return (
 		<MainLayout>
 			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>

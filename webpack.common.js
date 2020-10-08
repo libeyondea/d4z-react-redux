@@ -7,19 +7,29 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js|jsx$/,
+				test: /\.(js|mjs|jsx|ts|tsx)$/,
 				exclude: /node_modules/,
-				use: 'babel-loader'
+				use: {
+					loader: 'babel-loader'
+				}
 			},
 			{
 				test: /\.png|jpe?g|gif|ttf|woff|woff2|eot|svg$/,
-				use: [
-					{
-						loader: 'file-loader'
-					}
-				]
+				use: {
+					loader: 'file-loader'
+				}
 			}
 		]
+	},
+	node: {
+		module: 'empty',
+		dgram: 'empty',
+		dns: 'mock',
+		fs: 'empty',
+		http2: 'empty',
+		net: 'empty',
+		tls: 'empty',
+		child_process: 'empty'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
