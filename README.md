@@ -7,15 +7,15 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/de4th-zone/d4z-react-frontend/graphs/contributors/)
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/de4th-zone/d4z-react-frontend/issues/)
-[![GitHub version](https://badge.fury.io/gh/Naereen%2FStrapDown.js.svg)](https://github.com/de4th-zone/d4z-react-frontend)
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/de4th-zone/d4z-react-redux/graphs/contributors/)
+[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/de4th-zone/d4z-react-redux/issues/)
+[![GitHub version](https://badge.fury.io/gh/Naereen%2FStrapDown.js.svg)](https://github.com/de4th-zone/d4z-react-redux)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/de4th-zone/d4z-react-frontend">
+  <a href="https://github.com/de4th-zone/d4z-react-redux">
     <img src="https://i.imgur.com/eP2iaPn.png" alt="Logo" width="166" height="166">
   </a>
 
@@ -24,14 +24,14 @@
   <p align="center">
     Blog beta test
     <br />
-    <a href="https://github.com/de4th-zone/d4z-react-frontend"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/de4th-zone/d4z-react-redux"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/de4th-zone/d4z-react-frontend">View Demo</a>
+    <a href="https://github.com/de4th-zone/d4z-react-redux">View Demo</a>
     ·
-    <a href="https://github.com/de4th-zone/d4z-react-frontend/issues">Report Bug</a>
+    <a href="https://github.com/de4th-zone/d4z-react-redux/issues">Report Bug</a>
     ·
-    <a href="https://github.com/de4th-zone/d4z-react-frontend/issues">Request Feature</a>
+    <a href="https://github.com/de4th-zone/d4z-react-redux/issues">Request Feature</a>
   </p>
 </p>
 
@@ -55,7 +55,7 @@
 
 ## About The Project
 
-<!--[![Product Name Screen Shot][product-screenshot]](https://github.com/de4th-zone/d4z-react-frontend)-->
+<!--[![Product Name Screen Shot][product-screenshot]](https://github.com/de4th-zone/d4z-react-redux)-->
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
@@ -88,7 +88,7 @@ npm install npm@latest -g
 1. Clone the repo
 
 ```sh
-git clone https://github.com/de4th-zone/d4z-react-frontend.git
+git clone https://github.com/de4th-zone/d4z-react-redux.git
 ```
 
 2. Install NPM packages
@@ -103,13 +103,13 @@ npm install
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://github.com/de4th-zone/d4z-react-frontend)_
+_For more examples, please refer to the [Documentation](https://github.com/de4th-zone/d4z-react-redux)_
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
-See the [open issues](https://github.com/de4th-zone/d4z-react-frontend/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/de4th-zone/d4z-react-redux/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 
@@ -135,7 +135,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - [@NHT_445448](https://twitter.com/NHT_445448) - nguyenthucofficial@gmail.com
 
-Project Link: [https://github.com/de4th-zone/d4z-react-frontend](https://github.com/de4th-zone/d4z-react-frontend)
+Project Link: [https://github.com/de4th-zone/d4z-react-redux](https://github.com/de4th-zone/d4z-react-redux)
 
 <!-- ACKNOWLEDGEMENTS -->
 

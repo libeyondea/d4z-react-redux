@@ -17,7 +17,7 @@ import axios from 'axios';
 export const fetchCommentThunk = (postId) => async (dispatch) => {
 	try {
 		dispatch(fetchCommentRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/comments/${postId}`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/comments/${postId}`);
 		if (res.data.success) {
 			dispatch(fetchCommentSucceedAction(res.data.data));
 		}
@@ -33,7 +33,7 @@ export const fetchCommentResetedThunk = () => (dispatch) => {
 export const createCommentThunk = (comment, postId) => async (dispatch) => {
 	try {
 		dispatch(createCommentRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/comments/${postId}`, comment);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/comments/${postId}`, comment);
 		if (res.data.success) {
 			dispatch(createCommentSucceedAction(res.data.data));
 		} else {
@@ -51,7 +51,7 @@ export const createCommentResetedThunk = () => (dispatch) => {
 export const createReplyCommentThunk = (comment, postId) => async (dispatch) => {
 	try {
 		dispatch(createReplyCommentRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/comments/reply/${postId}`, comment);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/comments/reply/${postId}`, comment);
 		if (res.data.success) {
 			dispatch(createReplyCommentSucceedAction(res.data.data));
 		} else {

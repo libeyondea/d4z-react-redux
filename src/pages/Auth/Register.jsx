@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
 import { registerThunk } from '../../thunks/authThunk';
 import MainLayout from '../../layouts/MainLayout';
 import InputFormik from '../../components/Formik/InputFormik';
@@ -68,20 +69,21 @@ const Register = (props) => {
 			.min(6, 'Address must be at least 6 characters')
 			.max(66, 'Address must be at most 66 characters')
 			.required('Address is required'),
-		gender: Yup.string().oneOf(['1', '0', '3'], 'Invalid Gender').required('Required'),
+		gender: Yup.string().oneOf(['male', 'female', 'orther'], 'Invalid Gender').required('Required'),
 		agreeterms: Yup.boolean().oneOf([true], 'You must agree to terms of service').required('Required')
 	});
+	console.log(uuidv4());
 	const onSubmit = (values) => {
-		const { first_name, last_name, user_name, email, password, phone_number, address, gender } = values;
 		const user = {
-			first_name: first_name,
-			last_name: last_name,
-			user_name: user_name,
-			email: email,
-			password: password,
-			phone_number: phone_number,
-			address: address,
-			gender: gender
+			id: uuidv4(),
+			first_name: values.first_name,
+			last_name: values.last_name,
+			user_name: values.user_name,
+			email: values.email,
+			password: values.password,
+			phone_number: values.phone_number,
+			address: values.address,
+			gender: values.gender
 		};
 		registerThunk(user, history);
 	};
@@ -181,9 +183,9 @@ const Register = (props) => {
 											<div className="form-group floating-label-form-group controls">
 												<SelectFormik label="Gender" name="gender">
 													<option value="">Select gender</option>
-													<option value="1">Male</option>
-													<option value="0">Female</option>
-													<option value="3">Other</option>
+													<option value="male">Male</option>
+													<option value="female">Female</option>
+													<option value="orther">Other</option>
 												</SelectFormik>
 											</div>
 										</div>

@@ -29,7 +29,7 @@ import axios from 'axios';
 export const fetchCategoryThunk = () => async (dispatch) => {
 	try {
 		dispatch(fetchCategoryRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/categories`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories`);
 		if (res.data.success) {
 			dispatch(fetchCategorySucceedAction(res.data.data));
 		}
@@ -45,7 +45,7 @@ export const fetchCategoryResetedThunk = () => (dispatch) => {
 export const createCategoryThunk = (category, slug, history) => async (dispatch) => {
 	try {
 		dispatch(createCategoryRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/categories`, category);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/categories`, category);
 		if (res.data.success) {
 			dispatch(createCategorySucceedAction(res.data.data));
 			history.push(`/categories/${slug}`);
@@ -64,7 +64,7 @@ export const createCategoryResetedThunk = () => (dispatch) => {
 export const singleCategoryThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(singleCategoryRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/categories/${slug}`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories/${slug}`);
 		if (res.data.success) {
 			dispatch(singleCategorySucceedAction(res.data.data));
 		}
@@ -80,7 +80,7 @@ export const singleCategoryResetedThunk = () => (dispatch) => {
 export const editCategoryThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(editCategoryRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/categories/${slug}/edit`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories/${slug}/edit`);
 		if (res.data.success) {
 			dispatch(editCategorySucceedAction(res.data.data));
 		}
@@ -96,7 +96,7 @@ export const editCategoryResetedThunk = () => (dispatch) => {
 export const updateCategoryThunk = (category, history, slug, newSlug) => async (dispatch) => {
 	try {
 		dispatch(updateCategoryRequestedAction());
-		const res = await axios.put(`${process.env.API_URL}/categories/${slug}`, category);
+		const res = await axios.put(`${process.env.REACT_APP_API_URL}/categories/${slug}`, category);
 		if (res.data.success) {
 			dispatch(updateCategorySucceedAction(res.data.data));
 			history.push(`/categories/${newSlug}`);
@@ -115,7 +115,7 @@ export const updateCategoryResetedThunk = () => (dispatch) => {
 export const deleteCategoryThunk = (slug, history) => async (dispatch) => {
 	try {
 		dispatch(deleteCategoryRequestedAction());
-		const res = await axios.delete(`${process.env.API_URL}/categories/${slug}`);
+		const res = await axios.delete(`${process.env.REACT_APP_API_URL}/categories/${slug}`);
 		if (res.data.success) {
 			dispatch(deleteCategorySucceedAction(res.data.data));
 			history.push('/');

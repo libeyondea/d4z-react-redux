@@ -15,7 +15,7 @@ import setAuthToken from '../helpers/setAuthToken';
 export const registerThunk = (user, history) => async (dispatch) => {
 	try {
 		dispatch(registerRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/users/register`, user);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/register`, user);
 		if (res.data.success) {
 			dispatch(registerSucceedAction(res.data.data));
 			history.push('/login');
@@ -34,7 +34,7 @@ export const registerResetedThunk = () => (dispatch) => {
 export const loginThunk = (user) => async (dispatch) => {
 	try {
 		dispatch(loginRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/users/login`, user);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, user);
 		if (res.data.success) {
 			const { token } = res.data;
 			localStorage.setItem('jwtToken', token);

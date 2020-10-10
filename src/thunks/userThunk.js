@@ -29,7 +29,7 @@ import axios from 'axios';
 export const fetchUserThunk = () => async (dispatch) => {
 	try {
 		dispatch(fetchUserRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/users`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
 		if (res.data.success) {
 			dispatch(fetchUserSucceedAction(res.data.data));
 		}
@@ -45,7 +45,7 @@ export const fetchUserResetedThunk = () => (dispatch) => {
 export const createUserThunk = (user, slug, history) => async (dispatch) => {
 	try {
 		dispatch(createUserRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/users`, user);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/users`, user);
 		if (res.data.success) {
 			dispatch(createUserSucceedAction(res.data.data));
 			history.push('/');
@@ -65,7 +65,7 @@ export const createUserResetedThunk = () => (dispatch) => {
 export const singleUserThunk = (id, user_name) => async (dispatch) => {
 	try {
 		dispatch(singleUserRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/users/${id}/${user_name}`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${id}/${user_name}`);
 		if (res.data.success) {
 			dispatch(singleUserSucceedAction(res.data.data));
 		}
@@ -81,7 +81,7 @@ export const singleUserResetedThunk = () => (dispatch) => {
 export const editUserThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(editUserRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/users/${slug}/edit`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${slug}/edit`);
 		if (res.data.success) {
 			dispatch(editUserSucceedAction(res.data.data));
 		}
@@ -97,7 +97,7 @@ export const editUserResetedThunk = () => (dispatch) => {
 export const updateUserThunk = (user, history, slug, newSlug) => async (dispatch) => {
 	try {
 		dispatch(updateUserRequestedAction());
-		const res = await axios.put(`${process.env.API_URL}/users/${slug}`, user);
+		const res = await axios.put(`${process.env.REACT_APP_API_URL}/users/${slug}`, user);
 		if (res.data.success) {
 			dispatch(updateUserSucceedAction(res.data.data));
 			history.push(`/users/${newSlug}`);
@@ -116,7 +116,7 @@ export const updateUserResetedThunk = () => (dispatch) => {
 export const deleteUserThunk = (slug, history) => async (dispatch) => {
 	try {
 		dispatch(deleteUserRequestedAction());
-		const res = await axios.delete(`${process.env.API_URL}/users/${slug}`);
+		const res = await axios.delete(`${process.env.REACT_APP_API_URL}/users/${slug}`);
 		if (res.data.success) {
 			dispatch(deleteUserSucceedAction(res.data.data));
 			history.push('/');

@@ -130,19 +130,17 @@ const EditPost = (props) => {
 			)
 	});
 	const onSubmit = (values) => {
-		const { title, meta_title, meta_description, summary, content, image, tag, category, slug } = values;
 		const post = {
-			title: title,
-			meta_title: meta_title,
-			meta_description: meta_description,
-			slug: slug,
-			summary: summary,
-			content: content,
-			image: image,
-			tag: tag,
-			category: category
+			title: values.title,
+			meta_title: values.meta_title,
+			meta_description: values.meta_description,
+			slug: values.slug,
+			summary: values.summary,
+			content: values.content,
+			image: values.image,
+			tag: values.tag,
+			category: values.category
 		};
-		console.log(post);
 		Swal.fire({
 			title: 'Do you want to update?',
 			icon: 'question',
@@ -153,7 +151,7 @@ const EditPost = (props) => {
 			cancelButtonText: 'No'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				updatePostThunk(post, history, id, slug);
+				updatePostThunk(post, id, history);
 			}
 		});
 	};

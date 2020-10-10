@@ -29,7 +29,7 @@ import axios from 'axios';
 export const fetchTagThunk = () => async (dispatch) => {
 	try {
 		dispatch(fetchTagRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/tags`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/tags`);
 		if (res.data.success) {
 			dispatch(fetchTagSucceedAction(res.data.data));
 		}
@@ -45,7 +45,7 @@ export const fetchTagResetedThunk = () => (dispatch) => {
 export const createTagThunk = (tag, slug, history) => async (dispatch) => {
 	try {
 		dispatch(createTagRequestedAction());
-		const res = await axios.post(`${process.env.API_URL}/tags`, tag);
+		const res = await axios.post(`${process.env.REACT_APP_API_URL}/tags`, tag);
 		if (res.data.success) {
 			dispatch(createTagSucceedAction(res.data.data));
 			history.push(`/tags/${slug}`);
@@ -64,7 +64,7 @@ export const createTagResetedThunk = () => (dispatch) => {
 export const singleTagThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(singleTagRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/tags/${slug}`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/tags/${slug}`);
 		if (res.data.success) {
 			dispatch(singleTagSucceedAction(res.data.data));
 		}
@@ -80,7 +80,7 @@ export const singleTagResetedThunk = () => (dispatch) => {
 export const editTagThunk = (slug) => async (dispatch) => {
 	try {
 		dispatch(editTagRequestedAction());
-		const res = await axios.get(`${process.env.API_URL}/tags/${slug}/edit`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/tags/${slug}/edit`);
 		if (res.data.success) {
 			dispatch(editTagSucceedAction(res.data.data));
 		}
@@ -96,7 +96,7 @@ export const editTagResetedThunk = () => (dispatch) => {
 export const updateTagThunk = (tag, history, slug, newSlug) => async (dispatch) => {
 	try {
 		dispatch(updateTagRequestedAction());
-		const res = await axios.put(`${process.env.API_URL}/tags/${slug}`, tag);
+		const res = await axios.put(`${process.env.REACT_APP_API_URL}/tags/${slug}`, tag);
 		if (res.data.success) {
 			dispatch(updateTagSucceedAction(res.data.data));
 			history.push(`/tags/${newSlug}`);
@@ -115,7 +115,7 @@ export const updateTagResetedThunk = () => (dispatch) => {
 export const deleteTagThunk = (slug, history) => async (dispatch) => {
 	try {
 		dispatch(deleteTagRequestedAction());
-		const res = await axios.delete(`${process.env.API_URL}/tags/${slug}`);
+		const res = await axios.delete(`${process.env.REACT_APP_API_URL}/tags/${slug}`);
 		if (res.data.success) {
 			dispatch(deleteTagSucceedAction(res.data.data));
 			history.push('/');

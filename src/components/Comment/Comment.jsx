@@ -5,6 +5,7 @@ import parse from 'html-react-parser';
 import classnames from 'classnames';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { v4 as uuidv4 } from 'uuid';
 import {
 	fetchCommentThunk,
 	createReplyCommentThunk,
@@ -59,6 +60,7 @@ const CreateComment = (props) => {
 	});
 	const handleReplyCommentSubmit = (values, { resetForm }) => {
 		const comment = {
+			id: uuidv4(),
 			parent_id: parentId,
 			content: values.replyComment
 		};
@@ -77,6 +79,7 @@ const CreateComment = (props) => {
 	});
 	const commentOnSubmit = (values, { resetForm }) => {
 		const comment = {
+			id: uuidv4(),
 			content: values.comment
 		};
 		setReplyBox(false);

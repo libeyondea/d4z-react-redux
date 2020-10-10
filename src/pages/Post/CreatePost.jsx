@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
 import MainLayout from '../../layouts/MainLayout';
 import { createPostThunk } from '../../thunks/postThunk';
 import { fetchTagThunk, fetchTagResetedThunk } from '../../thunks/tagThunk';
@@ -37,6 +38,7 @@ const mapDispatchToProps = {
 	fetchTagResetedThunk,
 	fetchCategoryResetedThunk
 };
+
 const CreatePost = (props) => {
 	const {
 		createPostThunk,
@@ -109,17 +111,17 @@ const CreatePost = (props) => {
 			)
 	});
 	const onSubmit = (values) => {
-		const { title, meta_title, meta_description, slug, summary, content, image, tag, category } = values;
 		const post = {
-			title: title,
-			meta_title: meta_title,
-			meta_description: meta_description,
-			slug: slug,
-			summary: summary,
-			image: image,
-			content: content,
-			tag: tag,
-			category: category
+			id: uuidv4(),
+			title: values.title,
+			meta_title: values.meta_title,
+			meta_description: values.meta_description,
+			slug: values.slug,
+			summary: values.summary,
+			image: values.image,
+			content: values.content,
+			tag: values.tag,
+			category: values.category
 		};
 		console.log(post);
 		Swal.fire({
@@ -132,7 +134,7 @@ const CreatePost = (props) => {
 			cancelButtonText: 'No'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				createPostThunk(post, slug, history);
+				createPostThunk(post, history);
 			}
 		});
 	};

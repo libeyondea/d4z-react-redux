@@ -14,7 +14,7 @@ const RichTextEditorFormik = ({ touched, errored, errors, height, label, ...prop
 				<Editor
 					{...props}
 					init={{
-						apiKey: '9ukfllnge5c0jp46sfwh0165kyh4y8mzi1awrimg18puoaia',
+						apiKey: '7tb5sawtkhejvn3yeakoe0wsatx1chxf2a02617fn23psx6c',
 						height: height,
 						plugins: [
 							'advlist autolink link image lists charmap print preview hr anchor pagebreak',
