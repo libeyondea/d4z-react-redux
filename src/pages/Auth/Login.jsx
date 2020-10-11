@@ -4,22 +4,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import Layout from '../../components/Layout/Layout';
 import { loginThunk } from '../../thunks/authThunk';
-import MainLayout from '../../layouts/MainLayout';
 import InputFormik from '../../components/Formik/InputFormik';
 
-const propTypes = {
-	loginThunk: PropTypes.func.isRequired,
-	login: PropTypes.object.isRequired
-};
 const mapStateToProps = (state) => ({
 	login: state.auth.login
 });
 const mapDispatchToProps = {
 	loginThunk
 };
-const Login = (props) => {
-	const { loginThunk, login } = props;
+const Login = ({ loginThunk, login }) => {
 	const initialValues = {
 		email: '',
 		password: ''
@@ -29,28 +24,14 @@ const Login = (props) => {
 		password: Yup.string().required('Password is required')
 	});
 	const onSubmit = (values) => {
-		const { email, password } = values;
 		const user = {
-			email: email,
-			password: password
+			email: values.email,
+			password: values.password
 		};
 		loginThunk(user);
 	};
 	return (
-		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
-				<div className="overlay" />
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-12 col-md-12">
-							<div className="site-heading">
-								<h1>Login</h1>
-								<span className="subheading">Login Now</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+		<Layout>
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
@@ -120,10 +101,13 @@ const Login = (props) => {
 					</div>
 				</div>
 			</div>
-		</MainLayout>
+		</Layout>
 	);
 };
 
-Login.propTypes = propTypes;
+Login.propTypes = {
+	loginThunk: PropTypes.func.isRequired,
+	login: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

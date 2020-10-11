@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
-import MainLayout from '../../layouts/MainLayout';
+import Layout from '../../components/Layout/Layout';
 import { editPostThunk, updatePostThunk, editPostResetedThunk } from '../../thunks/postThunk';
 import { fetchTagThunk, fetchTagResetedThunk } from '../../thunks/tagThunk';
 import { fetchCategoryThunk, fetchCategoryResetedThunk } from '../../thunks/categoryThunk';
 import isEmpty from '../../helpers/isEmpty';
-import EditPostLoading from '../../components/Loading/EditPostLoading';
 import InputFormik from '../../components/Formik/InputFormik';
 import TextareaFormik from '../../components/Formik/TextareaFormik';
 import RichTextEditorFormik from '../../components/Formik/RichTextEditorFormik';
@@ -156,25 +155,12 @@ const EditPost = (props) => {
 		});
 	};
 	return (
-		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
-				<div className="overlay" />
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-12 col-md-12">
-							<div className="site-heading">
-								<h1>Edit Post</h1>
-								<span className="subheading">Admin</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+		<Layout>
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-12 col-md-12">
 						{editPost.isLoading || isEmpty(editPost.post) ? (
-							<EditPostLoading />
+							'loading'
 						) : (
 							<div className="nht-form">
 								<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -295,7 +281,7 @@ const EditPost = (props) => {
 					</div>
 				</div>
 			</div>
-		</MainLayout>
+		</Layout>
 	);
 };
 

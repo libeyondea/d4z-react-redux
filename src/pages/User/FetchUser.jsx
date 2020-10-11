@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from '../../helpers/isEmpty';
 import { fetchUserThunk, fetchUserResetedThunk } from '../../thunks/userThunk';
-import MainLayout from '../../layouts/MainLayout';
-import FetchUserLoading from '../../components/Loading/FetchUserLoading';
+import Layout from '../../components/Layout/Layout';
 
 const propTypes = {
 	fetchUserThunk: PropTypes.func.isRequired,
@@ -26,24 +25,11 @@ const FetchUser = (props) => {
 		};
 	}, [fetchUserResetedThunk, fetchUserThunk]);
 	return (
-		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
-				<div className="overlay" />
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-8 col-md-10 mx-auto">
-							<div className="site-heading">
-								<h1>Users</h1>
-								<span className="subheading">Users</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+		<Layout>
 			<div className="container">
 				<div className="row">
 					{fetchUser.isLoading || isEmpty(fetchUser.user) ? (
-						<FetchUserLoading />
+						'Loading...........'
 					) : (
 						<>
 							{fetchUser.user.map((item) => (
@@ -79,7 +65,7 @@ const FetchUser = (props) => {
 					)}
 				</div>
 			</div>
-		</MainLayout>
+		</Layout>
 	);
 };
 

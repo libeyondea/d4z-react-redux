@@ -4,21 +4,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import parse from 'html-react-parser';
+import { Helmet } from 'react-helmet';
 import isEmpty from '../../helpers/isEmpty';
-import MainLayout from '../../layouts/MainLayout';
+// Components
+import Layout from '../../components/Layout/Layout';
+// Thunk
 import { singlePostThunk, deletePostThunk, singlePostResetedThunk } from '../../thunks/postThunk';
-import TitlePostLoading from '../../components/Loading/TitlePostLoading';
-import ContentPostLoading from '../../components/Loading/ContentPostLoading';
-import Comment from '../../components/Comment/Comment';
+// Meta
+//import { MetaData } from '../../components/Meta';
 
-const propTypes = {
-	singlePostThunk: PropTypes.func.isRequired,
-	deletePostThunk: PropTypes.func.isRequired,
-	singlePostResetedThunk: PropTypes.func.isRequired,
-	singlePost: PropTypes.object.isRequired,
-	deletePost: PropTypes.object.isRequired,
-	login: PropTypes.object.isRequired
-};
 const mapStateToProps = (state) => ({
 	singlePost: state.posts.singlePost,
 	deletePost: state.posts.deletePost,
@@ -29,8 +23,15 @@ const mapDispatchToProps = {
 	deletePostThunk,
 	singlePostResetedThunk
 };
-const SinglePost = (props) => {
-	const { singlePostThunk, deletePostThunk, singlePostResetedThunk, singlePost, deletePost, login } = props;
+const Post = ({
+	singlePostThunk,
+	deletePostThunk,
+	singlePostResetedThunk,
+	singlePost,
+	deletePost,
+	login,
+	location
+}) => {
 	const { id } = useParams();
 	const history = useHistory();
 	useEffect(() => {
@@ -39,97 +40,46 @@ const SinglePost = (props) => {
 			singlePostResetedThunk();
 		};
 	}, [id, singlePostResetedThunk, singlePostThunk]);
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		Swal.fire({
-			title: 'Do you want to delete?',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes',
-			cancelButtonText: 'No'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				deletePostThunk(id, history);
-			}
-		});
-	};
 	return (
-		<MainLayout>
-			<header
-				className="masthead"
-				style={
-					singlePost.isLoading ? { backgroundColor: '#343a40' } : { backgroundImage: 'url("/assets/img/react.jpg")' }
-				}
-			>
-				<div className="overlay" />
+		<>
+			{/*<MetaData data={data} location={location} type="article" />*/}
+			<Layout>
 				<div className="container">
-					<div className="row">
-						<div className="col-lg-12 col-md-12">
-							{singlePost.isLoading || isEmpty(singlePost.post) ? (
-								<TitlePostLoading />
-							) : (
-								<div className="post-heading">
-									<h1>{singlePost.post.title}</h1>
-									<h2 className="subheading">{singlePost.post.summary}</h2>
-									<span className="meta">
-										Posted by <a href="#!">{singlePost.post.user.user_name}</a> on {singlePost.post.created_at}
-									</span>
-								</div>
+					{singlePost.isLoading || isEmpty(singlePost.post) ? (
+						'Loading...........'
+					) : (
+						<article className="content">
+							{singlePost.post.image && (
+								<figure className="post-feature-image">
+									<img src={singlePost.post.image} alt={singlePost.post.title} />
+								</figure>
 							)}
-						</div>
-					</div>
+							<section className="post-full-content">
+								<h1 className="content-title">{singlePost.post.title}</h1>
+								{/* The main post content */}
+								<section
+									className="content-body load-external-scripts"
+									dangerouslySetInnerHTML={{ __html: singlePost.post.content }}
+								/>
+							</section>
+						</article>
+					)}
 				</div>
-			</header>
-			<article>
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-12 col-md-12">
-							{singlePost.isLoading || isEmpty(singlePost.post) ? (
-								<ContentPostLoading />
-							) : (
-								<>
-									<div className="all-post-content border-bottom mb-3">
-										<div className="post-content">{parse(singlePost.post.content)}</div>
-										{(login.user.role === 'admin' || singlePost.post.user.id === login.user.id) && (
-											<div className="clearfix mb-4 mt-3">
-												<form onSubmit={handleSubmit}>
-													<Link
-														className="btn btn-primary float-right"
-														to={`/posts/${singlePost.post.id}/${singlePost.post.slug}/edit`}
-													>
-														Edit Post
-													</Link>
-													{deletePost.isLoading ? (
-														<button type="submit" className="btn btn-danger float-right mr-3" disabled>
-															<span
-																className="spinner-border spinner-border-sm mr-1"
-																role="status"
-																aria-hidden="true"
-															/>
-															Loading...
-														</button>
-													) : (
-														<button type="submit" className="btn btn-danger float-right mr-3">
-															Delete Post
-														</button>
-													)}
-												</form>
-											</div>
-										)}
-									</div>
-									<Comment postId={id} />
-								</>
-							)}
-						</div>
-					</div>
-				</div>
-			</article>
-		</MainLayout>
+			</Layout>
+		</>
 	);
 };
 
-SinglePost.propTypes = propTypes;
+Post.propTypes = {
+	singlePostThunk: PropTypes.func.isRequired,
+	deletePostThunk: PropTypes.func.isRequired,
+	singlePostResetedThunk: PropTypes.func.isRequired,
+	deletePost: PropTypes.object.isRequired,
+	login: PropTypes.object.isRequired,
+	singlePost: PropTypes.shape({
+		post: PropTypes.object.isRequired
+	}).isRequired,
+	location: PropTypes.object.isRequired
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
-import MainLayout from '../../layouts/MainLayout';
+import Layout from '../../components/Layout/Layout';
 import { createPostThunk } from '../../thunks/postThunk';
 import { fetchTagThunk, fetchTagResetedThunk } from '../../thunks/tagThunk';
 import { fetchCategoryThunk, fetchCategoryResetedThunk } from '../../thunks/categoryThunk';
@@ -139,20 +139,7 @@ const CreatePost = (props) => {
 		});
 	};
 	return (
-		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("/assets/img/react.jpg")' }}>
-				<div className="overlay" />
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-12 col-md-12">
-							<div className="site-heading">
-								<h1>Create Post</h1>
-								<span className="subheading">D4Z</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+		<Layout>
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-12 col-md-12">
@@ -274,7 +261,7 @@ const CreatePost = (props) => {
 					</div>
 				</div>
 			</div>
-		</MainLayout>
+		</Layout>
 	);
 };
 

@@ -6,16 +6,12 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 import { registerThunk } from '../../thunks/authThunk';
-import MainLayout from '../../layouts/MainLayout';
+import Layout from '../../components/Layout/Layout';
 import InputFormik from '../../components/Formik/InputFormik';
 import SelectFormik from '../../components/Formik/SelectFormik';
 import CheckBoxFormik from '../../components/Formik/CheckBoxFormik';
 import PhoneInputFormik from '../../components/Formik/PhoneInputFormik';
 
-const propTypes = {
-	registerThunk: PropTypes.func.isRequired,
-	register: PropTypes.object.isRequired
-};
 const mapStateToProps = (state) => ({
 	register: state.auth.register
 });
@@ -88,20 +84,7 @@ const Register = (props) => {
 		registerThunk(user, history);
 	};
 	return (
-		<MainLayout>
-			<header className="masthead" style={{ backgroundImage: 'url("assets/img/react.jpg")' }}>
-				<div className="overlay" />
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-12 col-md-12">
-							<div className="site-heading">
-								<h1>Register</h1>
-								<span className="subheading">Register Now</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
+		<Layout>
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-8 col-md-10 mx-auto">
@@ -230,10 +213,13 @@ const Register = (props) => {
 					</div>
 				</div>
 			</div>
-		</MainLayout>
+		</Layout>
 	);
 };
 
-Register.propTypes = propTypes;
+Register.propTypes = {
+	registerThunk: PropTypes.func.isRequired,
+	register: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register));

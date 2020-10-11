@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Home from '../pages/Home/Home';
+import FourZeroFour from '../pages/Error/404';
 
 const ErrorRoute = () => {
 	return (
 		<>
-			<Route path="/404" component={Home} />
+			<Route path="/404" component={FourZeroFour} />
 		</>
 	);
 };
