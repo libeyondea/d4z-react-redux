@@ -6,7 +6,6 @@ import setAuthToken from '../helpers/setAuthToken';
 import { loginSucceedAction, loginResetedAction } from '../actions/authAction';
 import Routes from '../routes/Routes';
 import '../styles/app.css';
-//import '../styles/form.css';
 
 if (localStorage.getItem('jwtToken')) {
 	setAuthToken(localStorage.jwtToken);

@@ -1,47 +1,114 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const LinkPostCard = styled(Link)`
+	color: inherit;
+	text-decoration: none;
+	&:hover {
+		text-decoration: none;
+	}
+`;
+const HeaderPostCardHeader = styled.header``;
+const DivPostCardImage = styled.div`
+	margin: 0 0 10px 0;
+	width: auto;
+	height: 200px;
+	background: var(--color-secondary) no-repeat center center;
+	background-size: cover;
+`;
+const DivPostCardTags = styled.div`
+	margin: 0 0 5px 0;
+	font-size: 1.4rem;
+	line-height: 1.15em;
+	color: var(--color-secondary);
+`;
+const H2PostCardTitle = styled.h2`
+	margin: 0 0 10px 0;
+	padding: 0;
+`;
+const SectionPostCardexcerpt = styled.section`
+	font-size: 1.6rem;
+	line-height: 1.55em;
+`;
+const FooterPostCardfooter = styled.footer`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 10px 0 0 0;
+	color: var(--color-secondary);
+`;
+const DivPostCardFooterLeft = styled.div`
+	display: flex;
+	align-items: center;
+`;
+const DivPostCardAvatar = styled.div`
+	width: 30px;
+	height: 30px;
+	margin: 0 7px 0 0;
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+const ImgAuthorProfileImage = styled.img`
+	${DivPostCardAvatar} & {
+		display: block;
+		width: 100%;
+		background: var(--color-secondary);
+		border-radius: 100%;
+		object-fit: cover;
+	}
+`;
+const ImgDefaultAvatar = styled.img`
+	${DivPostCardAvatar} & {
+		width: 26px;
+	}
+`;
+const DivPostCardFooterRight = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
 
 const PostCard = ({ post }) => {
 	const readingTime = '666 min read';
 	return (
-		<Link to={`/posts/${post.id}/${post.slug}`} className="post-card">
-			<header className="post-card-header">
+		<LinkPostCard to={`/posts/${post.id}/${post.slug}`}>
+			<HeaderPostCardHeader>
 				{post.image && (
-					<div
-						className="post-card-image"
+					<DivPostCardImage
 						style={{
 							backgroundImage: `url(${post.image})`
 						}}
-					></div>
+					></DivPostCardImage>
 				)}
 				{post.tag && (
-					<div className="post-card-tags">
+					<DivPostCardTags>
 						{post.tag.map((item) => (
 							<span key={item.id}>{item.title} </span>
 						))}
-					</div>
+					</DivPostCardTags>
 				)}
-				{post.featured && <span>Featured</span>}
-				<h2 className="post-card-title">{post.title}</h2>
-			</header>
-			<section className="post-card-excerpt">{post.summary}</section>
-			<footer className="post-card-footer">
-				<div className="post-card-footer-left">
-					<div className="post-card-avatar">
+				<H2PostCardTitle>{post.title}</H2PostCardTitle>
+			</HeaderPostCardHeader>
+			<SectionPostCardexcerpt>{post.summary}</SectionPostCardexcerpt>
+			<FooterPostCardfooter>
+				<DivPostCardFooterLeft>
+					<DivPostCardAvatar>
 						{post.user.image ? (
-							<img className="author-profile-image" src={post.user.image} alt={post.user.user_name} />
+							<ImgAuthorProfileImage src={post.user.image} alt={post.user.user_name} />
 						) : (
-							<img className="default-avatar" src="/images/icons/avatar.svg" alt={post.user.user_name} />
+							<ImgDefaultAvatar src="/images/icons/avatar.svg" alt={post.user.user_name} />
 						)}
-					</div>
+					</DivPostCardAvatar>
 					<span>{post.user.user_name}</span>
-				</div>
-				<div className="post-card-footer-right">
+				</DivPostCardFooterLeft>
+				<DivPostCardFooterRight>
 					<div>{readingTime}</div>
-				</div>
-			</footer>
-		</Link>
+				</DivPostCardFooterRight>
+			</FooterPostCardfooter>
+		</LinkPostCard>
 	);
 };
 
@@ -50,7 +117,6 @@ PostCard.propTypes = {
 		slug: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
 		image: PropTypes.string,
-		featured: PropTypes.bool,
 		tag: PropTypes.arrayOf(
 			PropTypes.shape({
 				id: PropTypes.string,

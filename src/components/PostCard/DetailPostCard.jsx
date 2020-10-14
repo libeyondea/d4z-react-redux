@@ -1,8 +1,19 @@
 import React, { useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import isEmpty from '../../helpers/isEmpty';
+import {
+	DivContainer,
+	Articlecontent,
+	FigurePostFeatureImage,
+	SectionPostFullContent,
+	H1ContentTitle,
+	SectionContentBody,
+	LinkBtnType,
+	ButtonBtnType,
+	DivBtnEditDel
+} from '../Styled/PostCard';
 
 const DetailPostCard = ({
 	singlePostThunk,
@@ -37,47 +48,40 @@ const DetailPostCard = ({
 		});
 	};
 	return (
-		<div className="container">
+		<DivContainer>
 			{singlePost.isLoading || isEmpty(singlePost.post) ? (
 				'Loading...........'
 			) : (
-				<article className="content">
+				<Articlecontent>
 					{singlePost.post.image && (
-						<figure className="post-feature-image">
+						<FigurePostFeatureImage>
 							<img src={singlePost.post.image} alt={singlePost.post.title} />
-						</figure>
+						</FigurePostFeatureImage>
 					)}
-					<section className="post-full-content">
-						<h1 className="content-title">{singlePost.post.title}</h1>
-						{/* The main post content */}
-						<section
-							className="content-body load-external-scripts"
-							dangerouslySetInnerHTML={{ __html: singlePost.post.content }}
-						/>
-					</section>
+					<SectionPostFullContent>
+						<H1ContentTitle>{singlePost.post.title}</H1ContentTitle>
+						<SectionContentBody dangerouslySetInnerHTML={{ __html: singlePost.post.content }} />
+					</SectionPostFullContent>
 					{(login.user.role === 'admin' || singlePost.post.user.id === login.user.id) && (
-						<div className="clearfix mb-4 mt-3">
-							<Link
-								className="btn btn-primary float-right"
-								to={`/posts/${singlePost.post.id}/${singlePost.post.slug}/edit`}
-							>
+						<DivBtnEditDel>
+							<LinkBtnType typeBtn="primary" fRight to={`/posts/${singlePost.post.id}/${singlePost.post.slug}/edit`}>
 								Edit Post
-							</Link>
+							</LinkBtnType>
 							{deletePost.isLoading ? (
-								<button type="submit" className="btn btn-danger float-right mr-3" disabled>
+								<ButtonBtnType typeBtn="danger" mRight="0.5rem" fRight type="submit" disabled>
 									<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
 									Loading...
-								</button>
+								</ButtonBtnType>
 							) : (
-								<button type="submit" onClick={handleDeleteSubmit} className="btn btn-danger float-right mr-3">
+								<ButtonBtnType typeBtn="danger" mRight="0.5rem" fRight type="submit" onClick={handleDeleteSubmit}>
 									Delete Post
-								</button>
+								</ButtonBtnType>
 							)}
-						</div>
+						</DivBtnEditDel>
 					)}
-				</article>
+				</Articlecontent>
 			)}
-		</div>
+		</DivContainer>
 	);
 };
 

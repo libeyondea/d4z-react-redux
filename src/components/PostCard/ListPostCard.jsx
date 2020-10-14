@@ -3,6 +3,25 @@ import PropTypes from 'prop-types';
 import PostCard from './PostCard';
 import Pagination from '../Pagination/Pagination';
 import isEmpty from '../../helpers/isEmpty';
+import styled from 'styled-components';
+
+const Container = styled.div`
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 4vw;
+`;
+const PostFeed = styled.section`
+	display: grid;
+	justify-content: space-between;
+	grid-gap: 30px;
+	grid-template-columns: 1fr 1fr 1fr;
+	@media (max-width: 980px) {
+		grid-template-columns: 1fr 1fr;
+	}
+	@media (max-width: 680px) {
+		grid-template-columns: 1fr;
+	}
+`;
 
 const pageContext = {
 	pageNumber: 0,
@@ -21,20 +40,20 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost }) => {
 		};
 	}, [fetchPostResetedThunk, fetchPostThunk]);
 	return (
-		<div className="container">
+		<Container>
 			{fetchPost.isLoading || isEmpty(fetchPost.post) ? (
-				'Loading.................'
+				'Loading................'
 			) : (
 				<>
-					<section className="post-feed">
+					<PostFeed>
 						{fetchPost.post.map((node) => (
 							<PostCard key={node.id} post={node} />
 						))}
-					</section>
+					</PostFeed>
 					<Pagination pageContext={pageContext} />
 				</>
 			)}
-		</div>
+		</Container>
 	);
 };
 

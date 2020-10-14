@@ -2,12 +2,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
-// Components
 import Navigation from '../Navigation/Navigation';
-// Config
 import config from '../../utils/siteConfig';
-
-import styles from '../../styles/app.module.css';
+import {
+	DivViewPort,
+	DivViewPortTop,
+	HeaderSite,
+	Container,
+	DivSiteMast,
+	DivSiteMastRight,
+	DivSiteMastLeft,
+	ImgSiteNavIcon,
+	ImgSiteLogo,
+	ASiteNavItem,
+	LinkSiteNavItem,
+	DivDropDown,
+	ADropDownToggleASiteNavItem,
+	DivDropDownMenu,
+	ADropDownItem,
+	LinkDropDownItem,
+	DivDropdownDivider,
+	DivSiteBanner,
+	H1SiteBannerTitle,
+	PSiteBannerDesc,
+	NavSite,
+	DivSiteNavLeft,
+	DivSiteNavRight,
+	LinkSiteNavButton,
+	MainSiteMain,
+	DivViewportBottom,
+	FooterSite,
+	DivSiteFootNavContainer,
+	DivSiteFootNavLeft,
+	DivSiteFootNavRight,
+	ASiteFootNavItem,
+	LinkSiteFootNavItem
+} from '../Styled/Layout';
 
 const data = {
 	node: {
@@ -55,94 +85,77 @@ const Layout = ({ logoutThunk, login, children, isHome }) => {
 			<Helmet>
 				<html lang={site.lang} />
 			</Helmet>
-			<div className={styles.viewport}>
-				<div className="viewport-top">
-					<header
-						className="site-head"
-						style={{ ...(site.cover_image && { backgroundImage: `url(${site.cover_image})` }) }}
-					>
-						<div className="container">
-							<div className="site-mast">
-								<div className="site-mast-left">
-									<Link to="/">{site.logo && <img className="site-logo" src={site.logo} alt={site.title} />}</Link>
-								</div>
-								<div className="site-mast-right">
+			<DivViewPort>
+				<DivViewPortTop>
+					<HeaderSite style={{ ...(site.cover_image && { backgroundImage: `url(${site.cover_image})` }) }}>
+						<Container>
+							<DivSiteMast>
+								<DivSiteMastLeft>
+									<Link to="/">{site.logo && <ImgSiteLogo src={site.logo} alt={site.title} />}</Link>
+								</DivSiteMastLeft>
+								<DivSiteMastRight>
 									{login.isAuthenticated ? (
-										<div className="dropdown">
-											<a href="#!" className="site-nav-item dropdown-toggle">
-												{login.user.user_name}
-											</a>
-											<div className="dropdown-menu">
-												<Link className="dropdown-item" to={`/users/${login.user.id}/${login.user.user_name}`}>
+										<DivDropDown>
+											<ADropDownToggleASiteNavItem href="#!">{login.user.user_name}</ADropDownToggleASiteNavItem>
+											<DivDropDownMenu>
+												<LinkDropDownItem to={`/users/${login.user.id}/${login.user.user_name}`}>
 													Profile
-												</Link>
-												<div className="dropdown-divider"></div>
-												<a href="#!" className="dropdown-item" onClick={handleLogoutSubmit}>
+												</LinkDropDownItem>
+												<DivDropdownDivider />
+												<ADropDownItem href="#!" onClick={handleLogoutSubmit}>
 													Logout
-												</a>
-											</div>
-										</div>
+												</ADropDownItem>
+											</DivDropDownMenu>
+										</DivDropDown>
 									) : (
 										<>
-											<Link to="/login" className="site-nav-item">
-												Login
-											</Link>
-											<Link to="/register" className="site-nav-item">
-												Register
-											</Link>
+											<LinkSiteNavItem to="/login">Login</LinkSiteNavItem>
+											<LinkSiteNavItem to="/register">Register</LinkSiteNavItem>
 										</>
 									)}
-									<a
-										className="site-nav-item"
+									<ASiteNavItem
 										href={`https://feedly.com/i/subscription/feed/${config.siteUrl}/rss/`}
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<img className="site-nav-icon" src="/images/icons/rss.svg" alt="RSS Feed" />
-									</a>
-								</div>
-							</div>
-							{isHome ? (
-								<div className="site-banner">
-									<h1 className="site-banner-title">{site.title}</h1>
-									<p className="site-banner-desc">{site.description}</p>
-								</div>
-							) : null}
-							<nav className="site-nav">
-								<div className="site-nav-left">
-									{/* The navigation items as setup in Ghost */}
-									<Navigation data={site.navigation} navClass="site-nav-item" />
-								</div>
-								<div className="site-nav-right">
-									<Link className="site-nav-button" to="/about">
-										About
-									</Link>
-								</div>
-							</nav>
-						</div>
-					</header>
-					<main className="site-main">
-						{/* All the main content gets inserted here, index.js, post.js */}
-						{children}
-					</main>
-				</div>
-
-				<div className="viewport-bottom">
-					<footer className="site-foot">
-						<div className="site-foot-nav container">
-							<div className="site-foot-nav-left">
-								<Link to="/">{site.title}</Link> © 2019 &mdash; Published with{' '}
-								<a className="site-foot-nav-item" href="https://ghost.org" target="_blank" rel="noopener noreferrer">
-									Ghost
-								</a>
-							</div>
-							<div className="site-foot-nav-right">
-								<Navigation data={site.navigation} navClass="site-foot-nav-item" />
-							</div>
-						</div>
-					</footer>
-				</div>
-			</div>
+										<ImgSiteNavIcon src="/images/icons/rss.svg" alt="RSS Feed" />
+									</ASiteNavItem>
+								</DivSiteMastRight>
+							</DivSiteMast>
+							{isHome && (
+								<DivSiteBanner>
+									<H1SiteBannerTitle>{site.title}</H1SiteBannerTitle>
+									<PSiteBannerDesc>{site.description}</PSiteBannerDesc>
+								</DivSiteBanner>
+							)}
+							<NavSite>
+								<DivSiteNavLeft>
+									<Navigation data={site.navigation} navTop={true} />
+								</DivSiteNavLeft>
+								<DivSiteNavRight>
+									<LinkSiteNavButton to="/about">About</LinkSiteNavButton>
+								</DivSiteNavRight>
+							</NavSite>
+						</Container>
+					</HeaderSite>
+				</DivViewPortTop>
+				<MainSiteMain>{children}</MainSiteMain>
+				<DivViewportBottom>
+					<FooterSite>
+						<DivSiteFootNavContainer>
+							<DivSiteFootNavLeft>
+								<LinkSiteFootNavItem to="/">{site.title}</LinkSiteFootNavItem> © 2019 &mdash; Published with{' '}
+								<ASiteFootNavItem href="https://d4-zone.netlify.app" target="_blank" rel="noopener noreferrer">
+									D4Z
+								</ASiteFootNavItem>
+							</DivSiteFootNavLeft>
+							<DivSiteFootNavRight>
+								<Navigation data={site.navigation} navTop={false} />
+							</DivSiteFootNavRight>
+						</DivSiteFootNavContainer>
+					</FooterSite>
+				</DivViewportBottom>
+			</DivViewPort>
 		</>
 	);
 };
