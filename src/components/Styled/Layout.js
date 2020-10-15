@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Container } from './Wapper';
 
 export const DivViewPort = styled.div`
 	display: flex;
@@ -15,11 +16,8 @@ export const HeaderSite = styled.header`
 	background: var(--color-base);
 	background-position: center;
 	background-size: cover;
-`;
-export const Container = styled.div`
-	max-width: 1120px;
-	margin: 0 auto;
-	padding: 0 4vw;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 `;
 export const DivSiteMast = styled.div`
 	display: flex;

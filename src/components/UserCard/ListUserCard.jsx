@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import isEmpty from '../../helpers/isEmpty';
 import Pagination from '../Pagination/Pagination';
 import UserCard from './UserCard';
+import { Container } from '../Styled/Wapper';
+import { UserHeader, SectionUserFeed, H1User } from '../Styled/UserCard';
 
 const pageContext = {
 	pageNumber: 0,
@@ -25,23 +27,23 @@ const ListUserCard = ({ fetchUserThunk, fetchUserResetedThunk, fetchUser }) => {
 		};
 	}, [fetchUserResetedThunk, fetchUserThunk]);
 	return (
-		<div className="container">
+		<Container>
 			{fetchUser.isLoading || isEmpty(fetchUser.user) ? (
 				'Loading...........'
 			) : (
 				<>
-					<header className="user-header">
-						<h1>Users</h1>
-					</header>
-					<section className="user-feed">
+					<UserHeader>
+						<H1User>Users</H1User>
+					</UserHeader>
+					<SectionUserFeed>
 						{fetchUser.user.map((node) => (
 							<UserCard key={node.id} user={node} />
 						))}
-					</section>
+					</SectionUserFeed>
 					<Pagination pageContext={pageContext} />
 				</>
 			)}
-		</div>
+		</Container>
 	);
 };
 

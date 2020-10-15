@@ -12,5 +12,38 @@ module.exports = {
 	shortTitle: `Ghost`, // Used for App manifest e.g. Mobile Home Screen
 	siteIcon: `favicon.png`, // Logo in /static dir used for SEO, RSS, and App manifest
 	backgroundColor: `#e9e9e9`, // Used for Offline Manifest
-	themeColor: `#15171A` // Used for Offline Manifest
+	themeColor: `#15171A`, // Used for Offline Manifest
+
+	layoutWebsite: {
+		title: 'De4th Zone',
+		description: 'De4th Zone',
+		logo: '/images/logo.png',
+		icon: 'https://gatsby.ghost.io/content/images/2019/01/favicon.png',
+		cover_image: '/images/d4z-2000-666.jpg',
+		facebook: 'd4z.d4z.d4z.d4z',
+		twitter: '@NHT_445448',
+		lang: 'en',
+		navigation: [
+			{
+				label: 'Home',
+				url: '/'
+			},
+			{
+				label: 'Tag',
+				url: '/tags'
+			},
+			{
+				label: 'Category',
+				url: '/categories'
+			},
+			{
+				label: 'Users',
+				url: '/users'
+			},
+			{
+				label: 'Help',
+				url: 'https://www.facebook.com/d4z.d4z.d4z.d4z'
+			}
+		]
+	}
 };

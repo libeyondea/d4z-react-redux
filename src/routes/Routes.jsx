@@ -4,6 +4,7 @@ import HomeRoute from './HomeRoute';
 import AuthRoute from './AuthRoute';
 import UserRoute from './UserRoute';
 import PostRoute from './PostRoute';
+import TagRoute from './TagRoute';
 import ErrorRoute from './ErrorRoute';
 
 const Routes = () => {
@@ -13,6 +14,7 @@ const Routes = () => {
 			<AuthRoute />
 			<UserRoute />
 			<PostRoute />
+			<TagRoute />
 			<ErrorRoute />
 		</Switch>
 	);

@@ -1,81 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-const LinkPostCard = styled(Link)`
-	color: inherit;
-	text-decoration: none;
-	&:hover {
-		text-decoration: none;
-	}
-`;
-const HeaderPostCardHeader = styled.header``;
-const DivPostCardImage = styled.div`
-	margin: 0 0 10px 0;
-	width: auto;
-	height: 200px;
-	background: var(--color-secondary) no-repeat center center;
-	background-size: cover;
-`;
-const DivPostCardTags = styled.div`
-	margin: 0 0 5px 0;
-	font-size: 1.4rem;
-	line-height: 1.15em;
-	color: var(--color-secondary);
-`;
-const H2PostCardTitle = styled.h2`
-	margin: 0 0 10px 0;
-	padding: 0;
-`;
-const SectionPostCardexcerpt = styled.section`
-	font-size: 1.6rem;
-	line-height: 1.55em;
-`;
-const FooterPostCardfooter = styled.footer`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin: 10px 0 0 0;
-	color: var(--color-secondary);
-`;
-const DivPostCardFooterLeft = styled.div`
-	display: flex;
-	align-items: center;
-`;
-const DivPostCardAvatar = styled.div`
-	width: 30px;
-	height: 30px;
-	margin: 0 7px 0 0;
-	border-radius: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
-const ImgAuthorProfileImage = styled.img`
-	${DivPostCardAvatar} & {
-		display: block;
-		width: 100%;
-		background: var(--color-secondary);
-		border-radius: 100%;
-		object-fit: cover;
-	}
-`;
-const ImgDefaultAvatar = styled.img`
-	${DivPostCardAvatar} & {
-		width: 26px;
-	}
-`;
-const DivPostCardFooterRight = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
+import isEmpty from '../../helpers/isEmpty';
+import {
+	LinkPostCard,
+	HeaderPostCard,
+	DivPostCardImage,
+	DivPostCardTags,
+	H2PostCardTitle,
+	SectionPostCardexcerpt,
+	FooterPostCardfooter,
+	DivPostCardFooterLeft,
+	DivPostCardAvatar,
+	ImgAuthorProfileImage,
+	ImgDefaultAvatar,
+	DivPostCardFooterRight
+} from '../Styled/PostCard';
 
 const PostCard = ({ post }) => {
 	const readingTime = '666 min read';
 	return (
 		<LinkPostCard to={`/posts/${post.id}/${post.slug}`}>
-			<HeaderPostCardHeader>
+			<HeaderPostCard>
 				{post.image && (
 					<DivPostCardImage
 						style={{
@@ -83,7 +28,7 @@ const PostCard = ({ post }) => {
 						}}
 					></DivPostCardImage>
 				)}
-				{post.tag && (
+				{!isEmpty(post.tag) && (
 					<DivPostCardTags>
 						{post.tag.map((item) => (
 							<span key={item.id}>{item.title} </span>
@@ -91,7 +36,7 @@ const PostCard = ({ post }) => {
 					</DivPostCardTags>
 				)}
 				<H2PostCardTitle>{post.title}</H2PostCardTitle>
-			</HeaderPostCardHeader>
+			</HeaderPostCard>
 			<SectionPostCardexcerpt>{post.summary}</SectionPostCardexcerpt>
 			<FooterPostCardfooter>
 				<DivPostCardFooterLeft>

@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import isEmpty from '../../helpers/isEmpty';
+import { LinkBtnType, ButtonBtnType } from '../Styled/Button';
 import {
 	DivContainer,
 	Articlecontent,
@@ -10,8 +11,6 @@ import {
 	SectionPostFullContent,
 	H1ContentTitle,
 	SectionContentBody,
-	LinkBtnType,
-	ButtonBtnType,
 	DivBtnEditDel
 } from '../Styled/PostCard';
 

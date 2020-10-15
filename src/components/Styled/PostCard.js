@@ -265,3 +265,84 @@ export const DivBtnEditDel = styled.div`
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 `;
+
+export const PostFeed = styled.section`
+	display: grid;
+	justify-content: space-between;
+	grid-gap: 30px;
+	grid-template-columns: 1fr 1fr 1fr;
+	@media (max-width: 980px) {
+		grid-template-columns: 1fr 1fr;
+	}
+	@media (max-width: 680px) {
+		grid-template-columns: 1fr;
+	}
+`;
+
+export const LinkPostCard = styled(Link)`
+	color: inherit;
+	text-decoration: none;
+	&:hover {
+		text-decoration: none;
+	}
+`;
+export const HeaderPostCard = styled.header``;
+export const DivPostCardImage = styled.div`
+	margin: 0 0 10px 0;
+	width: auto;
+	height: 200px;
+	background: var(--color-secondary) no-repeat center center;
+	background-size: cover;
+`;
+export const DivPostCardTags = styled.div`
+	margin: 0 0 5px 0;
+	font-size: 1.4rem;
+	line-height: 1.15em;
+	color: var(--color-secondary);
+`;
+export const H2PostCardTitle = styled.h2`
+	margin: 0 0 10px 0;
+	padding: 0;
+`;
+export const SectionPostCardexcerpt = styled.section`
+	font-size: 1.6rem;
+	line-height: 1.55em;
+`;
+export const FooterPostCardfooter = styled.footer`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 10px 0 0 0;
+	color: var(--color-secondary);
+`;
+export const DivPostCardFooterLeft = styled.div`
+	display: flex;
+	align-items: center;
+`;
+export const DivPostCardAvatar = styled.div`
+	width: 30px;
+	height: 30px;
+	margin: 0 7px 0 0;
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+export const ImgAuthorProfileImage = styled.img`
+	${DivPostCardAvatar} & {
+		display: block;
+		width: 100%;
+		background: var(--color-secondary);
+		border-radius: 100%;
+		object-fit: cover;
+	}
+`;
+export const ImgDefaultAvatar = styled.img`
+	${DivPostCardAvatar} & {
+		width: 26px;
+	}
+`;
+export const DivPostCardFooterRight = styled.div`
+	display: flex;
+	flex-direction: column;
+`;

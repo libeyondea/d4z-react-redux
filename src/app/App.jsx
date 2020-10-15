@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from '../helpers/setAuthToken';
 import { loginSucceedAction, loginResetedAction } from '../actions/authAction';
 import Routes from '../routes/Routes';
-import '../styles/app.css';
 
 if (localStorage.getItem('jwtToken')) {
 	setAuthToken(localStorage.jwtToken);
@@ -21,9 +20,11 @@ if (localStorage.getItem('jwtToken')) {
 }
 const App = () => {
 	return (
-		<Provider store={store}>
-			<Routes />
-		</Provider>
+		<>
+			<Provider store={store}>
+				<Routes />
+			</Provider>
+		</>
 	);
 };
 

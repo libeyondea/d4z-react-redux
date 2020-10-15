@@ -1,45 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import {
+	DivUserCard,
+	AuthorHeader,
+	DivAuthorHeaderContent,
+	LinkAuthorName,
+	DivAuthorHeaderMeta,
+	AAuthorHeaderItem,
+	DivAuthorHeaderImage
+} from '../Styled/UserCard';
 
 const UserCard = ({ user, isProfile }) => {
 	return (
-		<div className="user-card">
-			<header className="author-header">
-				<div className="author-header-content">
+		<DivUserCard>
+			<AuthorHeader>
+				<DivAuthorHeaderContent>
 					{isProfile ? (
 						<h1>
 							{user.first_name} {user.last_name}
 						</h1>
 					) : (
 						<h1>
-							<Link to={`/users/${user.id}/${user.user_name}`} className="author-name">
+							<LinkAuthorName to={`/users/${user.id}/${user.user_name}`}>
 								{user.first_name} {user.last_name}
-							</Link>
+							</LinkAuthorName>
 						</h1>
 					)}
 					{user.address && <p>{user.address}</p>}
-					<div className="author-header-meta">
+					<DivAuthorHeaderMeta>
 						{user && (
-							<a className="author-header-item" href={'/'} target="_blank" rel="noopener noreferrer">
+							<AAuthorHeaderItem href={'/'} target="_blank" rel="noopener noreferrer">
 								Website
-							</a>
+							</AAuthorHeaderItem>
 						)}
 						{user && (
-							<a className="author-header-item" href={'/'} target="_blank" rel="noopener noreferrer">
+							<AAuthorHeaderItem href={'/'} target="_blank" rel="noopener noreferrer">
 								Twitter
-							</a>
+							</AAuthorHeaderItem>
 						)}
 						{user && (
-							<a className="author-header-item" href={'/'} target="_blank" rel="noopener noreferrer">
+							<AAuthorHeaderItem href={'/'} target="_blank" rel="noopener noreferrer">
 								Facebook
-							</a>
+							</AAuthorHeaderItem>
 						)}
-					</div>
-				</div>
-				<div className="author-header-image">{user.image && <img src={user.image} alt={user.user_name} />}</div>
-			</header>
-		</div>
+					</DivAuthorHeaderMeta>
+				</DivAuthorHeaderContent>
+				<DivAuthorHeaderImage>{user.image && <img src={user.image} alt={user.user_name} />}</DivAuthorHeaderImage>
+			</AuthorHeader>
+		</DivUserCard>
 	);
 };
 

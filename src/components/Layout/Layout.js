@@ -4,11 +4,11 @@ import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import config from '../../utils/siteConfig';
+import GlobalStyle from '../Styled/GlobalStyle';
 import {
 	DivViewPort,
 	DivViewPortTop,
 	HeaderSite,
-	Container,
 	DivSiteMast,
 	DivSiteMastRight,
 	DivSiteMastLeft,
@@ -38,43 +38,10 @@ import {
 	ASiteFootNavItem,
 	LinkSiteFootNavItem
 } from '../Styled/Layout';
+import { Container } from '../Styled/Wapper';
 
-const data = {
-	node: {
-		title: 'De4th Zone',
-		description: 'De4th Zone',
-		logo: '/images/logo.png',
-		icon: 'https://gatsby.ghost.io/content/images/2019/01/favicon.png',
-		cover_image: 'https://static.ghost.org/v1.0.0/images/blog-cover.jpg',
-		facebook: 'd4z.d4z.d4z.d4z',
-		twitter: '@NHT_445448',
-		lang: 'en',
-		navigation: [
-			{
-				label: 'Home',
-				url: '/'
-			},
-			{
-				label: 'Tag',
-				url: '/tags'
-			},
-			{
-				label: 'Category',
-				url: '/categories'
-			},
-			{
-				label: 'Users',
-				url: '/users'
-			},
-			{
-				label: 'Help',
-				url: 'https://www.facebook.com/d4z.d4z.d4z.d4z'
-			}
-		]
-	}
-};
 const Layout = ({ logoutThunk, login, children, isHome }) => {
-	const site = data.node;
+	const site = config.layoutWebsite;
 	const history = useHistory();
 	const handleLogoutSubmit = (event) => {
 		event.preventDefault();
@@ -82,6 +49,7 @@ const Layout = ({ logoutThunk, login, children, isHome }) => {
 	};
 	return (
 		<>
+			<GlobalStyle />
 			<Helmet>
 				<html lang={site.lang} />
 			</Helmet>
@@ -138,8 +106,8 @@ const Layout = ({ logoutThunk, login, children, isHome }) => {
 							</NavSite>
 						</Container>
 					</HeaderSite>
+					<MainSiteMain>{children}</MainSiteMain>
 				</DivViewPortTop>
-				<MainSiteMain>{children}</MainSiteMain>
 				<DivViewportBottom>
 					<FooterSite>
 						<DivSiteFootNavContainer>

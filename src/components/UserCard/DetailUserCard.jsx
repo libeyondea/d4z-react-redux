@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import isEmpty from '../../helpers/isEmpty';
 import UserCard from './UserCard';
+import { Container } from '../Styled/Wapper';
+import { UserHeader, SectionUserFeed, H1User } from '../Styled/UserCard';
 
 const propTypes = {
 	singleUserThunk: PropTypes.func.isRequired,
@@ -19,20 +21,20 @@ const DetailUserCard = ({ singleUserThunk, singleUserResetedThunk, singleUser, l
 		};
 	}, [id, singleUserResetedThunk, singleUserThunk, user_name]);
 	return (
-		<div className="container">
+		<Container>
 			{singleUser.isLoading || isEmpty(singleUser.user) ? (
 				'Loading.........'
 			) : (
 				<>
-					<header className="user-header">
-						<h1>User Profile</h1>
-					</header>
-					<section className="user-feed">
+					<UserHeader>
+						<H1User>User Profile</H1User>
+					</UserHeader>
+					<SectionUserFeed>
 						<UserCard user={singleUser.user} isProfile={true} />
-					</section>
+					</SectionUserFeed>
 				</>
 			)}
-		</div>
+		</Container>
 	);
 };
 

@@ -3,25 +3,8 @@ import PropTypes from 'prop-types';
 import PostCard from './PostCard';
 import Pagination from '../Pagination/Pagination';
 import isEmpty from '../../helpers/isEmpty';
-import styled from 'styled-components';
-
-const Container = styled.div`
-	max-width: 1120px;
-	margin: 0 auto;
-	padding: 0 4vw;
-`;
-const PostFeed = styled.section`
-	display: grid;
-	justify-content: space-between;
-	grid-gap: 30px;
-	grid-template-columns: 1fr 1fr 1fr;
-	@media (max-width: 980px) {
-		grid-template-columns: 1fr 1fr;
-	}
-	@media (max-width: 680px) {
-		grid-template-columns: 1fr;
-	}
-`;
+import { Container } from '../Styled/Wapper';
+import { PostFeed } from '../Styled/PostCard';
 
 const pageContext = {
 	pageNumber: 0,
