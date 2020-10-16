@@ -49,6 +49,10 @@ export const loginThunk = (user) => async (dispatch) => {
 	}
 };
 
+export const loginResetedThunk = () => (dispatch) => {
+	dispatch(loginResetedAction());
+};
+
 export const logoutThunk = (history) => (dispatch) => {
 	localStorage.removeItem('jwtToken');
 	setAuthToken(false);

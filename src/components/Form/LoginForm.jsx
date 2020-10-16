@@ -4,6 +4,21 @@ import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import InputForm from './InputForm';
+import { Container } from '../Styled/Wapper';
+import { ButtonBtnType } from '../Styled/Button';
+import {
+	DivLg8Md10Center,
+	DivFormGroup,
+	DivRememberForgot,
+	DivCustomControl,
+	InputCustomControlCheckBox,
+	LabelCustomControlCheckBox,
+	DivCenter,
+	PCustom,
+	FormTitleHeader,
+	H1FormTileHeader,
+	PFormTileHeader
+} from '../Styled/LoginForm';
 
 const LoginForm = ({ loginThunk, login }) => {
 	const initialValues = {
@@ -22,83 +37,63 @@ const LoginForm = ({ loginThunk, login }) => {
 		loginThunk(user);
 	};
 	return (
-		<div className="container">
-			<div className="row">
-				<div className="col-lg-8 col-md-10 mx-auto">
-					<div className="nht-form">
-						<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-							<Form>
-								<div className="control-group">
-									<div className="form-group floating-label-form-group controls">
-										<InputForm
-											label="Email"
-											id="email"
-											name="email"
-											type="text"
-											isError={login.isError}
-											errorMessage={login.errorMessage.user}
-										/>
-									</div>
-								</div>
-								<div className="control-group">
-									<div className="form-group floating-label-form-group controls">
-										<InputForm
-											label="Password"
-											id="password"
-											name="password"
-											type="password"
-											isError={login.isError}
-											errorMessage={login.errorMessage.user}
-										/>
-									</div>
-								</div>
-								<div className="control-group">
-									<div className="d-flex justify-content-between align-items-center mb-3">
-										<div className="custom-control custom-checkbox">
-											<input type="checkbox" className="custom-control-input" id="remember" />
-											<label className="custom-control-label" htmlFor="remember">
-												Remember
-											</label>
-										</div>
-										<span>
-											<a href="#!">Forgot password?</a>
-										</span>
-									</div>
-								</div>
-								<div className="text-center">
-									{login.isLoading ? (
-										<button type="submit" className="btn btn-primary" disabled>
-											<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
-											Loading...
-										</button>
-									) : (
-										<button type="submit" className="btn btn-primary">
-											Login
-										</button>
-									)}
-									<p className="mt-5">
-										Not a member? <Link to="/register">Register</Link>
-									</p>
-									<p>or sign in with:</p>
-									<a href="#!" className="btn-floating btn-fb btn-sm mr-1">
-										<i className="fab fa-facebook-f" />
-									</a>
-									<a href="#!" className="btn-floating btn-tw btn-sm mr-1">
-										<i className="fab fa-twitter" />
-									</a>
-									<a href="#!" className="btn-floating btn-li btn-sm mr-1">
-										<i className="fab fa-linkedin-in" />
-									</a>
-									<a href="#!" className="btn-floating btn-git btn-sm">
-										<i className="fab fa-github" />
-									</a>
-								</div>
-							</Form>
-						</Formik>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Container>
+			<DivLg8Md10Center>
+				<FormTitleHeader>
+					<H1FormTileHeader>Login</H1FormTileHeader>
+					<PFormTileHeader>Login your account</PFormTileHeader>
+				</FormTitleHeader>
+				<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+					<Form>
+						<DivFormGroup>
+							<InputForm
+								label="Email"
+								id="email"
+								name="email"
+								type="text"
+								isError={login.isError}
+								errorMessage={login.errorMessage.user}
+							/>
+						</DivFormGroup>
+						<DivFormGroup>
+							<InputForm
+								label="Password"
+								id="password"
+								name="password"
+								type="password"
+								isError={login.isError}
+								errorMessage={login.errorMessage.user}
+							/>
+						</DivFormGroup>
+						<DivFormGroup>
+							<DivRememberForgot>
+								<DivCustomControl>
+									<InputCustomControlCheckBox type="checkbox" id="remember" />
+									<LabelCustomControlCheckBox htmlFor="remember">Remember</LabelCustomControlCheckBox>
+								</DivCustomControl>
+								<span>
+									<a href="#!">Forgot password?</a>
+								</span>
+							</DivRememberForgot>
+						</DivFormGroup>
+						<DivCenter>
+							{login.isLoading ? (
+								<ButtonBtnType $typeBtn="primary" type="submit" className="btn btn-primary" disabled>
+									Loading...
+								</ButtonBtnType>
+							) : (
+								<ButtonBtnType $typeBtn="primary" type="submit" className="btn btn-primary">
+									Login
+								</ButtonBtnType>
+							)}
+							<PCustom mT="3rem" mB="1.5rem">
+								Not a member? <Link to="/register">Register</Link>
+							</PCustom>
+						</DivCenter>
+					</Form>
+				</Formik>
+			</DivLg8Md10Center>
+		</Container>
 	);
 };
 

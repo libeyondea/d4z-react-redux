@@ -1,16 +1,12 @@
 import React from 'react';
-import classnames from 'classnames';
 import { Editor } from '@tinymce/tinymce-react';
+import { LabelForm, RichTXTFormControl, DivInvalidFeedback } from '../Styled/LoginForm';
 
 const RichTextEditorFormik = ({ touched, errors, isError, errorMessage, height, label, ...props }) => {
 	return (
 		<>
-			<label htmlFor={props.id || props.name}>{label}</label>
-			<div
-				className={classnames('form-control-tiny-mce', {
-					'is-invalid-tiny-mce': (errors && touched) || (isError && errorMessage)
-				})}
-			>
+			<LabelForm htmlFor={props.id || props.name}>{label}</LabelForm>
+			<RichTXTFormControl isInValid={((errors && touched) || (isError && errorMessage)) && true}>
 				<Editor
 					{...props}
 					init={{
@@ -34,9 +30,9 @@ const RichTextEditorFormik = ({ touched, errors, isError, errorMessage, height, 
 						menubar: 'favs file edit view insert format tools table help'
 					}}
 				/>
-			</div>
-			{errors && touched && <div className="invalid-feedback d-block">{errors}</div>}
-			{isError && errorMessage && <div className="invalid-feedback d-block">{errorMessage}</div>}
+			</RichTXTFormControl>
+			{errors && touched && <DivInvalidFeedback>{errors}</DivInvalidFeedback>}
+			{isError && errorMessage && <DivInvalidFeedback>{errorMessage}</DivInvalidFeedback>}
 		</>
 	);
 };

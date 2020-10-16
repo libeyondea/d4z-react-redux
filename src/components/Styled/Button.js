@@ -19,7 +19,7 @@ export const CssBtn = css`
 	background-color: transparent;
 	border: 1px solid transparent;
 	padding: 0.75rem 1.5rem;
-	border-radius: 0.25rem;
+	border-radius: 0.75rem;
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
 		box-shadow 0.15s ease-in-out;
 	@media (prefers-reduced-motion: reduce) {
@@ -35,26 +35,26 @@ export const CssBtn = css`
 `;
 export const CssBtnType = css`
 	color: #fff;
-	${({ typeBtn }) =>
-		(typeBtn === 'primary' &&
+	${({ $typeBtn }) =>
+		($typeBtn === 'primary' &&
 			`
     background-color: #0d6efd;
     border-color: #0d6efd
 `) ||
-		(typeBtn === 'danger' &&
+		($typeBtn === 'danger' &&
 			`
     background-color: #dc3545;
     border-color: #dc3545;
 `)}
 	&:hover {
 		color: #fff;
-		${({ typeBtn }) =>
-			(typeBtn === 'primary' &&
+		${({ $typeBtn }) =>
+			($typeBtn === 'primary' &&
 				`
         background-color: #025ce2;
         border-color: #0257d5
     `) ||
-			(typeBtn === 'danger' &&
+			($typeBtn === 'danger' &&
 				`
         background-color: #c82333;
         border-color: #bd2130;
@@ -62,14 +62,14 @@ export const CssBtnType = css`
 	}
 	&:focus {
 		color: #fff;
-		${({ typeBtn }) =>
-			(typeBtn === 'primary' &&
+		${({ $typeBtn }) =>
+			($typeBtn === 'primary' &&
 				`
         background-color: #025ce2;
         border-color: #0257d5;
         box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
     `) ||
-			(typeBtn === 'danger' &&
+			($typeBtn === 'danger' &&
 				`
         background-color:  #c82333;
         border-color:  #bd2130;
@@ -79,13 +79,13 @@ export const CssBtnType = css`
 	&:active,
 	&.active {
 		color: #fff;
-		${({ typeBtn }) =>
-			(typeBtn === 'primary' &&
+		${({ $typeBtn }) =>
+			($typeBtn === 'primary' &&
 				`
             background-color: #025ce2;
             border-color: #0257d5
     `) ||
-			(typeBtn === 'danger' &&
+			($typeBtn === 'danger' &&
 				`
             background-color: #c82333;
             border-color: #bd2130;
@@ -93,12 +93,12 @@ export const CssBtnType = css`
 	}
 	&:active:focus,
 	&.active:focus {
-		${({ typeBtn }) =>
-			(typeBtn === 'primary' &&
+		${({ $typeBtn }) =>
+			($typeBtn === 'primary' &&
 				`
             box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
     `) ||
-			(typeBtn === 'danger' &&
+			($typeBtn === 'danger' &&
 				`
             box-shadow: 0 0 0 0.2rem rgba(225,83,97,.5);
     `)}
@@ -106,26 +106,26 @@ export const CssBtnType = css`
 	&:disabled,
 	&.disabled {
 		color: #fff;
-		${({ typeBtn }) =>
-			(typeBtn === 'primary' &&
+		${({ $typeBtn }) =>
+			($typeBtn === 'primary' &&
 				`
-            background-color: #0d6efd;
-            border-color: #0d6efd;
+            background-color: #76b9ff;
+            border-color: #76b9ff;
     `) ||
-			(typeBtn === 'danger' &&
+			($typeBtn === 'danger' &&
 				`
-            background-color: #dc3545;
-            border-color:  #dc3545;
+            background-color: #e77883;
+            border-color:  #e77883;
     `)}
 	}
 `;
 export const CssFloat = css`
-	${({ fRight, fLeft }) =>
-		(fRight &&
+	${({ $fRight, $fLeft }) =>
+		($fRight &&
 			`
 			float: right;
 	`) ||
-		(fLeft &&
+		($fLeft &&
 			`
 			float: left;
 	`)}
@@ -133,34 +133,12 @@ export const CssFloat = css`
 export const LinkBtnType = styled(Link)`
 	${CssBtn}
 	${CssBtnType}
-	${({ fRight, fLeft }) =>
-		(fRight &&
-			`
-			float: right;
-	`) ||
-		(fLeft &&
-			`
-			float: left;
-	`) ||
-		`
-		float: none;
-	`}
+	${CssFloat}
 	margin-right: ${({ mRight }) => mRight || 0};
 `;
 export const ButtonBtnType = styled.button`
 	${CssBtn}
 	${CssBtnType}
-	${({ fRight, fLeft }) =>
-		(fRight &&
-			`
-			float: right;
-	`) ||
-		(fLeft &&
-			`
-			float: left;
-	`) ||
-		`
-		float: none;
-	`}
+	${CssFloat}
 	margin-right: ${({ mRight }) => mRight || 0};
 `;

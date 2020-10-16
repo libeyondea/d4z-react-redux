@@ -29,11 +29,11 @@ module.exports = {
 				url: '/'
 			},
 			{
-				label: 'Tag',
+				label: 'Tags',
 				url: '/tags'
 			},
 			{
-				label: 'Category',
+				label: 'Categories',
 				url: '/categories'
 			},
 			{

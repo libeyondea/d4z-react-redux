@@ -14,8 +14,9 @@ export const Articlecontent = styled.article`
 		font-size: 1.8rem;
 	}
 `;
-export const FigurePostFeatureImage = styled.figure`
-	& img {
+export const FigurePostFeatureImage = styled.figure``;
+export const ImgPostFeatureImage = styled.img`
+	${FigurePostFeatureImage} & {
 		margin: 0 0 3vw;
 		width: 100%;
 		height: 500px;

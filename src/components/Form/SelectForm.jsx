@@ -1,21 +1,19 @@
 import React from 'react';
 import { useField } from 'formik';
-import classnames from 'classnames';
+import { LabelForm, SelectFormControl, DivInvalidFeedback } from '../Styled/LoginForm';
 
 const SelectFormik = ({ isError, errorMessage, label, ...props }) => {
 	const [field, meta] = useField(props);
 	return (
 		<>
-			<label htmlFor={props.id || props.name}>{label}</label>
-			<select
+			<LabelForm htmlFor={props.id || props.name}>{label}</LabelForm>
+			<SelectFormControl
 				{...field}
 				{...props}
-				className={classnames('form-control', {
-					'is-invalid': (meta.touched && meta.error) || (isError && errorMessage)
-				})}
+				isInValid={((meta.touched && meta.error) || (isError && errorMessage)) && true}
 			/>
-			{meta.touched && meta.error && <div className="invalid-feedback">{meta.error}</div>}
-			{isError && errorMessage && <div className="invalid-feedback">{errorMessage}</div>}
+			{meta.touched && meta.error && <DivInvalidFeedback>{meta.error}</DivInvalidFeedback>}
+			{isError && errorMessage && <DivInvalidFeedback>{errorMessage}</DivInvalidFeedback>}
 		</>
 	);
 };

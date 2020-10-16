@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from '../../helpers/isEmpty';
 import {
 	DivTagCard,
 	HeaderTagCard,
@@ -26,11 +25,11 @@ const TagCard = ({ tag }) => {
 					<span>{tag.total_post} posts</span>
 				</DivTagCardFooterLeft>
 				<DivTagCardFooterRight>
-					<div>
+					<span>
 						{tag.total_post_today} today
 						{', '}
-						{tag.total_post_week} week
-					</div>
+						{tag.total_post_week} this week
+					</span>
 				</DivTagCardFooterRight>
 			</FooterTagCardfooter>
 		</DivTagCard>
@@ -39,20 +38,13 @@ const TagCard = ({ tag }) => {
 
 TagCard.propTypes = {
 	tag: PropTypes.shape({
+		id: PropTypes.string.isRequired,
 		slug: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
-		image: PropTypes.string,
-		tag: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.string,
-				title: PropTypes.string
-			})
-		),
-		summary: PropTypes.string.isRequired,
-		user: PropTypes.shape({
-			user_name: PropTypes.string.isRequired,
-			image: PropTypes.string
-		}).isRequired
+		content: PropTypes.string.isRequired,
+		total_post: PropTypes.number.isRequired,
+		total_post_today: PropTypes.number.isRequired,
+		total_post_week: PropTypes.number.isRequired
 	}).isRequired
 };
 

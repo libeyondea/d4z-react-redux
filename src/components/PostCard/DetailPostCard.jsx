@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import isEmpty from '../../helpers/isEmpty';
 import { LinkBtnType, ButtonBtnType } from '../Styled/Button';
+import { Container } from '../Styled/Wapper';
 import {
-	DivContainer,
 	Articlecontent,
 	FigurePostFeatureImage,
+	ImgPostFeatureImage,
 	SectionPostFullContent,
 	H1ContentTitle,
 	SectionContentBody,
@@ -47,14 +48,14 @@ const DetailPostCard = ({
 		});
 	};
 	return (
-		<DivContainer>
+		<Container>
 			{singlePost.isLoading || isEmpty(singlePost.post) ? (
 				'Loading...........'
 			) : (
 				<Articlecontent>
 					{singlePost.post.image && (
 						<FigurePostFeatureImage>
-							<img src={singlePost.post.image} alt={singlePost.post.title} />
+							<ImgPostFeatureImage src={singlePost.post.image} alt={singlePost.post.title} />
 						</FigurePostFeatureImage>
 					)}
 					<SectionPostFullContent>
@@ -63,16 +64,15 @@ const DetailPostCard = ({
 					</SectionPostFullContent>
 					{(login.user.role === 'admin' || singlePost.post.user.id === login.user.id) && (
 						<DivBtnEditDel>
-							<LinkBtnType typeBtn="primary" fRight to={`/posts/${singlePost.post.id}/${singlePost.post.slug}/edit`}>
+							<LinkBtnType $typeBtn="primary" $fRight to={`/posts/${singlePost.post.id}/${singlePost.post.slug}/edit`}>
 								Edit Post
 							</LinkBtnType>
 							{deletePost.isLoading ? (
-								<ButtonBtnType typeBtn="danger" mRight="0.5rem" fRight type="submit" disabled>
-									<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
+								<ButtonBtnType $typeBtn="danger" mRight="0.5rem" $fRight type="submit" disabled>
 									Loading...
 								</ButtonBtnType>
 							) : (
-								<ButtonBtnType typeBtn="danger" mRight="0.5rem" fRight type="submit" onClick={handleDeleteSubmit}>
+								<ButtonBtnType $typeBtn="danger" mRight="0.5rem" $fRight type="submit" onClick={handleDeleteSubmit}>
 									Delete Post
 								</ButtonBtnType>
 							)}
@@ -80,7 +80,7 @@ const DetailPostCard = ({
 					)}
 				</Articlecontent>
 			)}
-		</DivContainer>
+		</Container>
 	);
 };
 

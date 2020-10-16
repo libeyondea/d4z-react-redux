@@ -101,7 +101,7 @@ const Layout = ({ logoutThunk, login, children, isHome }) => {
 									<Navigation data={site.navigation} navTop={true} />
 								</DivSiteNavLeft>
 								<DivSiteNavRight>
-									<LinkSiteNavButton to="/about">About</LinkSiteNavButton>
+									{login.isAuthenticated && <LinkSiteNavButton to="/posts/create">Create post</LinkSiteNavButton>}
 								</DivSiteNavRight>
 							</NavSite>
 						</Container>

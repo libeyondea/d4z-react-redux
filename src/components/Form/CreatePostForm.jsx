@@ -10,6 +10,16 @@ import InputForm from './InputForm';
 import TextareaForm from './TextareaForm';
 import RichTextEditorForm from './RichTextEditorForm';
 import SelectInputForm from './SelectInputForm';
+import { Container } from '../Styled/Wapper';
+import { ButtonBtnType } from '../Styled/Button';
+import {
+	DivLg8Md10Center,
+	DivFormGroup,
+	DivCenter,
+	FormTitleHeader,
+	H1FormTileHeader,
+	PFormTileHeader
+} from '../Styled/LoginForm';
 
 const propTypes = {
 	createPostThunk: PropTypes.func.isRequired,
@@ -120,127 +130,108 @@ const CreatePostForm = ({
 		});
 	};
 	return (
-		<div className="container">
-			<div className="row">
-				<div className="col-lg-12 col-md-12">
-					<div className="nht-form">
-						<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-							{({ values, errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (
-								<form onSubmit={handleSubmit}>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<TextareaForm rows="3" label="Title" id="title" name="title" type="text" />
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<TextareaForm rows="3" label="Meta title" id="meta_title" name="meta_title" type="text" />
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<TextareaForm
-												rows="6"
-												label="Meta description"
-												id="meta_description"
-												name="meta_description"
-												type="text"
-											/>
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<InputForm label="Slug" id="slug" name="slug" type="text" />
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<TextareaForm rows="6" label="Summary" id="summary" name="summary" type="text" />
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<RichTextEditorForm
-												label="Content"
-												id="content"
-												textareaName="content"
-												onEditorChange={(selectedValue) => setFieldValue('content', selectedValue)}
-												onBlur={() => setFieldTouched('content', true)}
-												value={values.content}
-												height="333"
-												errors={errors.content}
-												touched={touched.content}
-											/>
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<SelectInputForm
-												id="tag"
-												name="tag"
-												label="Tag"
-												options={fetchTag.tag}
-												onChange={(selectedValue) => {
-													if (isEmpty(selectedValue)) {
-														selectedValue = [];
-													}
-													setFieldValue('tag', selectedValue);
-												}}
-												onBlur={() => setFieldTouched('tag', true)}
-												value={values.tag}
-												getOptionValue={(option) => option.id}
-												getOptionLabel={(option) => option.title}
-												errors={errors.tag}
-												touched={touched.tag}
-											/>
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<SelectInputForm
-												id="category"
-												name="category"
-												label="Category"
-												options={fetchCategory.category}
-												onChange={(selectedValue) => {
-													if (isEmpty(selectedValue)) {
-														selectedValue = [];
-													}
-													setFieldValue('category', selectedValue);
-												}}
-												onBlur={() => setFieldTouched('category', true)}
-												value={values.category}
-												getOptionValue={(option) => option.id}
-												getOptionLabel={(option) => option.title}
-												errors={errors.category}
-												touched={touched.category}
-											/>
-										</div>
-									</div>
-									<div className="control-group">
-										<div className="form-group floating-label-form-group controls">
-											<InputForm label="Image" id="image" name="image" type="text" />
-										</div>
-									</div>
-									<div className="text-center">
-										{createPost.isLoading ? (
-											<button type="submit" className="btn btn-primary" disabled>
-												<span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" />
-												Loading...
-											</button>
-										) : (
-											<button type="submit" className="btn btn-primary">
-												Create
-											</button>
-										)}
-									</div>
-								</form>
-							)}
-						</Formik>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Container>
+			<DivLg8Md10Center>
+				<FormTitleHeader>
+					<H1FormTileHeader>Create post</H1FormTileHeader>
+					<PFormTileHeader>Create new post</PFormTileHeader>
+				</FormTitleHeader>
+				<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+					{({ values, errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (
+						<form onSubmit={handleSubmit}>
+							<DivFormGroup>
+								<TextareaForm rows="3" label="Title" id="title" name="title" type="text" />
+							</DivFormGroup>
+							<DivFormGroup>
+								<TextareaForm rows="3" label="Meta title" id="meta_title" name="meta_title" type="text" />
+							</DivFormGroup>
+							<DivFormGroup>
+								<TextareaForm
+									rows="6"
+									label="Meta description"
+									id="meta_description"
+									name="meta_description"
+									type="text"
+								/>
+							</DivFormGroup>
+							<DivFormGroup>
+								<InputForm label="Slug" id="slug" name="slug" type="text" />
+							</DivFormGroup>
+							<DivFormGroup>
+								<TextareaForm rows="6" label="Summary" id="summary" name="summary" type="text" />
+							</DivFormGroup>
+							<DivFormGroup>
+								<RichTextEditorForm
+									label="Content"
+									id="content"
+									textareaName="content"
+									onEditorChange={(selectedValue) => setFieldValue('content', selectedValue)}
+									onBlur={() => setFieldTouched('content', true)}
+									value={values.content}
+									height="333"
+									errors={errors.content}
+									touched={touched.content}
+								/>
+							</DivFormGroup>
+							<DivFormGroup>
+								<SelectInputForm
+									id="tag"
+									name="tag"
+									label="Tag"
+									options={fetchTag.tag}
+									onChange={(selectedValue) => {
+										if (isEmpty(selectedValue)) {
+											selectedValue = [];
+										}
+										setFieldValue('tag', selectedValue);
+									}}
+									onBlur={() => setFieldTouched('tag', true)}
+									value={values.tag}
+									getOptionValue={(option) => option.id}
+									getOptionLabel={(option) => option.title}
+									errors={errors.tag}
+									touched={touched.tag}
+								/>
+							</DivFormGroup>
+							<DivFormGroup>
+								<SelectInputForm
+									id="category"
+									name="category"
+									label="Category"
+									options={fetchCategory.category}
+									onChange={(selectedValue) => {
+										if (isEmpty(selectedValue)) {
+											selectedValue = [];
+										}
+										setFieldValue('category', selectedValue);
+									}}
+									onBlur={() => setFieldTouched('category', true)}
+									value={values.category}
+									getOptionValue={(option) => option.id}
+									getOptionLabel={(option) => option.title}
+									errors={errors.category}
+									touched={touched.category}
+								/>
+							</DivFormGroup>
+							<DivFormGroup>
+								<InputForm label="Image" id="image" name="image" type="text" />
+							</DivFormGroup>
+							<DivCenter>
+								{createPost.isLoading ? (
+									<ButtonBtnType $typeBtn="primary" type="submit" disabled>
+										Loading...
+									</ButtonBtnType>
+								) : (
+									<ButtonBtnType $typeBtn="primary" type="submit">
+										Create
+									</ButtonBtnType>
+								)}
+							</DivCenter>
+						</form>
+					)}
+				</Formik>
+			</DivLg8Md10Center>
+		</Container>
 	);
 };
 

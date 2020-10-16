@@ -2,12 +2,13 @@ import React from 'react';
 import Select from 'react-select';
 import classnames from 'classnames';
 import makeAnimated from 'react-select/animated';
+import { LabelForm, DivInvalidFeedback } from '../Styled/LoginForm';
 
 const animatedComponents = makeAnimated();
 const SelectInputFormik = ({ errors, touched, isError, errorMessage, label, ...props }) => {
 	return (
 		<>
-			<label htmlFor={props.id || props.name}>{label}</label>
+			<LabelForm htmlFor={props.id || props.name}>{label}</LabelForm>
 			<Select
 				{...props}
 				className={classnames('form-control-react-select', {
@@ -19,8 +20,8 @@ const SelectInputFormik = ({ errors, touched, isError, errorMessage, label, ...p
 				closeMenuOnSelect={false}
 				isOpen={true}
 			/>
-			{errors && touched && <div className="invalid-feedback d-block">{errors}</div>}
-			{isError && errorMessage && <div className="invalid-feedback d-block">{errorMessage}</div>}
+			{errors && touched && <DivInvalidFeedback>{errors}</DivInvalidFeedback>}
+			{isError && errorMessage && <DivInvalidFeedback>{errorMessage}</DivInvalidFeedback>}
 		</>
 	);
 };
