@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import PostCard from './PostCard';
 import Pagination from '../Pagination/Pagination';
 import isEmpty from '../../helpers/isEmpty';
@@ -24,6 +25,10 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost }) => {
 	}, [fetchPostResetedThunk, fetchPostThunk]);
 	return (
 		<Container>
+			<Helmet>
+				<title>Home | De4th Zone</title>
+				<meta name="description" content="De4th Zone" />
+			</Helmet>
 			{fetchPost.isLoading || isEmpty(fetchPost.post) ? (
 				'Loading................'
 			) : (

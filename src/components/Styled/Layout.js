@@ -16,8 +16,6 @@ export const HeaderSite = styled.header`
 	background: var(--color-base);
 	background-position: center;
 	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
 `;
 export const DivSiteMast = styled.div`
 	display: flex;

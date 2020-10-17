@@ -22,7 +22,7 @@ const UserCard = ({ user, isProfile }) => {
 					) : (
 						<h1>
 							<LinkAuthorName to={`/users/${user.id}/${user.user_name}`}>
-								{user.first_name} {user.last_name}
+								{user.last_name} {user.first_name}
 							</LinkAuthorName>
 						</h1>
 					)}

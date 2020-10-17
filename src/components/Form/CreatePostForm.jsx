@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 import isEmpty from '../../helpers/isEmpty';
+import convertHtmlToText from '../../helpers/convertHtmlToText';
+import convertTextToSlug from '../../helpers/convertTextToSlug';
 import InputForm from './InputForm';
 import TextareaForm from './TextareaForm';
 import RichTextEditorForm from './RichTextEditorForm';
@@ -52,9 +54,6 @@ const CreatePostForm = ({
 	}, [fetchCategoryResetedThunk, fetchCategoryThunk, fetchTagResetedThunk, fetchTagThunk]);
 	const initialValues = {
 		title: '',
-		meta_title: '',
-		meta_description: '',
-		slug: '',
 		summary: '',
 		content: '',
 		image: '',
@@ -66,24 +65,11 @@ const CreatePostForm = ({
 			.min(6, 'Title must be at least 6 characters')
 			.max(100, 'Title must be at most 100 characters')
 			.required('Title is required'),
-		meta_title: Yup.string()
-			.min(6, 'Meta title must be at least 6 characters')
-			.max(200, 'Meta title must be at most 200 characters')
-			.required('Meta title is required'),
-		meta_description: Yup.string()
-			.min(6, 'Meta description must be at least 6 characters')
-			.max(666, 'Meta description must be at most 666 characters')
-			.required('Meta description is required'),
-		slug: Yup.string()
-			.min(6, 'Slug must be at least 6 characters')
-			.max(100, 'Slug must be at most 100 characters')
-			.required('Slug is required'),
 		summary: Yup.string()
 			.min(6, 'Summary must be at least 6 characters')
-			.max(666, 'Summary must be at most 666 characters')
-			.required('Summary is required'),
+			.max(666, 'Summary must be at most 666 characters'),
 		content: Yup.string().required('Content is required'),
-		image: Yup.string().required('Image is required'),
+		image: Yup.string().max(300, 'Image must be at most 300 characters'),
 		tag: Yup.array()
 			.min(1, 'Pick at least 1 tag')
 			.of(
@@ -105,9 +91,9 @@ const CreatePostForm = ({
 		const post = {
 			id: uuidv4(),
 			title: values.title,
-			meta_title: values.meta_title,
-			meta_description: values.meta_description,
-			slug: values.slug,
+			meta_title: values.title,
+			meta_description: convertHtmlToText(values.content),
+			slug: convertTextToSlug(values.title),
 			summary: values.summary,
 			image: values.image,
 			content: values.content,
@@ -140,22 +126,8 @@ const CreatePostForm = ({
 					{({ values, errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (
 						<form onSubmit={handleSubmit}>
 							<DivFormGroup>
-								<TextareaForm rows="3" label="Title" id="title" name="title" type="text" />
-							</DivFormGroup>
-							<DivFormGroup>
-								<TextareaForm rows="3" label="Meta title" id="meta_title" name="meta_title" type="text" />
-							</DivFormGroup>
-							<DivFormGroup>
-								<TextareaForm
-									rows="6"
-									label="Meta description"
-									id="meta_description"
-									name="meta_description"
-									type="text"
-								/>
-							</DivFormGroup>
-							<DivFormGroup>
-								<InputForm label="Slug" id="slug" name="slug" type="text" />
+								<InputForm label="Title" id="title" name="title" type="text" />
+								Auto slug: {convertTextToSlug(values.title)}
 							</DivFormGroup>
 							<DivFormGroup>
 								<TextareaForm rows="6" label="Summary" id="summary" name="summary" type="text" />
@@ -172,6 +144,7 @@ const CreatePostForm = ({
 									errors={errors.content}
 									touched={touched.content}
 								/>
+								Auto description: {convertHtmlToText(values.content)}
 							</DivFormGroup>
 							<DivFormGroup>
 								<SelectInputForm

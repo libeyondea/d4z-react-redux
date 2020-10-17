@@ -4,9 +4,11 @@ import ListPostCardContainer from '../../containers/ListPostCardContainer';
 
 const Home = () => {
 	return (
-		<LayoutContainer isHome={true}>
-			<ListPostCardContainer />
-		</LayoutContainer>
+		<>
+			<LayoutContainer isHome={true}>
+				<ListPostCardContainer />
+			</LayoutContainer>
+		</>
 	);
 };
 

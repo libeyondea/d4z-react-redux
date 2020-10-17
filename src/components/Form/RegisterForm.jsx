@@ -33,6 +33,7 @@ const RegisterForm = ({ registerThunk, register, registerResetedThunk }) => {
 		phone_number: '',
 		address: '',
 		gender: '',
+		image: '',
 		agreeterms: false
 	};
 	const validationSchema = Yup.object({
@@ -61,12 +62,11 @@ const RegisterForm = ({ registerThunk, register, registerResetedThunk }) => {
 			.oneOf([Yup.ref('password')], 'Password is not match'),
 		phone_number: Yup.string()
 			.min(10, 'Phone number must be at least 10 characters')
-			.matches(/^[0-9]+$/)
-			.required('Phone number is required'),
+			.matches(/^[0-9]+$/),
 		address: Yup.string()
 			.min(6, 'Address must be at least 6 characters')
-			.max(66, 'Address must be at most 66 characters')
-			.required('Address is required'),
+			.max(66, 'Address must be at most 66 characters'),
+		image: Yup.string().max(300, 'Image must be at most 300 characters'),
 		gender: Yup.string().oneOf(['male', 'female', 'orther'], 'Invalid Gender').required('Select gender'),
 		agreeterms: Yup.boolean().oneOf([true], 'You must agree to terms of service').required('Required')
 	});
@@ -80,7 +80,8 @@ const RegisterForm = ({ registerThunk, register, registerResetedThunk }) => {
 			password: values.password,
 			phone_number: values.phone_number,
 			address: values.address,
-			gender: values.gender
+			gender: values.gender,
+			image: values.image
 		};
 		registerThunk(user, history);
 	};
@@ -159,13 +160,16 @@ const RegisterForm = ({ registerThunk, register, registerResetedThunk }) => {
 								</SelectForm>
 							</DivFormGroup>
 							<DivFormGroup>
+								<InputForm label="Image" id="image" name="image" type="text" />
+							</DivFormGroup>
+							<DivFormGroup>
 								<DivCustomControl>
 									<CheckBoxForm label="Agree to terms of service" id="agreeterms" name="agreeterms" />
 								</DivCustomControl>
 							</DivFormGroup>
 							<DivCenter>
 								{register.isLoading ? (
-									<ButtonBtnType typeBtn="primary" type="submit" disabled>
+									<ButtonBtnType $typeBtn="primary" type="submit" disabled>
 										Loading...
 									</ButtonBtnType>
 								) : (

@@ -457,9 +457,6 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 1.4rem;
 		font-weight: 500;
 	}
-	.tox-tinymce-aux{
-		display: none;
-	}
 `;
 
 export default GlobalStyle;
