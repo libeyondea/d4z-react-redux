@@ -57,6 +57,8 @@ const DetailPostCard = ({
 					<Helmet>
 						<title>{singlePost.post.title} | De4th Zone</title>
 						<meta name="description" content={singlePost.post.summary || singlePost.post.meta_description} />
+						<meta property="og:title" content={singlePost.post.title} />
+						<meta property="og:description" content={singlePost.post.summary || singlePost.post.meta_description} />
 					</Helmet>
 					<Articlecontent>
 						{singlePost.post.image && (
