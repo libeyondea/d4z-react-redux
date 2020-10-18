@@ -70,9 +70,9 @@ const EditPostForm = ({
 	]);
 	const initialValues = {
 		title: editPost.post.title,
-		summary: editPost.post.summary,
+		summary: editPost.post.summary || '',
 		content: editPost.post.content,
-		image: editPost.post.image,
+		image: editPost.post.image || '',
 		tag: editPost.post.tag,
 		category: editPost.post.category
 	};
@@ -83,9 +83,10 @@ const EditPostForm = ({
 			.required('Title is required'),
 		summary: Yup.string()
 			.min(6, 'Summary must be at least 6 characters')
-			.max(666, 'Summary must be at most 666 characters'),
+			.max(666, 'Summary must be at most 666 characters')
+			.nullable(),
 		content: Yup.string().required('Content is required'),
-		image: Yup.string().max(300, 'Image must be at most 300 characters'),
+		image: Yup.string().max(300, 'Image must be at most 300 characters').nullable(),
 		tag: Yup.array()
 			.min(1, 'Pick at least 1 tag')
 			.of(

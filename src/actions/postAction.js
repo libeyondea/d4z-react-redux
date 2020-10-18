@@ -3,6 +3,8 @@ import {
 	FETCH_POST_SUCCEED,
 	FETCH_POST_FAILED,
 	FETCH_POST_RESETED,
+	SORT_BY_POST_SUCCEED,
+	FILTER_BY_POST_SUCCEED,
 	CREATE_POST_REQUESTED,
 	CREATE_POST_SUCCEED,
 	CREATE_POST_FAILED,
@@ -31,6 +33,20 @@ export const fetchPostRequestedAction = () => ({
 export const fetchPostSucceedAction = (payload) => ({
 	type: FETCH_POST_SUCCEED,
 	payload
+});
+export const sortByPostSucceedAction = (post, sortBy) => ({
+	type: SORT_BY_POST_SUCCEED,
+	payload: {
+		post: post,
+		sortBy: sortBy
+	}
+});
+export const filterByPostSucceedAction = (post, filterBy) => ({
+	type: FILTER_BY_POST_SUCCEED,
+	payload: {
+		post: post,
+		filterBy: filterBy
+	}
 });
 export const fetchPostFailedAction = (payload) => ({
 	type: FETCH_POST_FAILED,

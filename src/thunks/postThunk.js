@@ -1,6 +1,8 @@
 import {
 	fetchPostRequestedAction,
 	fetchPostSucceedAction,
+	sortByPostSucceedAction,
+	filterByPostSucceedAction,
 	fetchPostFailedAction,
 	fetchPostResetedAction,
 	createPostRequestedAction,
@@ -26,12 +28,32 @@ import {
 } from '../actions/postAction';
 import axios from 'axios';
 
-export const fetchPostThunk = () => async (dispatch) => {
+export const fetchPostThunk = (sortBy) => async (dispatch) => {
 	try {
 		dispatch(fetchPostRequestedAction());
 		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
 		if (res.data.success) {
-			dispatch(fetchPostSucceedAction(res.data.data));
+			if (sortBy) {
+				dispatch(sortByPostSucceedAction(res.data.data, sortBy));
+			} else {
+				dispatch(fetchPostSucceedAction(res.data.data));
+			}
+		}
+	} catch (err) {
+		dispatch(fetchPostFailedAction(err.message));
+	}
+};
+
+export const filterByPostThunk = (filterBy) => async (dispatch) => {
+	try {
+		//dispatch(fetchPostRequestedAction());
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
+		if (res.data.success) {
+			if (filterBy) {
+				dispatch(filterByPostSucceedAction(res.data.data, filterBy));
+			} else {
+				dispatch(fetchPostSucceedAction(res.data.data));
+			}
 		}
 	} catch (err) {
 		dispatch(fetchPostFailedAction(err.message));

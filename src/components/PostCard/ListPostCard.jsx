@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import PostCard from './PostCard';
 import Pagination from '../Pagination/Pagination';
 import isEmpty from '../../helpers/isEmpty';
 import { Container } from '../Styled/Wapper';
-import { PostFeed } from '../Styled/PostCard';
+import { PostFeed, SelectSortBy, DivFilter, InputSearch, DivSearch, DivSortBy } from '../Styled/PostCard';
 
 const pageContext = {
 	pageNumber: 0,
@@ -16,19 +16,60 @@ const pageContext = {
 	previousPagePath: '1',
 	nextPagePath: '2'
 };
-const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost }) => {
+const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filterByPostThunk }) => {
+	const [sortBy, setSortBy] = useState('');
+	const [filterBy, setFilterBy] = useState('');
+	const mounted = useRef();
 	useEffect(() => {
 		fetchPostThunk();
+		console.log('mount');
 		return () => {
+			console.log('unmount');
 			fetchPostResetedThunk();
 		};
 	}, [fetchPostResetedThunk, fetchPostThunk]);
+	useEffect(() => {
+		if (!mounted.current) {
+			mounted.current = true;
+		} else {
+			fetchPostThunk(sortBy);
+		}
+	}, [fetchPostThunk, sortBy]);
+	useEffect(() => {
+		if (!mounted.current) {
+			mounted.current = true;
+		} else {
+			filterByPostThunk(filterBy);
+		}
+	}, [filterBy, filterByPostThunk]);
+	const handleSortByPost = (event) => {
+		setSortBy(event.target.value);
+	};
+	const handleFilterByPost = (event) => {
+		setFilterBy(event.target.value);
+	};
 	return (
 		<Container>
 			<Helmet>
 				<title>Home | De4th Zone</title>
 				<meta name="description" content="De4th Zone" />
 			</Helmet>
+			<DivFilter>
+				<DivSearch>
+					<InputSearch type="text" placeholder="Search..." value={filterBy} onChange={handleFilterByPost} />
+				</DivSearch>
+				<DivSortBy>
+					<SelectSortBy value={sortBy} name="sortBy" onChange={handleSortByPost}>
+						<option value="" disabled>
+							Sort by
+						</option>
+						<option value="title_asc">Title - A-Z</option>
+						<option value="title_desc">Title - Z-A</option>
+						<option value="created_at_asc">Created at - Asc</option>
+						<option value="created_at_desc">Created at - Desc</option>
+					</SelectSortBy>
+				</DivSortBy>
+			</DivFilter>
 			{fetchPost.isLoading || isEmpty(fetchPost.post) ? (
 				'Loading................'
 			) : (

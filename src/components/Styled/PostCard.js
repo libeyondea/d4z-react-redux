@@ -347,3 +347,73 @@ export const DivPostCardFooterRight = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
+export const DivFilter = styled.div`
+	margin-bottom: 30px;
+	&::after {
+		content: '';
+		clear: both;
+		display: table;
+	}
+`;
+export const DivSearch = styled.div`
+	float: left;
+`;
+export const DivSortBy = styled.div`
+	float: right;
+`;
+export const InputSearch = styled.input`
+	margin-bottom: 30px;
+	display: block;
+	width: 500px;
+	line-height: 1.5;
+	color: rgb(73, 80, 87);
+	background-color: rgb(255, 255, 255);
+	background-clip: padding-box;
+	padding: 1rem 1.25rem;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(206, 212, 218);
+	border-image: initial;
+	border-radius: 0.75rem;
+	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+	@media (max-width: 980px) {
+		width: 420px;
+	}
+	@media (max-width: 680px) {
+		width: 320px;
+	}
+	&:focus {
+		color: #495057;
+		background-color: #fff;
+		border-color: #80bdff;
+		outline: 0;
+		box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.25);
+	}
+`;
+
+export const SelectSortBy = styled.select`
+	width: 200px;
+	display: block;
+	padding: 1rem 1.25rem;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: 0.75rem;
+	-webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	@media (max-width: 980px) {
+		width: 180px;
+	}
+	@media (max-width: 680px) {
+		width: 150px;
+	}
+	&:focus {
+		color: #495057;
+		background-color: #fff;
+		border-color: #80bdff;
+		outline: 0;
+		box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.25);
+	}
+`;

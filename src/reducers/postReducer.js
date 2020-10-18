@@ -1,6 +1,8 @@
 import {
 	FETCH_POST_REQUESTED,
 	FETCH_POST_SUCCEED,
+	SORT_BY_POST_SUCCEED,
+	FILTER_BY_POST_SUCCEED,
 	FETCH_POST_FAILED,
 	FETCH_POST_RESETED,
 	CREATE_POST_REQUESTED,
@@ -26,6 +28,20 @@ import {
 } from '../constants/postConstant';
 import { produce } from 'immer';
 
+const sortAsc = (arr, field) => {
+	return arr.sort(function (a, b) {
+		if (a[field] > b[field]) return 1;
+		if (b[field] > a[field]) return -1;
+		return 0;
+	});
+};
+const sortDesc = (arr, field) => {
+	return arr.sort(function (a, b) {
+		if (a[field] > b[field]) return -1;
+		if (b[field] > a[field]) return 1;
+		return 0;
+	});
+};
 const initialState = {
 	fetchPost: {
 		post: [],
@@ -64,7 +80,6 @@ const initialState = {
 		errorMessage: null
 	}
 };
-
 const postReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
@@ -77,6 +92,30 @@ const postReducer = (state = initialState, action) =>
 				break;
 			case FETCH_POST_SUCCEED:
 				draft.fetchPost.post = action.payload;
+				draft.fetchPost.isLoading = false;
+				draft.fetchPost.isError = false;
+				draft.fetchPost.errorMessage = null;
+				break;
+			case SORT_BY_POST_SUCCEED:
+				let sortArrPost = [];
+				if (action.payload.sortBy === 'title_asc') {
+					sortArrPost = sortAsc(action.payload.post, 'title');
+				} else if (action.payload.sortBy === 'title_desc') {
+					sortArrPost = sortDesc(action.payload.post, 'title');
+				} else if (action.payload.sortBy === 'created_at_asc') {
+					sortArrPost = sortAsc(action.payload.post, 'created_at');
+				} else if (action.payload.sortBy === 'created_at_desc') {
+					sortArrPost = sortDesc(action.payload.post, 'created_at');
+				}
+				draft.fetchPost.post = sortArrPost;
+				draft.fetchPost.isLoading = false;
+				draft.fetchPost.isError = false;
+				draft.fetchPost.errorMessage = null;
+				break;
+			case FILTER_BY_POST_SUCCEED:
+				const { filterBy } = action.payload;
+				const filterArrPost = action.payload.post.filter((val) => val.title.includes(filterBy));
+				draft.fetchPost.post = filterArrPost;
 				draft.fetchPost.isLoading = false;
 				draft.fetchPost.isError = false;
 				draft.fetchPost.errorMessage = null;
