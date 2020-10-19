@@ -24,12 +24,7 @@ import {
 	DELETE_POST_REQUESTED,
 	DELETE_POST_SUCCEED,
 	DELETE_POST_FAILED,
-	DELETE_POST_RESETED,
-	SORT_BY_ALPHABET,
-	SORT_BY_PRICE,
-	LOAD_DATA,
-	FILTER_BY_PRICE,
-	FILTER_BY_VALUE
+	DELETE_POST_RESETED
 } from '../constants/postConstant';
 
 export const fetchPostRequestedAction = () => ({
@@ -59,29 +54,6 @@ export const fetchPostFailedAction = (payload) => ({
 });
 export const fetchPostResetedAction = () => ({
 	type: FETCH_POST_RESETED
-});
-
-export const sortByPrice = (payload) => ({
-	type: SORT_BY_PRICE,
-	payload
-});
-export const filterByPrice = (payload) => ({
-	type: FILTER_BY_PRICE,
-	payload
-});
-export const sortByAlphabet = (payload) => ({
-	type: SORT_BY_ALPHABET,
-	payload
-});
-export const loadData = (payload) => ({
-	type: LOAD_DATA,
-	payload
-});
-export const filterByValue = (value) => ({
-	type: FILTER_BY_VALUE,
-	payload: {
-		value: value
-	}
 });
 
 export const createPostRequestedAction = () => ({

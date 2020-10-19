@@ -24,32 +24,9 @@ import {
 	deletePostRequestedAction,
 	deletePostSucceedAction,
 	deletePostFailedAction,
-	deletePostResetedAction,
-	loadData,
-	filterByValue
+	deletePostResetedAction
 } from '../actions/postAction';
 import axios from 'axios';
-
-export const loadDataThunk = () => async (dispatch) => {
-	try {
-		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
-		console.log('sad');
-		dispatch(loadData(res.data.data));
-	} catch (err) {
-		console.log('err');
-	}
-};
-
-export const filterByValueThunk = (value) => async (dispatch) => {
-	try {
-		//const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
-
-		dispatch(filterByValue(value));
-		console.log('sad');
-	} catch (err) {
-		console.log('err');
-	}
-};
 
 export const fetchPostThunk = (sortBy) => async (dispatch) => {
 	try {
