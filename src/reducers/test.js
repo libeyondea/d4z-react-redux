@@ -1,4 +1,4 @@
-import generate from '../helpers/data';
+import generate from './data';
 
 const initialState = {
 	appliedFilters: []
@@ -97,7 +97,6 @@ const filterStore = (state = initialState, action) => {
 		case LOAD_DATA:
 			let count = action.payload.count;
 			let countPerPage = action.payload.countPerPage || 20;
-
 			//round up
 			let totalPages = Math.ceil(count / countPerPage);
 

@@ -5,6 +5,7 @@ import PostCard from './PostCard';
 import Pagination from '../Pagination/Pagination';
 import isEmpty from '../../helpers/isEmpty';
 import { Container } from '../Styled/Wapper';
+import Test from './Test';
 import { PostFeed, SelectSortBy, DivFilter, InputSearch, DivSearch, DivSortBy } from '../Styled/PostCard';
 
 const pageContext = {
@@ -16,37 +17,26 @@ const pageContext = {
 	previousPagePath: '1',
 	nextPagePath: '2'
 };
-const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filterByPostThunk }) => {
+const ListPostCard = ({
+	fetchPostThunk,
+	fetchPostResetedThunk,
+	fetchPost,
+	filterByPostThunk,
+	loadDataThunk,
+	filterByValueThunk
+}) => {
 	const [sortBy, setSortBy] = useState('');
 	const [filterBy, setFilterBy] = useState('');
 	const mounted = useRef();
 	useEffect(() => {
-		fetchPostThunk();
-		console.log('mount');
-		return () => {
-			console.log('unmount');
-			fetchPostResetedThunk();
-		};
-	}, [fetchPostResetedThunk, fetchPostThunk]);
-	useEffect(() => {
-		if (!mounted.current) {
-			mounted.current = true;
-		} else {
-			fetchPostThunk(sortBy);
-		}
-	}, [fetchPostThunk, sortBy]);
-	useEffect(() => {
-		if (!mounted.current) {
-			mounted.current = true;
-		} else {
-			filterByPostThunk(filterBy);
-		}
-	}, [filterBy, filterByPostThunk]);
+		loadDataThunk();
+	}, [loadDataThunk]);
 	const handleSortByPost = (event) => {
 		setSortBy(event.target.value);
 	};
 	const handleFilterByPost = (event) => {
-		setFilterBy(event.target.value);
+		let input = event.target.value;
+		filterByValueThunk(input);
 	};
 	return (
 		<Container>
@@ -56,7 +46,7 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filter
 			</Helmet>
 			<DivFilter>
 				<DivSearch>
-					<InputSearch type="text" placeholder="Search..." value={filterBy} onChange={handleFilterByPost} />
+					<InputSearch type="text" placeholder="Search..." onChange={handleFilterByPost} />
 				</DivSearch>
 				<DivSortBy>
 					<SelectSortBy value={sortBy} name="sortBy" onChange={handleSortByPost}>
@@ -70,18 +60,12 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filter
 					</SelectSortBy>
 				</DivSortBy>
 			</DivFilter>
-			{fetchPost.isLoading || isEmpty(fetchPost.post) ? (
-				'Loading................'
-			) : (
-				<>
-					<PostFeed>
-						{fetchPost.post.map((node) => (
-							<PostCard key={node.id} post={node} />
-						))}
-					</PostFeed>
-					<Pagination pageContext={pageContext} />
-				</>
-			)}
+			<PostFeed>
+				{fetchPost.filteredProducts &&
+					fetchPost.filteredProducts.length &&
+					fetchPost.filteredProducts.map((node) => <PostCard key={node.id} post={node} />)}
+			</PostFeed>
+			<Pagination pageContext={pageContext} />
 		</Container>
 	);
 };

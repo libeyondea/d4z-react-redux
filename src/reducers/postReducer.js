@@ -24,7 +24,12 @@ import {
 	DELETE_POST_REQUESTED,
 	DELETE_POST_SUCCEED,
 	DELETE_POST_FAILED,
-	DELETE_POST_RESETED
+	DELETE_POST_RESETED,
+	SORT_BY_ALPHABET,
+	SORT_BY_PRICE,
+	LOAD_DATA,
+	FILTER_BY_PRICE,
+	FILTER_BY_VALUE
 } from '../constants/postConstant';
 import { produce } from 'immer';
 
@@ -84,6 +89,34 @@ const postReducer = (state = initialState, action) =>
 	produce(state, (draft) => {
 		switch (action.type) {
 			//
+			case SORT_BY_ALPHABET:
+				let sortedArr =
+					action.payload.direction === 'asc'
+						? sortAsc(state.filteredProducts, 'name')
+						: sortDesc(state.filteredProducts, 'name');
+
+				draft.fetchPost.filteredProducts = sortedArr;
+				break;
+			case SORT_BY_PRICE:
+				//sort by price
+				break;
+			case FILTER_BY_PRICE:
+				//filter by price
+				break;
+			case LOAD_DATA:
+				draft.fetchPost.post = action.payload;
+				break;
+			case FILTER_BY_VALUE:
+				//clone the state
+				//let newState = Object.assign({}, state);
+				//the value received from our presentational component
+				let value = action.payload.value;
+				let filteredValues = draft.fetchPost.post.filter((product) => {
+					//look for objects with the received value in their ‘name’ or ‘designer’ fields
+					return product.title.toLowerCase().includes(value) || product.summary.toLowerCase().includes(value);
+				});
+				draft.fetchPost.filteredProducts = filteredValues;
+				break;
 			case FETCH_POST_REQUESTED:
 				draft.fetchPost.post = [];
 				draft.fetchPost.isLoading = true;
