@@ -67,10 +67,9 @@ const CreatePostForm = ({
 			.required('Title is required'),
 		summary: Yup.string()
 			.min(6, 'Summary must be at least 6 characters')
-			.max(666, 'Summary must be at most 666 characters')
-			.nullable(),
+			.max(666, 'Summary must be at most 666 characters'),
 		content: Yup.string().required('Content is required'),
-		image: Yup.string().max(300, 'Image must be at most 300 characters').nullable(),
+		image: Yup.string().max(300, 'Image must be at most 300 characters'),
 		tag: Yup.array()
 			.min(1, 'Pick at least 1 tag')
 			.of(
