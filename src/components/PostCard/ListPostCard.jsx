@@ -5,7 +5,6 @@ import PostCard from './PostCard';
 import Pagination from '../Pagination/Pagination';
 import isEmpty from '../../helpers/isEmpty';
 import { Container } from '../Styled/Wapper';
-import Test from './Test';
 import { PostFeed, SelectSortBy, DivFilter, InputSearch, DivSearch, DivSortBy } from '../Styled/PostCard';
 
 const pageContext = {
