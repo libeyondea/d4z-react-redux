@@ -34,19 +34,13 @@ export const fetchPostSucceedAction = (payload) => ({
 	type: FETCH_POST_SUCCEED,
 	payload
 });
-export const sortByPostSucceedAction = (post, sortBy) => ({
+export const sortByPostSucceedAction = (payload) => ({
 	type: SORT_BY_POST_SUCCEED,
-	payload: {
-		post: post,
-		sortBy: sortBy
-	}
+	payload
 });
-export const filterByPostSucceedAction = (post, filterBy) => ({
+export const filterByPostSucceedAction = (payload) => ({
 	type: FILTER_BY_POST_SUCCEED,
-	payload: {
-		post: post,
-		filterBy: filterBy
-	}
+	payload
 });
 export const fetchPostFailedAction = (payload) => ({
 	type: FETCH_POST_FAILED,

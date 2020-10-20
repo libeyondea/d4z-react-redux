@@ -28,15 +28,25 @@ import {
 } from '../actions/postAction';
 import axios from 'axios';
 
-export const fetchPostThunk = (sortBy) => async (dispatch) => {
+export const fetchPostThunk = () => async (dispatch) => {
 	try {
 		dispatch(fetchPostRequestedAction());
 		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
 		if (res.data.success) {
+			dispatch(fetchPostSucceedAction(res.data.data));
+		}
+	} catch (err) {
+		dispatch(fetchPostFailedAction(err.message));
+	}
+};
+
+export const sortByPostThunk = (sortBy) => async (dispatch) => {
+	try {
+		//dispatch(fetchPostRequestedAction());
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
+		if (res.data.success) {
 			if (sortBy) {
-				dispatch(sortByPostSucceedAction(res.data.data, sortBy));
-			} else {
-				dispatch(fetchPostSucceedAction(res.data.data));
+				dispatch(sortByPostSucceedAction(sortBy));
 			}
 		}
 	} catch (err) {
@@ -49,11 +59,7 @@ export const filterByPostThunk = (filterBy) => async (dispatch) => {
 		//dispatch(fetchPostRequestedAction());
 		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
 		if (res.data.success) {
-			if (filterBy) {
-				dispatch(filterByPostSucceedAction(res.data.data, filterBy));
-			} else {
-				dispatch(fetchPostSucceedAction(res.data.data));
-			}
+			dispatch(filterByPostSucceedAction(filterBy));
 		}
 	} catch (err) {
 		dispatch(fetchPostFailedAction(err.message));

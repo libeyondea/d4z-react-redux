@@ -16,37 +16,20 @@ const pageContext = {
 	previousPagePath: '1',
 	nextPagePath: '2'
 };
-const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filterByPostThunk }) => {
+const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filterByPostThunk, sortByPostThunk }) => {
 	const [sortBy, setSortBy] = useState('');
-	const [filterBy, setFilterBy] = useState('');
-	const mounted = useRef();
 	useEffect(() => {
 		fetchPostThunk();
-		console.log('mount');
 		return () => {
-			console.log('unmount');
 			fetchPostResetedThunk();
 		};
 	}, [fetchPostResetedThunk, fetchPostThunk]);
-	useEffect(() => {
-		if (!mounted.current) {
-			mounted.current = true;
-		} else {
-			fetchPostThunk(sortBy);
-		}
-	}, [fetchPostThunk, sortBy]);
-	useEffect(() => {
-		if (!mounted.current) {
-			mounted.current = true;
-		} else {
-			filterByPostThunk(filterBy);
-		}
-	}, [filterBy, filterByPostThunk]);
 	const handleSortByPost = (event) => {
+		sortByPostThunk(event.target.value);
 		setSortBy(event.target.value);
 	};
 	const handleFilterByPost = (event) => {
-		setFilterBy(event.target.value);
+		filterByPostThunk(event.target.value);
 	};
 	return (
 		<Container>
@@ -70,19 +53,18 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filter
 					</SelectSortBy>
 				</DivSortBy>
 			</DivFilter>
-			{fetchPost.isLoading || isEmpty(fetchPost.post) ? (
+			{fetchPost.isLoading || isEmpty(fetchPost.filteredPost) ? (
 				'Loading................'
 			) : (
 				<>
 					<PostFeed>
-						{fetchPost.post.map((node) => (
+						{fetchPost.filteredPost.map((node) => (
 							<PostCard key={node.id} post={node} />
 						))}
 					</PostFeed>
 					<Pagination pageContext={pageContext} />
 				</>
 			)}
-			<Pagination pageContext={pageContext} />
 		</Container>
 	);
 };
