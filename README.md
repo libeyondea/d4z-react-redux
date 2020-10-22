@@ -27,7 +27,7 @@
     <a href="https://github.com/de4th-zone/d4z-react-redux"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/de4th-zone/d4z-react-redux">View Demo</a>
+    <a href="https://d4z-react-redux.netlify.app">View Demo</a>
     ·
     <a href="https://github.com/de4th-zone/d4z-react-redux/issues">Report Bug</a>
     ·
