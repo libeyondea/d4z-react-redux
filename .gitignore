@@ -17,7 +17,7 @@
 .env
 .env.development
 .env.test
-.env.production
+#.env.production
 .env.staging
 
 npm-debug.log*
