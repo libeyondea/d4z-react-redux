@@ -18,12 +18,8 @@
   <a href="https://github.com/de4th-zone/d4z-react-redux">
     <img src="https://i.imgur.com/eP2iaPn.png" alt="Logo" width="166" height="166">
   </a>
-
-  <h3 align="center">Blog React Redux</h3>
-
+  <h3 align="center">Blog React Redux Beta</h3>
   <p align="center">
-    Blog beta test
-    <br />
     <a href="https://github.com/de4th-zone/d4z-react-redux"><strong>Explore the docs »</strong></a>
     <br />
     <br />
@@ -57,9 +53,7 @@
 
 <!--[![Product Name Screen Shot][product-screenshot]](https://github.com/de4th-zone/d4z-react-redux)-->
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`github_username`, `repo_name`, `twitter_handle`, `email`
+**Libraries used in the project**
 
 ### Built With
 
@@ -74,8 +68,6 @@ Here's a blank template to get started:
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
 
 - npm v6.14.8
 
