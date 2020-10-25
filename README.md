@@ -81,19 +81,23 @@ This is an example of how to list things you need to use the software and how to
 
 - node v14.5.0
 
-```sh
-npm install npm@latest -g
-```
-
 ### Installation
 
-1. Clone the repo
+1. Open cmd
+
+2. Clone the repo
 
 ```sh
 git clone https://github.com/de4th-zone/d4z-react-redux.git
 ```
 
-2. Install NPM packages
+3. Open folder
+
+```sh
+cd d4z-react-redux-master
+```
+
+4. Install NPM packages
 
 ```sh
 npm install
