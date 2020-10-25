@@ -16,7 +16,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/de4th-zone/d4z-react-redux">
-    <img src="https://i.imgur.com/eP2iaPn.png" alt="Logo" width="166" height="166">
+    <img src="[img]https://i.imgur.com/6jxXR32.jpg" alt="d4z" width="166" height="166">
   </a>
   <h3 align="center">Blog React Redux Beta</h3>
   <p align="center">
