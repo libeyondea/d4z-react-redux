@@ -77,7 +77,9 @@ To get a local copy up and running follow these simple steps.
 
 This is an example of how to list things you need to use the software and how to install them.
 
-- npm
+- npm v6.14.8
+
+- node v14.5.0
 
 ```sh
 npm install npm@latest -g
