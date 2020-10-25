@@ -101,24 +101,30 @@ const postReducer = (state = initialState, action) =>
 				break;
 			case SORT_BY_POST_SUCCEED:
 				let sortArrPost = [];
+				let sortArrPostDefault = [];
 				let sortBy = action.payload;
 				if (sortBy === 'title_asc') {
 					sortArrPost = sortAsc(draft.fetchPost.filteredPost, 'title');
+					sortArrPostDefault = sortAsc(draft.fetchPost.post, 'title');
 				} else if (sortBy === 'title_desc') {
 					sortArrPost = sortDesc(draft.fetchPost.filteredPost, 'title');
+					sortArrPostDefault = sortDesc(draft.fetchPost.post, 'title');
 				} else if (sortBy === 'created_at_asc') {
 					sortArrPost = sortAsc(draft.fetchPost.filteredPost, 'created_at');
+					sortArrPostDefault = sortAsc(draft.fetchPost.post, 'created_at');
 				} else if (sortBy === 'created_at_desc') {
 					sortArrPost = sortDesc(draft.fetchPost.filteredPost, 'created_at');
+					sortArrPostDefault = sortDesc(draft.fetchPost.post, 'created_at');
 				}
-				draft.fetchPost.post = sortArrPost;
+				draft.fetchPost.post = sortArrPostDefault;
 				draft.fetchPost.filteredPost = sortArrPost;
 				draft.fetchPost.isLoading = false;
 				draft.fetchPost.isError = false;
 				draft.fetchPost.errorMessage = null;
 				break;
 			case FILTER_BY_POST_SUCCEED:
-				let filterArrPost = draft.fetchPost.post.filter((val) => val.title.includes(action.payload));
+				let values = action.payload;
+				let filterArrPost = draft.fetchPost.post.filter((val) => val.title.includes(values));
 				draft.fetchPost.filteredPost = filterArrPost;
 				draft.fetchPost.isLoading = false;
 				draft.fetchPost.isError = false;
