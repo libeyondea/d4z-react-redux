@@ -3,6 +3,10 @@ import {
 	FETCH_CATEGORY_SUCCEED,
 	FETCH_CATEGORY_FAILED,
 	FETCH_CATEGORY_RESETED,
+	FETCH_RECURSIVE_CATEGORY_REQUESTED,
+	FETCH_RECURSIVE_CATEGORY_SUCCEED,
+	FETCH_RECURSIVE_CATEGORY_FAILED,
+	FETCH_RECURSIVE_CATEGORY_RESETED,
 	CREATE_CATEGORY_REQUESTED,
 	CREATE_CATEGORY_SUCCEED,
 	CREATE_CATEGORY_FAILED,
@@ -28,6 +32,12 @@ import { produce } from 'immer';
 
 const initialState = {
 	fetchCategory: {
+		category: [],
+		isLoading: false,
+		isError: false,
+		errorMessage: null
+	},
+	fetchRecursiveCategory: {
 		category: [],
 		isLoading: false,
 		isError: false,
@@ -91,6 +101,31 @@ const categoryReducer = (state = initialState, action) =>
 				draft.fetchCategory.isLoading = false;
 				draft.fetchCategory.isError = false;
 				draft.fetchCategory.errorMessage = null;
+				break;
+			// D4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4Z
+			case FETCH_RECURSIVE_CATEGORY_REQUESTED:
+				draft.fetchRecursiveCategory.category = [];
+				draft.fetchRecursiveCategory.isLoading = true;
+				draft.fetchRecursiveCategory.isError = false;
+				draft.fetchRecursiveCategory.errorMessage = null;
+				break;
+			case FETCH_RECURSIVE_CATEGORY_SUCCEED:
+				draft.fetchRecursiveCategory.category = action.payload;
+				draft.fetchRecursiveCategory.isLoading = false;
+				draft.fetchRecursiveCategory.isError = false;
+				draft.fetchRecursiveCategory.errorMessage = null;
+				break;
+			case FETCH_RECURSIVE_CATEGORY_FAILED:
+				draft.fetchRecursiveCategory.category = [];
+				draft.fetchRecursiveCategory.isLoading = false;
+				draft.fetchRecursiveCategory.isError = true;
+				draft.fetchRecursiveCategory.errorMessage = action.payload;
+				break;
+			case FETCH_RECURSIVE_CATEGORY_RESETED:
+				draft.fetchRecursiveCategory.category = [];
+				draft.fetchRecursiveCategory.isLoading = false;
+				draft.fetchRecursiveCategory.isError = false;
+				draft.fetchRecursiveCategory.errorMessage = null;
 				break;
 			// D4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4Z
 			case CREATE_CATEGORY_REQUESTED:

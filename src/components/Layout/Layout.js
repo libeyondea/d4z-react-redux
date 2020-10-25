@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
@@ -36,16 +36,42 @@ import {
 	DivSiteFootNavLeft,
 	DivSiteFootNavRight,
 	ASiteFootNavItem,
-	LinkSiteFootNavItem
+	LinkSiteFootNavItem,
+	LinkDropDownSubItem
 } from '../Styled/Layout';
 import { Container } from '../Styled/Wapper';
 
-const Layout = ({ logoutThunk, login, children, isHome }) => {
+const Layout = ({ logoutThunk, login, children, isHome, fetchRecursiveCategoryThunk, fetchRecursiveCategory }) => {
 	const site = config.layoutWebsite;
 	const history = useHistory();
 	const handleLogoutSubmit = (event) => {
 		event.preventDefault();
 		logoutThunk(history);
+	};
+	useEffect(() => {
+		fetchRecursiveCategoryThunk();
+	}, [fetchRecursiveCategoryThunk]);
+
+	const ListCategory = (category) => {
+		return (
+			<DivDropDownMenu>
+				{category.map((node) => (
+					<>
+						{node.children_category ? (
+							<LinkDropDownSubItem to={`/category/${node.id}/${node.slug}`} key={node.id}>
+								{node.title}
+								{node.children_category && ListCategory(node.children_category)}
+							</LinkDropDownSubItem>
+						) : (
+							<LinkDropDownItem to={`/category/${node.id}/${node.slug}`} key={node.id}>
+								{node.title}
+								{node.children_category && ListCategory(node.children_category)}
+							</LinkDropDownItem>
+						)}
+					</>
+				))}
+			</DivDropDownMenu>
+		);
 	};
 	return (
 		<>
@@ -62,6 +88,10 @@ const Layout = ({ logoutThunk, login, children, isHome }) => {
 									<Link to="/">{site.logo && <ImgSiteLogo src={site.logo} alt={site.title} />}</Link>
 								</DivSiteMastLeft>
 								<DivSiteMastRight>
+									<DivDropDown>
+										<ADropDownToggleASiteNavItem href="#!">Categories</ADropDownToggleASiteNavItem>
+										{ListCategory(fetchRecursiveCategory.category)}
+									</DivDropDown>
 									{login.isAuthenticated ? (
 										<DivDropDown>
 											<ADropDownToggleASiteNavItem href="#!">{login.user.user_name}</ADropDownToggleASiteNavItem>

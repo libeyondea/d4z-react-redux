@@ -76,7 +76,7 @@ export const DivDropDownMenu = styled.div`
 		z-index: 1;
 		border-radius: 0.25rem;
 	}
-	${DivDropDown}:hover & {
+	${DivDropDown}:hover > & {
 		display: block;
 	}
 `;
@@ -90,6 +90,37 @@ export const CssDropDownItem = css`
 	}
 	${DivDropDown} ${DivDropDownMenu} &:hover {
 		background-color: #f1f1f1;
+	}
+`;
+export const CssDropDownSubItem = css`
+	${DivDropDown} ${DivDropDownMenu} & {
+		color: var(--color-base);
+		padding: 10px 20px;
+		text-decoration: none;
+		display: block;
+		border-radius: 0.25rem;
+		position: relative;
+	}
+	${DivDropDown} ${DivDropDownMenu} &:hover {
+		background-color: #f1f1f1;
+	}
+`;
+export const LinkDropDownSubItem = styled(Link)`
+	${CssDropDownSubItem}
+	& ${DivDropDownMenu} {
+		display: none;
+		position: absolute;
+		right: 0;
+		background-color: #f9f9f9;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		z-index: 1;
+		border-radius: 0.25rem;
+		left: 101%;
+		top: 0;
+	}
+	&:hover > ${DivDropDownMenu} {
+		display: block;
 	}
 `;
 export const ADropDownItem = styled.a`

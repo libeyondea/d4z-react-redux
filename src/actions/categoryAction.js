@@ -3,6 +3,10 @@ import {
 	FETCH_CATEGORY_SUCCEED,
 	FETCH_CATEGORY_FAILED,
 	FETCH_CATEGORY_RESETED,
+	FETCH_RECURSIVE_CATEGORY_REQUESTED,
+	FETCH_RECURSIVE_CATEGORY_SUCCEED,
+	FETCH_RECURSIVE_CATEGORY_FAILED,
+	FETCH_RECURSIVE_CATEGORY_RESETED,
 	CREATE_CATEGORY_REQUESTED,
 	CREATE_CATEGORY_SUCCEED,
 	CREATE_CATEGORY_FAILED,
@@ -38,6 +42,21 @@ export const fetchCategoryFailedAction = (payload) => ({
 });
 export const fetchCategoryResetedAction = () => ({
 	type: FETCH_CATEGORY_RESETED
+});
+
+export const fetchRecursiveCategoryRequestedAction = () => ({
+	type: FETCH_RECURSIVE_CATEGORY_REQUESTED
+});
+export const fetchRecursiveCategorySucceedAction = (payload) => ({
+	type: FETCH_RECURSIVE_CATEGORY_SUCCEED,
+	payload
+});
+export const fetchRecursiveCategoryFailedAction = (payload) => ({
+	type: FETCH_RECURSIVE_CATEGORY_FAILED,
+	payload
+});
+export const fetchRecursiveCategoryResetedAction = () => ({
+	type: FETCH_RECURSIVE_CATEGORY_RESETED
 });
 
 export const createCategoryRequestedAction = () => ({

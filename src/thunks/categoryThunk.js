@@ -3,6 +3,10 @@ import {
 	fetchCategorySucceedAction,
 	fetchCategoryFailedAction,
 	fetchCategoryResetedAction,
+	fetchRecursiveCategoryRequestedAction,
+	fetchRecursiveCategorySucceedAction,
+	fetchRecursiveCategoryFailedAction,
+	fetchRecursiveCategoryResetedAction,
 	createCategoryRequestedAction,
 	createCategorySucceedAction,
 	createCategoryFailedAction,
@@ -40,6 +44,22 @@ export const fetchCategoryThunk = () => async (dispatch) => {
 
 export const fetchCategoryResetedThunk = () => (dispatch) => {
 	dispatch(fetchCategoryResetedAction());
+};
+
+export const fetchRecursiveCategoryThunk = () => async (dispatch) => {
+	try {
+		dispatch(fetchRecursiveCategoryRequestedAction());
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/recursive-categories`);
+		if (res.data.success) {
+			dispatch(fetchRecursiveCategorySucceedAction(res.data.data));
+		}
+	} catch (err) {
+		dispatch(fetchRecursiveCategoryFailedAction(err.message));
+	}
+};
+
+export const fetchRecursiveCategoryResetedThunk = () => (dispatch) => {
+	dispatch(fetchRecursiveCategoryResetedAction());
 };
 
 export const createCategoryThunk = (category, slug, history) => async (dispatch) => {
