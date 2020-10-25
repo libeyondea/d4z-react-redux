@@ -95,6 +95,12 @@ cd d4z-react-redux-master
 npm install
 ```
 
+4. Run project
+
+```sh
+npm run dev
+```
+
 <!-- USAGE EXAMPLES -->
 
 ## Usage
