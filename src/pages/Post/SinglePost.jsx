@@ -4,11 +4,9 @@ import DetailPostCardContainer from '../../containers/DetailPostCardContainer';
 
 const Post = () => {
 	return (
-		<>
-			<LayoutContainer>
-				<DetailPostCardContainer />
-			</LayoutContainer>
-		</>
+		<LayoutContainer>
+			<DetailPostCardContainer />
+		</LayoutContainer>
 	);
 };
 

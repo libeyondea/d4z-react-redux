@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import LayoutContainer from '../../containers/LayoutContainer.jsx';
 
 const FourZeroFour = () => {
-	console.log('404');
 	return (
 		<LayoutContainer>
 			<div className="container">
