@@ -56,9 +56,10 @@
 
 ### Built With
 
-- []()
-- []()
-- []()
+- [React](https://github.com/facebook/react)
+- [Redux](https://github.com/reduxjs/redux)
+- [styled-components](https://github.com/styled-components/styled-components)
+- ...
 
 <!-- GETTING STARTED -->
 
