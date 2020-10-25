@@ -22,7 +22,6 @@
   <p align="center">
     <a href="https://github.com/de4th-zone/d4z-react-redux"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
     <a href="https://d4z-react-redux.netlify.app" target="_blank" rel="noopener noreferrer">View Demo</a>
     ·
     <a href="https://github.com/de4th-zone/d4z-react-redux/issues">Report Bug</a>
@@ -137,7 +136,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@NHT_445448](https://twitter.com/NHT_445448) - nguyenthucofficial@gmail.com
+Your Name - [@de4th_zone](https://twitter.com/de4th_zone) - nguyenthucofficial@gmail.com
 
 Project Link: [https://github.com/de4th-zone/d4z-react-redux](https://github.com/de4th-zone/d4z-react-redux)
 
