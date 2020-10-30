@@ -78,7 +78,7 @@ export const createPostThunk = (post, history) => async (dispatch) => {
 			dispatch(createPostSucceedAction(res.data.data));
 			history.push(`/posts/${post.id}/${post.slug}`);
 		} else {
-			dispatch(updatePostFailedAction(res.data.errorMessage));
+			dispatch(createPostFailedAction(res.data.errorMessage));
 		}
 	} catch (err) {
 		dispatch(createPostFailedAction(err.message));

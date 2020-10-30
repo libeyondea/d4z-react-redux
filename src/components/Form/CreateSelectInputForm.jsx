@@ -1,15 +1,15 @@
 import React from 'react';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import classnames from 'classnames';
 import makeAnimated from 'react-select/animated';
 import { LabelForm, DivInvalidFeedback } from '../Styled/LoginForm';
 
 const animatedComponents = makeAnimated();
-const SelectInputFormik = ({ errors, touched, isError, errorMessage, label, ...props }) => {
+const CreateSelectInputForm = ({ errors, touched, isError, errorMessage, label, ...props }) => {
 	return (
 		<>
 			<LabelForm htmlFor={props.id || props.name}>{label}</LabelForm>
-			<Select
+			<CreatableSelect
 				{...props}
 				className={classnames('form-control-react-select', {
 					'is-invalid-react-select': (errors && touched) || (isError && errorMessage)
@@ -18,6 +18,7 @@ const SelectInputFormik = ({ errors, touched, isError, errorMessage, label, ...p
 				components={animatedComponents}
 				closeMenuOnSelect={false}
 				isOpen={true}
+				createOptionPosition="first"
 			/>
 			{errors && touched && <DivInvalidFeedback>{errors}</DivInvalidFeedback>}
 			{isError && errorMessage && <DivInvalidFeedback>{errorMessage}</DivInvalidFeedback>}
@@ -25,4 +26,4 @@ const SelectInputFormik = ({ errors, touched, isError, errorMessage, label, ...p
 	);
 };
 
-export default SelectInputFormik;
+export default CreateSelectInputForm;

@@ -33,10 +33,6 @@ module.exports = {
 				url: '/tags'
 			},
 			{
-				label: 'Categories',
-				url: '/categories'
-			},
-			{
 				label: 'Users',
 				url: '/users'
 			},

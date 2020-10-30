@@ -17,6 +17,8 @@ const EditPost = lazy(() => import('../pages/Post/EditPost'));
 const FetchTag = lazy(() => import('../pages/Tag/FetchTag'));
 const SingleTag = lazy(() => import('../pages/Tag/SingleTag'));
 
+const SingleCategory = lazy(() => import('../pages/Category/SingleCategory'));
+
 const FourZeroFour = lazy(() => import('../pages/Error/404'));
 
 const Routes = () => {
@@ -38,6 +40,8 @@ const Routes = () => {
 
 					<Route exact path="/tags" component={FetchTag} />
 					<Route exact path="/tags/:id/:slug" component={SingleTag} />
+
+					<Route exact path="/categories/:id/:slug" component={SingleCategory} />
 
 					<Route component={FourZeroFour} />
 				</Switch>

@@ -54,7 +54,7 @@ const initialState = {
 		post: {},
 		isLoading: false,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	singlePost: {
 		post: {},
@@ -72,7 +72,7 @@ const initialState = {
 		post: {},
 		isLoading: false,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	deletePost: {
 		post: {},
@@ -149,13 +149,13 @@ const postReducer = (state = initialState, action) =>
 				draft.createPost.post = {};
 				draft.createPost.isLoading = true;
 				draft.createPost.isError = false;
-				draft.createPost.errorMessage = null;
+				draft.createPost.errorMessage = {};
 				break;
 			case CREATE_POST_SUCCEED:
 				draft.createPost.post = action.payload;
 				draft.createPost.isLoading = false;
 				draft.createPost.isError = false;
-				draft.createPost.errorMessage = null;
+				draft.createPost.errorMessage = {};
 				break;
 			case CREATE_POST_FAILED:
 				draft.createPost.post = {};
@@ -167,7 +167,7 @@ const postReducer = (state = initialState, action) =>
 				draft.createPost.post = {};
 				draft.createPost.isLoading = false;
 				draft.createPost.isError = false;
-				draft.createPost.errorMessage = null;
+				draft.createPost.errorMessage = {};
 				break;
 			//
 			case SINGLE_POST_REQUESTED:
@@ -224,13 +224,13 @@ const postReducer = (state = initialState, action) =>
 				draft.updatePost.post = {};
 				draft.updatePost.isLoading = true;
 				draft.updatePost.isError = false;
-				draft.updatePost.errorMessage = null;
+				draft.updatePost.errorMessage = {};
 				break;
 			case UPDATE_POST_SUCCEED:
 				draft.updatePost.post = action.payload;
 				draft.updatePost.isLoading = false;
 				draft.updatePost.isError = false;
-				draft.updatePost.errorMessage = null;
+				draft.updatePost.errorMessage = {};
 				break;
 			case UPDATE_POST_FAILED:
 				draft.updatePost.post = {};
@@ -242,7 +242,7 @@ const postReducer = (state = initialState, action) =>
 				draft.updatePost.post = {};
 				draft.updatePost.isLoading = false;
 				draft.updatePost.isError = false;
-				draft.updatePost.errorMessage = null;
+				draft.updatePost.errorMessage = {};
 				break;
 			//
 			case DELETE_POST_REQUESTED:

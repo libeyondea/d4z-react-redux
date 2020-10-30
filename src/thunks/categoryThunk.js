@@ -81,10 +81,10 @@ export const createCategoryResetedThunk = () => (dispatch) => {
 	dispatch(createCategoryResetedAction());
 };
 
-export const singleCategoryThunk = (slug) => async (dispatch) => {
+export const singleCategoryThunk = (id) => async (dispatch) => {
 	try {
 		dispatch(singleCategoryRequestedAction());
-		const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories/${slug}`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/categories/${id}`);
 		if (res.data.success) {
 			dispatch(singleCategorySucceedAction(res.data.data));
 		}

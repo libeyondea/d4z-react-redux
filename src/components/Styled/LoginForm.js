@@ -31,14 +31,24 @@ export const InputFormControl = styled.input`
 	padding: 1rem 1.25rem;
 	line-height: 1.5;
 	color: #495057;
-	background-color: #fff;
+	${({ readOnly }) =>
+		readOnly
+			? `
+            background-color: #d3d3d3;
+    		`
+			: `background-color: #fff;`}
 	background-clip: padding-box;
 	border: 1px solid ${({ isInValid }) => (isInValid && `#dc3545`) || `#ced4da`};
 	border-radius: 0.75rem;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 	&:focus {
 		color: #495057;
-		background-color: #fff;
+		${({ readOnly }) =>
+			readOnly
+				? `
+            background-color: #d3d3d3;
+    		`
+				: `background-color: #fff;`}
 		border-color: ${({ isInValid }) => (isInValid && `#dc3545`) || `#80bdff`};
 		outline: 0;
 		box-shadow: ${({ isInValid }) =>

@@ -36,12 +36,11 @@ import {
 	DivSiteFootNavLeft,
 	DivSiteFootNavRight,
 	ASiteFootNavItem,
-	LinkSiteFootNavItem,
-	LinkDropDownSubItem
+	LinkSiteFootNavItem
 } from '../Styled/Layout';
 import { Container } from '../Styled/Wapper';
 
-const Layout = ({ logoutThunk, login, children, isHome, fetchRecursiveCategoryThunk, fetchRecursiveCategory }) => {
+const Layout = ({ logoutThunk, login, children, isHome, fetchCategoryThunk, fetchCategory }) => {
 	const site = config.layoutWebsite;
 	const history = useHistory();
 	const handleLogoutSubmit = (event) => {
@@ -49,25 +48,17 @@ const Layout = ({ logoutThunk, login, children, isHome, fetchRecursiveCategoryTh
 		logoutThunk(history);
 	};
 	useEffect(() => {
-		fetchRecursiveCategoryThunk();
-	}, [fetchRecursiveCategoryThunk]);
+		fetchCategoryThunk();
+	}, [fetchCategoryThunk]);
 
 	const ListCategory = (category) => {
 		return (
 			<DivDropDownMenu>
 				{category.map((node) => (
 					<>
-						{node.children_category ? (
-							<LinkDropDownSubItem to={`/category/${node.id}/${node.slug}`} key={node.id}>
-								{node.title}
-								{node.children_category && ListCategory(node.children_category)}
-							</LinkDropDownSubItem>
-						) : (
-							<LinkDropDownItem to={`/category/${node.id}/${node.slug}`} key={node.id}>
-								{node.title}
-								{node.children_category && ListCategory(node.children_category)}
-							</LinkDropDownItem>
-						)}
+						<LinkDropDownItem to={`/categories/${node.id}/${node.slug}`} key={node.id}>
+							{node.title}
+						</LinkDropDownItem>
 					</>
 				))}
 			</DivDropDownMenu>
@@ -90,7 +81,7 @@ const Layout = ({ logoutThunk, login, children, isHome, fetchRecursiveCategoryTh
 								<DivSiteMastRight>
 									<DivDropDown>
 										<ADropDownToggleASiteNavItem href="#!">Categories</ADropDownToggleASiteNavItem>
-										{ListCategory(fetchRecursiveCategory.category)}
+										{ListCategory(fetchCategory.category)}
 									</DivDropDown>
 									{login.isAuthenticated ? (
 										<DivDropDown>

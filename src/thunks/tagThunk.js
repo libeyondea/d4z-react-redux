@@ -61,10 +61,10 @@ export const createTagResetedThunk = () => (dispatch) => {
 	dispatch(createTagResetedAction());
 };
 
-export const singleTagThunk = (slug) => async (dispatch) => {
+export const singleTagThunk = (id) => async (dispatch) => {
 	try {
 		dispatch(singleTagRequestedAction());
-		const res = await axios.get(`${process.env.REACT_APP_API_URL}/tags/${slug}`);
+		const res = await axios.get(`${process.env.REACT_APP_API_URL}/tags/${id}`);
 		if (res.data.success) {
 			dispatch(singleTagSucceedAction(res.data.data));
 		}

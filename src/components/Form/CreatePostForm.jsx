@@ -12,6 +12,7 @@ import InputForm from './InputForm';
 import TextareaForm from './TextareaForm';
 import RichTextEditorForm from './RichTextEditorForm';
 import SelectInputForm from './SelectInputForm';
+import CreateSelectInputForm from './CreateSelectInputForm';
 import { Container } from '../Styled/Wapper';
 import { ButtonBtnType } from '../Styled/Button';
 import {
@@ -127,7 +128,18 @@ const CreatePostForm = ({
 						<form onSubmit={handleSubmit}>
 							<DivFormGroup>
 								<InputForm label="Title" id="title" name="title" type="text" />
-								Auto slug: {convertTextToSlug(values.title)}
+							</DivFormGroup>
+							<DivFormGroup>
+								<InputForm
+									label="Auto Slug"
+									id="slug"
+									name="slug"
+									type="text"
+									value={convertTextToSlug(values.title)}
+									isError={createPost.isError}
+									errorMessage={createPost.errorMessage.slug}
+									readOnly
+								/>
 							</DivFormGroup>
 							<DivFormGroup>
 								<TextareaForm rows="6" label="Summary" id="summary" name="summary" type="text" />
@@ -144,13 +156,24 @@ const CreatePostForm = ({
 									errors={errors.content}
 									touched={touched.content}
 								/>
-								Auto description: {convertHtmlToText(values.content)}
 							</DivFormGroup>
 							<DivFormGroup>
-								<SelectInputForm
+								<TextareaForm
+									rows="4"
+									label="Auto description"
+									id="meta_description"
+									name="meta_description"
+									type="text"
+									value={convertHtmlToText(values.content)}
+									readOnly
+								/>
+							</DivFormGroup>
+							<DivFormGroup>
+								<CreateSelectInputForm
 									id="tag"
 									name="tag"
 									label="Tag"
+									isMulti={true}
 									options={fetchTag.tag}
 									onChange={(selectedValue) => {
 										if (isEmpty(selectedValue)) {
@@ -160,6 +183,25 @@ const CreatePostForm = ({
 									}}
 									onBlur={() => setFieldTouched('tag', true)}
 									value={values.tag}
+									getNewOptionData={(inputValue, optionLabel) => ({
+										id: uuidv4(),
+										title: optionLabel,
+										meta_title: optionLabel,
+										meta_description: optionLabel,
+										slug: convertTextToSlug(optionLabel),
+										content: optionLabel,
+										__isNew__: true
+									})}
+									isValidNewOption={(inputValue, selectValue, selectOptions) => {
+										if (
+											inputValue.trim().length === 0 ||
+											selectValue.find((option) => option.slug === convertTextToSlug(inputValue)) ||
+											selectOptions.find((option) => option.slug === convertTextToSlug(inputValue))
+										) {
+											return false;
+										}
+										return true;
+									}}
 									getOptionValue={(option) => option.id}
 									getOptionLabel={(option) => option.title}
 									errors={errors.tag}
@@ -171,6 +213,7 @@ const CreatePostForm = ({
 									id="category"
 									name="category"
 									label="Category"
+									isMulti={true}
 									options={fetchCategory.category}
 									onChange={(selectedValue) => {
 										if (isEmpty(selectedValue)) {
