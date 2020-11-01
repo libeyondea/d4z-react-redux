@@ -27,7 +27,7 @@ const DetailPostCard = ({ singleTagThunk, singleTagResetedThunk, singleTag }) =>
 	}, [id, singleTagResetedThunk, singleTagThunk]);
 	return (
 		<Container>
-			{singleTag.isLoading || isEmpty(singleTag.tag) ? (
+			{singleTag.isLoading ? (
 				'Loading...........'
 			) : (
 				<>
@@ -35,12 +35,15 @@ const DetailPostCard = ({ singleTagThunk, singleTagResetedThunk, singleTag }) =>
 						<H1Tag>{singleTag.tag.title}</H1Tag>
 						<PTag>{singleTag.tag.content}</PTag>
 					</TagHeader>
-					<PostFeed>
-						{singleTag.tag.post.map((node) => (
-							<PostCard key={node.id} post={node} />
-						))}
-					</PostFeed>
-					<Pagination pageContext={pageContext} />
+					{isEmpty(singleTag.tag.post) ? (
+						'Empty................'
+					) : (
+						<PostFeed>
+							{singleTag.tag.post.map((node) => (
+								<PostCard key={node.id} post={node} />
+							))}
+						</PostFeed>
+					)}
 				</>
 			)}
 		</Container>

@@ -1,37 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavPagination, LinkPagination, DivPaginationLocation } from '../Styled/Pagination';
+import { NavPagination, LinkPagination, DivPaginationLocation, APaginationNumber } from '../Styled/Pagination';
 
-const Pagination = ({ pageContext }) => {
-	const { previousPagePath, nextPagePath, humanPageNumber, numberOfPages } = pageContext;
-
+const Pagination = ({ previousPage, nextPage, filteredPages, currentPage, goToPage }) => {
 	return (
 		<NavPagination role="navigation">
 			<div>
-				{previousPagePath && (
-					<LinkPagination to={previousPagePath} rel="prev">
-						Previous
-					</LinkPagination>
-				)}
+				<LinkPagination onClick={previousPage} rel="prev">
+					Previous
+				</LinkPagination>
 			</div>
-			{numberOfPages > 1 && (
-				<DivPaginationLocation>
-					Page {humanPageNumber} of {numberOfPages}
-				</DivPaginationLocation>
-			)}
+			<DivPaginationLocation>
+				{[...Array(filteredPages)].map((value, index) => (
+					<APaginationNumber
+						key={index}
+						className={`${currentPage === index + 1 ? 'isCurrent' : ''}`}
+						aria-label="Page 1"
+						onClick={() => goToPage(index + 1)}
+						aria-current="page"
+					>
+						{index + 1}
+					</APaginationNumber>
+				))}
+			</DivPaginationLocation>
 			<div>
-				{nextPagePath && (
-					<LinkPagination to={nextPagePath} rel="next">
-						Next
-					</LinkPagination>
-				)}
+				<LinkPagination onClick={nextPage} rel="next">
+					Next
+				</LinkPagination>
 			</div>
 		</NavPagination>
 	);
 };
 
 Pagination.propTypes = {
-	pageContext: PropTypes.object.isRequired
+	filteredPages: PropTypes.number.isRequired
 };
 
 export default Pagination;

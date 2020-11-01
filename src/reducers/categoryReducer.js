@@ -51,9 +51,9 @@ const initialState = {
 	},
 	singleCategory: {
 		category: {},
-		isLoading: false,
+		isLoading: true,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	editCategory: {
 		category: {},
@@ -157,13 +157,13 @@ const categoryReducer = (state = initialState, action) =>
 				draft.singleCategory.category = {};
 				draft.singleCategory.isLoading = true;
 				draft.singleCategory.isError = false;
-				draft.singleCategory.errorMessage = null;
+				draft.singleCategory.errorMessage = {};
 				break;
 			case SINGLE_CATEGORY_SUCCEED:
 				draft.singleCategory.category = action.payload;
 				draft.singleCategory.isLoading = false;
 				draft.singleCategory.isError = false;
-				draft.singleCategory.errorMessage = null;
+				draft.singleCategory.errorMessage = {};
 				break;
 			case SINGLE_CATEGORY_FAILED:
 				draft.singleCategory.category = {};
@@ -173,9 +173,9 @@ const categoryReducer = (state = initialState, action) =>
 				break;
 			case SINGLE_CATEGORY_RESETED:
 				draft.singleCategory.category = {};
-				draft.singleCategory.isLoading = false;
+				draft.singleCategory.isLoading = true;
 				draft.singleCategory.isError = false;
-				draft.singleCategory.errorMessage = null;
+				draft.singleCategory.errorMessage = {};
 				break;
 			// D4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4Z
 			case EDIT_CATEGORY_REQUESTED:

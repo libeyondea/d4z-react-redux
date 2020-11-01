@@ -1,8 +1,11 @@
 import {
 	fetchPostRequestedAction,
+	filterByValuePostSucceedAction,
 	fetchPostSucceedAction,
-	sortByPostSucceedAction,
-	filterByPostSucceedAction,
+	fetchExactPagePostSucceedAction,
+	fetchNewPagePostSucceedAction,
+	sortByTitlePostSucceedAction,
+	sortByCreatedAtPostSucceedAction,
 	fetchPostFailedAction,
 	fetchPostResetedAction,
 	createPostRequestedAction,
@@ -33,39 +36,38 @@ export const fetchPostThunk = () => async (dispatch) => {
 		dispatch(fetchPostRequestedAction());
 		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
 		if (res.data.success) {
-			dispatch(fetchPostSucceedAction(res.data.data));
-		}
-	} catch (err) {
-		dispatch(fetchPostFailedAction(err.message));
-	}
-};
-
-export const sortByPostThunk = (sortBy) => async (dispatch) => {
-	try {
-		//dispatch(fetchPostRequestedAction());
-		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
-		if (res.data.success) {
-			if (sortBy) {
-				dispatch(sortByPostSucceedAction(sortBy));
+			const params = new URLSearchParams(window.location.search);
+			const pageQueryParam = params.get('page');
+			if (!pageQueryParam) {
+				dispatch(fetchPostSucceedAction(res.data.data, 6, 1));
+			} else {
+				dispatch(fetchPostSucceedAction(res.data.data, 6, pageQueryParam));
 			}
 		}
 	} catch (err) {
 		dispatch(fetchPostFailedAction(err.message));
 	}
 };
-
-export const filterByPostThunk = (filterBy) => async (dispatch) => {
-	try {
-		//dispatch(fetchPostRequestedAction());
-		const res = await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
-		if (res.data.success) {
-			dispatch(filterByPostSucceedAction(filterBy));
-		}
-	} catch (err) {
-		dispatch(fetchPostFailedAction(err.message));
+export const filterByValueThunk = (value) => (dispatch) => {
+	dispatch(filterByValuePostSucceedAction(value));
+};
+export const nextPageThunk = () => (dispatch) => {
+	dispatch(fetchNewPagePostSucceedAction(1));
+};
+export const previousPageThunk = () => (dispatch) => {
+	dispatch(fetchNewPagePostSucceedAction(-1));
+};
+export const goToPageThunk = (page) => (dispatch) => {
+	dispatch(fetchExactPagePostSucceedAction(page));
+};
+export const sortByValueThunk = (value) => (dispatch) => {
+	let direction = value.endsWith('asc') ? 'asc' : 'desc';
+	if (value.startsWith('created_at')) {
+		dispatch(sortByCreatedAtPostSucceedAction(direction));
+	} else {
+		dispatch(sortByTitlePostSucceedAction(direction));
 	}
 };
-
 export const fetchPostResetedThunk = () => (dispatch) => {
 	dispatch(fetchPostResetedAction());
 };

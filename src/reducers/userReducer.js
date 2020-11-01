@@ -29,9 +29,9 @@ import { produce } from 'immer';
 const initialState = {
 	fetchUser: {
 		user: [],
-		isLoading: false,
+		isLoading: true,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	createUser: {
 		user: {},
@@ -72,13 +72,13 @@ const userReducer = (state = initialState, action) =>
 				draft.fetchUser.user = [];
 				draft.fetchUser.isLoading = true;
 				draft.fetchUser.isError = false;
-				draft.fetchUser.errorMessage = null;
+				draft.fetchUser.errorMessage = {};
 				break;
 			case FETCH_USER_SUCCEED:
 				draft.fetchUser.user = action.payload;
 				draft.fetchUser.isLoading = false;
 				draft.fetchUser.isError = false;
-				draft.fetchUser.errorMessage = null;
+				draft.fetchUser.errorMessage = {};
 				break;
 			case FETCH_USER_FAILED:
 				draft.fetchUser.user = [];
@@ -88,9 +88,9 @@ const userReducer = (state = initialState, action) =>
 				break;
 			case FETCH_USER_RESETED:
 				draft.fetchUser.user = [];
-				draft.fetchUser.isLoading = false;
+				draft.fetchUser.isLoading = true;
 				draft.fetchUser.isError = false;
-				draft.fetchUser.errorMessage = null;
+				draft.fetchUser.errorMessage = {};
 				break;
 			// D4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4Z
 			case CREATE_USER_REQUESTED:

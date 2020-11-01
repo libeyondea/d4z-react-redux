@@ -29,9 +29,9 @@ import { produce } from 'immer';
 const initialState = {
 	fetchTag: {
 		tag: [],
-		isLoading: false,
+		isLoading: true,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	createTag: {
 		tag: {},
@@ -41,9 +41,9 @@ const initialState = {
 	},
 	singleTag: {
 		tag: {},
-		isLoading: false,
+		isLoading: true,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	editTag: {
 		tag: {},
@@ -72,13 +72,13 @@ const tagReducer = (state = initialState, action) =>
 				draft.fetchTag.tag = [];
 				draft.fetchTag.isLoading = true;
 				draft.fetchTag.isError = false;
-				draft.fetchTag.errorMessage = null;
+				draft.fetchTag.errorMessage = {};
 				break;
 			case FETCH_TAG_SUCCEED:
 				draft.fetchTag.tag = action.payload;
 				draft.fetchTag.isLoading = false;
 				draft.fetchTag.isError = false;
-				draft.fetchTag.errorMessage = null;
+				draft.fetchTag.errorMessage = {};
 				break;
 			case FETCH_TAG_FAILED:
 				draft.fetchTag.tag = [];
@@ -88,9 +88,9 @@ const tagReducer = (state = initialState, action) =>
 				break;
 			case FETCH_TAG_RESETED:
 				draft.fetchTag.tag = [];
-				draft.fetchTag.isLoading = false;
+				draft.fetchTag.isLoading = true;
 				draft.fetchTag.isError = false;
-				draft.fetchTag.errorMessage = null;
+				draft.fetchTag.errorMessage = {};
 				break;
 			// D4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4Z
 			case CREATE_TAG_REQUESTED:
@@ -122,13 +122,13 @@ const tagReducer = (state = initialState, action) =>
 				draft.singleTag.tag = {};
 				draft.singleTag.isLoading = true;
 				draft.singleTag.isError = false;
-				draft.singleTag.errorMessage = null;
+				draft.singleTag.errorMessage = {};
 				break;
 			case SINGLE_TAG_SUCCEED:
 				draft.singleTag.tag = action.payload;
 				draft.singleTag.isLoading = false;
 				draft.singleTag.isError = false;
-				draft.singleTag.errorMessage = null;
+				draft.singleTag.errorMessage = {};
 				break;
 			case SINGLE_TAG_FAILED:
 				draft.singleTag.tag = {};
@@ -138,9 +138,9 @@ const tagReducer = (state = initialState, action) =>
 				break;
 			case SINGLE_TAG_RESETED:
 				draft.singleTag.tag = {};
-				draft.singleTag.isLoading = false;
+				draft.singleTag.isLoading = true;
 				draft.singleTag.isError = false;
-				draft.singleTag.errorMessage = null;
+				draft.singleTag.errorMessage = {};
 				break;
 			// D4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4ZD4Z
 			case EDIT_TAG_REQUESTED:

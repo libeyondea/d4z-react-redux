@@ -28,19 +28,22 @@ const ListUserCard = ({ fetchUserThunk, fetchUserResetedThunk, fetchUser }) => {
 	}, [fetchUserResetedThunk, fetchUserThunk]);
 	return (
 		<Container>
-			{fetchUser.isLoading || isEmpty(fetchUser.user) ? (
+			{fetchUser.isLoading ? (
 				'Loading...........'
 			) : (
 				<>
 					<UserHeader>
 						<H1User>Users</H1User>
 					</UserHeader>
-					<SectionUserFeed>
-						{fetchUser.user.map((node) => (
-							<UserCard key={node.id} user={node} />
-						))}
-					</SectionUserFeed>
-					<Pagination pageContext={pageContext} />
+					{isEmpty(fetchUser.user) ? (
+						'Empty................'
+					) : (
+						<SectionUserFeed>
+							{fetchUser.user.map((node) => (
+								<UserCard key={node.id} user={node} />
+							))}
+						</SectionUserFeed>
+					)}
 				</>
 			)}
 		</Container>

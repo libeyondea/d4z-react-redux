@@ -7,30 +7,37 @@ import isEmpty from '../../helpers/isEmpty';
 import { Container } from '../Styled/Wapper';
 import { PostFeed, SelectSortBy, DivFilter, InputSearch, DivSearch, DivSortBy } from '../Styled/PostCard';
 
-const pageContext = {
-	pageNumber: 0,
-	humanPageNumber: 1,
-	skip: 0,
-	limit: 5,
-	numberOfPages: 666,
-	previousPagePath: '1',
-	nextPagePath: '2'
-};
-const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filterByPostThunk, sortByPostThunk }) => {
+const ListPostCard = ({
+	fetchPostThunk,
+	fetchPostResetedThunk,
+	filterByValueThunk,
+	nextPageThunk,
+	previousPageThunk,
+	goToPageThunk,
+	sortByValueThunk,
+	fetchPost
+}) => {
 	const [sortBy, setSortBy] = useState('');
+	const handleSortByInput = (event) => {
+		setSortBy(event.target.value);
+		sortByValueThunk(event.target.value);
+	};
+	const handlePreviousPage = () => {
+		previousPageThunk();
+	};
+	const handleNextPage = () => {
+		nextPageThunk();
+	};
+	const handleFilterByInput = (event) => {
+		filterByValueThunk(event.target.value);
+	};
 	useEffect(() => {
 		fetchPostThunk();
 		return () => {
 			fetchPostResetedThunk();
 		};
 	}, [fetchPostResetedThunk, fetchPostThunk]);
-	const handleSortByPost = (event) => {
-		sortByPostThunk(event.target.value);
-		setSortBy(event.target.value);
-	};
-	const handleFilterByPost = (event) => {
-		filterByPostThunk(event.target.value);
-	};
+
 	return (
 		<Container>
 			<Helmet>
@@ -39,10 +46,10 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filter
 			</Helmet>
 			<DivFilter>
 				<DivSearch>
-					<InputSearch type="text" placeholder="Search..." onChange={handleFilterByPost} />
+					<InputSearch type="text" placeholder="Search..." onChange={handleFilterByInput} />
 				</DivSearch>
 				<DivSortBy>
-					<SelectSortBy value={sortBy} name="sortBy" onChange={handleSortByPost}>
+					<SelectSortBy value={sortBy} name="sortBy" onChange={handleSortByInput}>
 						<option value="" disabled>
 							Sort by
 						</option>
@@ -53,16 +60,30 @@ const ListPostCard = ({ fetchPostThunk, fetchPostResetedThunk, fetchPost, filter
 					</SelectSortBy>
 				</DivSortBy>
 			</DivFilter>
-			{fetchPost.isLoading || isEmpty(fetchPost.filteredPost) ? (
-				'Loading................'
+			{fetchPost.isLoading ? (
+				'Loading..............'
 			) : (
 				<>
-					<PostFeed>
-						{fetchPost.filteredPost.map((node) => (
-							<PostCard key={node.id} post={node} />
-						))}
-					</PostFeed>
-					<Pagination pageContext={pageContext} />
+					{isEmpty(fetchPost.filteredPost) ? (
+						'Empty..............'
+					) : (
+						<>
+							<PostFeed>
+								{fetchPost.filteredPost.map((node) => (
+									<PostCard post={node} key={node.id} />
+								))}
+							</PostFeed>
+							{fetchPost.filteredPages > 1 && (
+								<Pagination
+									previousPage={handlePreviousPage}
+									nextPage={handleNextPage}
+									filteredPages={fetchPost.filteredPages}
+									currentPage={fetchPost.currentPage}
+									goToPage={goToPageThunk}
+								/>
+							)}
+						</>
+					)}
 				</>
 			)}
 		</Container>

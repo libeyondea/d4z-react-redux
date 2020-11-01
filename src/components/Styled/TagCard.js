@@ -16,7 +16,11 @@ export const H1Tag = styled(H1User)``;
 export const PTag = styled(PUser)``;
 
 export const TagFeed = styled(PostFeed)``;
-export const DivTagCard = styled.div``;
+export const DivTagCard = styled.div`
+	border: 1px solid #d6d9dc;
+	border-radius: 3px;
+	padding: 12px;
+`;
 export const LinkTagCardTitle = styled(Link)`
 	text-decoration: none;
 	color: var(--color-primary);

@@ -1,10 +1,13 @@
 import {
 	FETCH_POST_REQUESTED,
 	FETCH_POST_SUCCEED,
+	SORT_BY_TITLE_POST_SUCCEED,
+	SORT_BY_CREATED_AT_POST_SUCCEED,
+	FILTER_BY_VALUE_POST_SUCCEED,
+	FETCH_NEW_PAGE_POST_SUCCEED,
+	FETCH_EXACT_PAGE_POST_SUCCEED,
 	FETCH_POST_FAILED,
 	FETCH_POST_RESETED,
-	SORT_BY_POST_SUCCEED,
-	FILTER_BY_POST_SUCCEED,
 	CREATE_POST_REQUESTED,
 	CREATE_POST_SUCCEED,
 	CREATE_POST_FAILED,
@@ -30,16 +33,32 @@ import {
 export const fetchPostRequestedAction = () => ({
 	type: FETCH_POST_REQUESTED
 });
-export const fetchPostSucceedAction = (payload) => ({
+export const sortByCreatedAtPostSucceedAction = (payload) => ({
+	type: SORT_BY_CREATED_AT_POST_SUCCEED,
+	payload
+});
+export const sortByTitlePostSucceedAction = (payload) => ({
+	type: SORT_BY_TITLE_POST_SUCCEED,
+	payload
+});
+export const fetchPostSucceedAction = (post, countPerPage, currentPage) => ({
 	type: FETCH_POST_SUCCEED,
+	payload: {
+		post: post,
+		countPerPage: countPerPage,
+		currentPage: currentPage
+	}
+});
+export const filterByValuePostSucceedAction = (payload) => ({
+	type: FILTER_BY_VALUE_POST_SUCCEED,
 	payload
 });
-export const sortByPostSucceedAction = (payload) => ({
-	type: SORT_BY_POST_SUCCEED,
+export const fetchNewPagePostSucceedAction = (payload) => ({
+	type: FETCH_NEW_PAGE_POST_SUCCEED,
 	payload
 });
-export const filterByPostSucceedAction = (payload) => ({
-	type: FILTER_BY_POST_SUCCEED,
+export const fetchExactPagePostSucceedAction = (payload) => ({
+	type: FETCH_EXACT_PAGE_POST_SUCCEED,
 	payload
 });
 export const fetchPostFailedAction = (payload) => ({

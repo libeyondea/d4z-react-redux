@@ -55,11 +55,9 @@ const Layout = ({ logoutThunk, login, children, isHome, fetchCategoryThunk, fetc
 		return (
 			<DivDropDownMenu>
 				{category.map((node) => (
-					<>
-						<LinkDropDownItem to={`/categories/${node.id}/${node.slug}`} key={node.id}>
-							{node.title}
-						</LinkDropDownItem>
-					</>
+					<LinkDropDownItem to={`/categories/${node.id}/${node.slug}`} key={node.id}>
+						{node.title}
+					</LinkDropDownItem>
 				))}
 			</DivDropDownMenu>
 		);

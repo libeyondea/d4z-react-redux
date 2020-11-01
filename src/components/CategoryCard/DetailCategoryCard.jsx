@@ -27,7 +27,7 @@ const DetailCategoryCard = ({ singleCategoryThunk, singleCategoryResetedThunk, s
 	}, [id, singleCategoryResetedThunk, singleCategoryThunk]);
 	return (
 		<Container>
-			{singleCategory.isLoading || isEmpty(singleCategory.category) ? (
+			{singleCategory.isLoading ? (
 				'Loading...........'
 			) : (
 				<>
@@ -35,12 +35,15 @@ const DetailCategoryCard = ({ singleCategoryThunk, singleCategoryResetedThunk, s
 						<H1Tag>{singleCategory.category.title}</H1Tag>
 						<PTag>{singleCategory.category.content}</PTag>
 					</TagHeader>
-					<PostFeed>
-						{singleCategory.category.post.map((node) => (
-							<PostCard key={node.id} post={node} />
-						))}
-					</PostFeed>
-					<Pagination pageContext={pageContext} />
+					{isEmpty(singleCategory.category.post) ? (
+						'Empty................'
+					) : (
+						<PostFeed>
+							{singleCategory.category.post.map((node) => (
+								<PostCard key={node.id} post={node} />
+							))}
+						</PostFeed>
+					)}
 				</>
 			)}
 		</Container>
