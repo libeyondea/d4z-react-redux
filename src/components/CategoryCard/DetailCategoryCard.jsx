@@ -2,21 +2,11 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import isEmpty from '../../helpers/isEmpty';
-import Pagination from '../Pagination/Pagination';
 import PostCard from '../PostCard/PostCard';
 import { Container } from '../Styled/Wapper';
 import { TagHeader, H1Tag, PTag } from '../Styled/TagCard';
 import { PostFeed } from '../Styled/PostCard';
 
-const pageContext = {
-	pageNumber: 0,
-	humanPageNumber: 1,
-	skip: 0,
-	limit: 5,
-	numberOfPages: 666,
-	previousPagePath: '1',
-	nextPagePath: '2'
-};
 const DetailCategoryCard = ({ singleCategoryThunk, singleCategoryResetedThunk, singleCategory }) => {
 	const { id } = useParams();
 	useEffect(() => {
