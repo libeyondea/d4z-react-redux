@@ -33,7 +33,11 @@ const Pagination = ({ previousPage, nextPage, filteredPages, currentPage, goToPa
 };
 
 Pagination.propTypes = {
-	filteredPages: PropTypes.number.isRequired
+	previousPage: PropTypes.func.isRequired,
+	nextPage: PropTypes.func.isRequired,
+	filteredPages: PropTypes.number.isRequired,
+	currentPage: PropTypes.number.isRequired,
+	goToPage: PropTypes.func.isRequired
 };
 
 export default Pagination;

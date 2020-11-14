@@ -1,11 +1,11 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import ListUserCardContainer from '../../containers/ListUserCardContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import FetchUserContainer from '../../containers/User/FetchUserContainer';
 
 const FetchUser = () => {
 	return (
 		<LayoutContainer>
-			<ListUserCardContainer />
+			<FetchUserContainer />
 		</LayoutContainer>
 	);
 };

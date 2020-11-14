@@ -1,0 +1,150 @@
+.navigation {
+	height: 70px;
+	background: #262626;
+}
+.navigation .brand {
+	position: absolute;
+	/*padding-left: 20px;*/
+	float: left;
+	line-height: 70px;
+	text-transform: uppercase;
+	font-size: 1.4em;
+}
+.navigation .brand a,
+.navigation .brand a:visited {
+	color: #fff;
+	text-decoration: none;
+}
+.navigation .nav-container {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 4vw;
+}
+.navigation nav {
+	float: right;
+}
+.navigation nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	min-width: 190px;
+}
+.navigation nav ul li {
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+.navigation nav ul li a,
+.navigation nav ul li a:visited {
+	display: block;
+	padding: 0 20px;
+	line-height: 70px;
+	background: #262626;
+	color: #fff;
+	text-decoration: none;
+}
+.navigation nav ul li a:hover,
+.navigation nav ul li a:visited:hover {
+	background: #2581dc;
+	color: #fff;
+}
+.navigation nav ul li a:not(:only-child):after,
+.navigation nav ul li a:visited:not(:only-child):after {
+	padding-left: 4px;
+	content: ' ▾';
+}
+.navigation nav ul li ul li {
+	min-width: 190px;
+}
+.navigation nav ul li ul li a {
+	padding: 15px;
+	line-height: 20px;
+}
+.navigation .nav-dropdown {
+	position: absolute;
+	display: block;
+	z-index: 1;
+	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+	right: 0;
+}
+/* Mobile navigation */
+.navigation .nav-mobile {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 4vw; /* new */
+	background: #262626;
+	height: 70px;
+	width: 70px;
+}
+@media only screen and (max-width: 798px) {
+	.navigation .nav-mobile {
+		display: block;
+	}
+	.navigation nav {
+		width: 100%;
+		padding: 70px 0 15px;
+	}
+	.navigation nav ul {
+		display: none;
+		z-index: 999;
+	}
+	.navigation nav ul li {
+		float: none;
+	}
+	.navigation nav ul li a {
+		padding: 15px;
+		line-height: 20px;
+	}
+	.navigation nav ul li ul li a {
+		padding-left: 30px;
+	}
+	.navigation .nav-dropdown {
+		position: static;
+	}
+}
+@media screen and (min-width: 799px) {
+	.navigation .nav-list {
+		display: block !important;
+	}
+}
+.navigation #nav-toggle {
+	position: absolute;
+	left: 18px;
+	top: 22px;
+	cursor: pointer;
+	padding: 10px 35px 16px 0px;
+}
+.navigation #nav-toggle span,
+.navigation #nav-toggle span:before,
+.navigation #nav-toggle span:after {
+	cursor: pointer;
+	border-radius: 1px;
+	height: 5px;
+	width: 35px;
+	background: #fff;
+	position: absolute;
+	display: block;
+	content: '';
+	transition: all 300ms ease-in-out;
+}
+.navigation #nav-toggle span:before {
+	top: -10px;
+}
+.navigation #nav-toggle span:after {
+	bottom: -10px;
+}
+.navigation #nav-toggle.active span {
+	background-color: transparent;
+}
+.navigation #nav-toggle.active span:before,
+.navigation #nav-toggle.active span:after {
+	top: 0;
+}
+.navigation #nav-toggle.active span:before {
+	transform: rotate(45deg);
+}
+.navigation #nav-toggle.active span:after {
+	transform: rotate(-45deg);
+}

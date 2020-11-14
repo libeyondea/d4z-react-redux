@@ -1,13 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import PostCard from './PostCard';
-import Pagination from '../Pagination/Pagination';
+import PostCard from '../../components/PostCard/PostCard';
+import Pagination from '../../components/Pagination/Pagination';
+import { DivSpinner } from '../../components/Styled/Spinners';
 import isEmpty from '../../helpers/isEmpty';
-import { Container } from '../Styled/Wapper';
-import { PostFeed, SelectSortBy, DivFilter, InputSearch, DivSearch, DivSortBy } from '../Styled/PostCard';
+import { Container } from '../../components/Styled/Wapper';
+import { PostFeed, SelectSortBy, DivFilter, InputSearch, DivSearch, DivSortBy } from '../../components/Styled/PostCard';
+import {
+	fetchPostThunk,
+	fetchPostResetedThunk,
+	filterByValueThunk,
+	nextPageThunk,
+	previousPageThunk,
+	goToPageThunk,
+	sortByValueThunk
+} from '../../thunks/postThunk';
 
-const ListPostCard = ({
+const mapStateToProps = (state) => ({
+	fetchPost: state.posts.fetchPost
+});
+const mapDispatchToProps = {
+	fetchPostThunk,
+	fetchPostResetedThunk,
+	filterByValueThunk,
+	nextPageThunk,
+	previousPageThunk,
+	goToPageThunk,
+	sortByValueThunk
+};
+
+const FetchPostContainer = ({
 	fetchPostThunk,
 	fetchPostResetedThunk,
 	filterByValueThunk,
@@ -61,26 +85,32 @@ const ListPostCard = ({
 				</DivSortBy>
 			</DivFilter>
 			{fetchPost.isLoading ? (
-				'Loading..............'
+				<DivSpinner />
 			) : (
 				<>
-					{isEmpty(fetchPost.filteredPost) ? (
-						'Empty..............'
+					{fetchPost.isError ? (
+						<div>{fetchPost.errorMessage}</div>
 					) : (
 						<>
-							<PostFeed>
-								{fetchPost.filteredPost.map((node) => (
-									<PostCard post={node} key={node.id} />
-								))}
-							</PostFeed>
-							{fetchPost.filteredPages > 1 && (
-								<Pagination
-									previousPage={handlePreviousPage}
-									nextPage={handleNextPage}
-									filteredPages={fetchPost.filteredPages}
-									currentPage={fetchPost.currentPage}
-									goToPage={goToPageThunk}
-								/>
+							{isEmpty(fetchPost.filteredPost) ? (
+								<div>No posts</div>
+							) : (
+								<>
+									<PostFeed>
+										{fetchPost.filteredPost.map((node) => (
+											<PostCard post={node} key={node.id} />
+										))}
+									</PostFeed>
+									{fetchPost.filteredPages > 1 && (
+										<Pagination
+											previousPage={handlePreviousPage}
+											nextPage={handleNextPage}
+											filteredPages={fetchPost.filteredPages}
+											currentPage={fetchPost.currentPage}
+											goToPage={goToPageThunk}
+										/>
+									)}
+								</>
 							)}
 						</>
 					)}
@@ -90,10 +120,10 @@ const ListPostCard = ({
 	);
 };
 
-ListPostCard.propTypes = {
+FetchPostContainer.propTypes = {
 	fetchPost: PropTypes.shape({
 		post: PropTypes.array
 	}).isRequired
 };
 
-export default ListPostCard;
+export default connect(mapStateToProps, mapDispatchToProps)(FetchPostContainer);

@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './app/App';
 import * as serviceWorker from './serviceWorker';
 
+const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+console.log(width, height);
+console.log(window.screen.width);
+
 ReactDOM.render(
 	<React.StrictMode>
 		<App />

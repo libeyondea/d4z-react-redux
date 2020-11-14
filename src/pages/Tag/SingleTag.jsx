@@ -1,11 +1,11 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import DetailTagCardContainer from '../../containers/DetailTagCardContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import SingleTagContainer from '../../containers/Tag/SingleTagContainer';
 
 const SingleTag = () => {
 	return (
 		<LayoutContainer>
-			<DetailTagCardContainer />
+			<SingleTagContainer />
 		</LayoutContainer>
 	);
 };

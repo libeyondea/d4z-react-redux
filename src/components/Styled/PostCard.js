@@ -270,7 +270,7 @@ export const DivBtnEditDel = styled.div`
 export const PostFeed = styled.section`
 	display: grid;
 	justify-content: space-between;
-	grid-gap: 12px;
+	grid-gap: 16px;
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	@media (max-width: 980px) {
 		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

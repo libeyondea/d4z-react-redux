@@ -1,11 +1,11 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import DetailPostCardContainer from '../../containers/DetailPostCardContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import SinglePostContainer from '../../containers/Post/SinglePostContainer';
 
 const Post = () => {
 	return (
 		<LayoutContainer>
-			<DetailPostCardContainer />
+			<SinglePostContainer />
 		</LayoutContainer>
 	);
 };

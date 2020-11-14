@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LayoutContainer from '../../containers/LayoutContainer.jsx';
+import LayoutContainer from '../../containers/Layout/LayoutContainer.jsx';
 
 const FourZeroFour = () => {
 	return (

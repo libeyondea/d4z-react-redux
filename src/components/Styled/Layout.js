@@ -10,7 +10,7 @@ export const DivViewPort = styled.div`
 `;
 export const DivViewPortTop = styled.div``;
 export const HeaderSite = styled.header`
-	padding-top: 20px;
+	//padding-top: 20px;
 	padding-bottom: 20px;
 	color: #fff;
 	background: var(--color-base);

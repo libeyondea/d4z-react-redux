@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
-import InputForm from './InputForm';
-import SelectForm from './SelectForm';
-import CheckBoxForm from './CheckBoxForm';
-import PhoneInputForm from './PhoneInputForm';
-import { Container } from '../Styled/Wapper';
-import { ButtonBtnType } from '../Styled/Button';
+import InputForm from '../../components/Form/InputForm';
+import SelectForm from '../../components/Form/SelectForm';
+import CheckBoxForm from '../../components/Form/CheckBoxForm';
+import PhoneInputForm from '../../components/Form/PhoneInputForm';
+import { Container } from '../../components/Styled/Wapper';
+import { ButtonBtnType } from '../../components/Styled/Button';
 import {
 	DivLg8Md10Center,
 	DivFormGroup,
@@ -19,9 +19,19 @@ import {
 	FormTitleHeader,
 	H1FormTileHeader,
 	PFormTileHeader
-} from '../Styled/LoginForm';
+} from '../../components/Styled/LoginForm';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { registerThunk, registerResetedThunk } from '../../thunks/authThunk';
 
-const RegisterForm = ({ registerThunk, register, registerResetedThunk }) => {
+const mapStateToProps = (state) => ({
+	register: state.auth.register
+});
+const mapDispatchToProps = {
+	registerThunk,
+	registerResetedThunk
+};
+const RegisterFormContainer = ({ registerThunk, register, registerResetedThunk }) => {
 	const history = useHistory();
 	const initialValues = {
 		first_name: '',
@@ -190,9 +200,9 @@ const RegisterForm = ({ registerThunk, register, registerResetedThunk }) => {
 	);
 };
 
-RegisterForm.propTypes = {
+RegisterFormContainer.propTypes = {
 	registerThunk: PropTypes.func.isRequired,
 	register: PropTypes.object.isRequired
 };
 
-export default RegisterForm;
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RegisterFormContainer));

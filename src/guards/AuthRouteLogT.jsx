@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
 });
 const AuthRouteLogT = (props) => {
 	const { login, component: Component, ...rest } = props;
+	console.log('tt');
 	return (
 		<Route
 			{...rest}

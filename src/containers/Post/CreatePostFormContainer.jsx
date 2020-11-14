@@ -8,13 +8,13 @@ import { v4 as uuidv4 } from 'uuid';
 import isEmpty from '../../helpers/isEmpty';
 import convertHtmlToText from '../../helpers/convertHtmlToText';
 import convertTextToSlug from '../../helpers/convertTextToSlug';
-import InputForm from './InputForm';
-import TextareaForm from './TextareaForm';
-import RichTextEditorForm from './RichTextEditorForm';
-import SelectInputForm from './SelectInputForm';
-import CreateSelectInputForm from './CreateSelectInputForm';
-import { Container } from '../Styled/Wapper';
-import { ButtonBtnType } from '../Styled/Button';
+import InputForm from '../../components/Form/InputForm';
+import TextareaForm from '../../components/Form/TextareaForm';
+import RichTextEditorForm from '../../components/Form/RichTextEditorForm';
+import SelectInputForm from '../../components/Form/SelectInputForm';
+import CreateSelectInputForm from '../../components/Form/CreateSelectInputForm';
+import { Container } from '../../components/Styled/Wapper';
+import { ButtonBtnType } from '../../components/Styled/Button';
 import {
 	DivLg8Md10Center,
 	DivFormGroup,
@@ -22,19 +22,25 @@ import {
 	FormTitleHeader,
 	H1FormTileHeader,
 	PFormTileHeader
-} from '../Styled/LoginForm';
+} from '../../components/Styled/LoginForm';
+import { connect } from 'react-redux';
+import { createPostThunk } from '../../thunks/postThunk';
+import { fetchTagThunk, fetchTagResetedThunk } from '../../thunks/tagThunk';
+import { fetchCategoryThunk, fetchCategoryResetedThunk } from '../../thunks/categoryThunk';
 
-const propTypes = {
-	createPostThunk: PropTypes.func.isRequired,
-	fetchTagThunk: PropTypes.func.isRequired,
-	fetchCategoryThunk: PropTypes.func.isRequired,
-	fetchTagResetedThunk: PropTypes.func.isRequired,
-	fetchCategoryResetedThunk: PropTypes.func.isRequired,
-	createPost: PropTypes.object.isRequired,
-	fetchTag: PropTypes.object.isRequired,
-	fetchCategory: PropTypes.object.isRequired
+const mapStateToProps = (state) => ({
+	createPost: state.posts.createPost,
+	fetchTag: state.tags.fetchTag,
+	fetchCategory: state.categories.fetchCategory
+});
+const mapDispatchToProps = {
+	createPostThunk,
+	fetchTagThunk,
+	fetchCategoryThunk,
+	fetchTagResetedThunk,
+	fetchCategoryResetedThunk
 };
-const CreatePostForm = ({
+const CreatePostFormContainer = ({
 	createPostThunk,
 	fetchTagThunk,
 	fetchCategoryThunk,
@@ -251,6 +257,15 @@ const CreatePostForm = ({
 	);
 };
 
-CreatePostForm.propTypes = propTypes;
+CreatePostFormContainer.propTypes = {
+	createPostThunk: PropTypes.func.isRequired,
+	fetchTagThunk: PropTypes.func.isRequired,
+	fetchCategoryThunk: PropTypes.func.isRequired,
+	fetchTagResetedThunk: PropTypes.func.isRequired,
+	fetchCategoryResetedThunk: PropTypes.func.isRequired,
+	createPost: PropTypes.object.isRequired,
+	fetchTag: PropTypes.object.isRequired,
+	fetchCategory: PropTypes.object.isRequired
+};
 
-export default CreatePostForm;
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePostFormContainer);

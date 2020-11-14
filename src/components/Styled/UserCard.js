@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { PostFeed } from './PostCard';
 
 export const UserHeader = styled.header`
 	max-width: 690px;
@@ -27,8 +28,66 @@ export const PUser = styled.p`
 		}
 	}
 `;
-export const SectionUserFeed = styled.section``;
-export const DivUserCard = styled.div``;
+export const SectionUserFeed = styled(PostFeed)``;
+
+export const DivUserCard = styled.div`
+	overflow: hidden;
+`;
+export const DivUserGravatar = styled.div`
+	${DivUserCard} & {
+		float: left;
+		width: 66px;
+		height: 66px;
+	}
+`;
+export const DivUserGravatarWrapper = styled.div`
+	${DivUserCard} & img {
+		border-radius: 6px;
+	}
+`;
+
+export const DivUserDetails = styled.div`
+	${DivUserCard} & {
+		margin-left: 9px;
+		width: calc(100% - 75px);
+		float: left;
+	}
+	${DivUserCard} & a {
+		display: inline-block;
+	}
+	${DivUserCard} & a:hover {
+		text-decoration: none;
+	}
+	${DivUserCard} & h2 {
+		margin: 0;
+	}
+`;
+export const DivUserTags = styled.div`
+	${DivUserCard} & {
+		clear: both;
+		margin-left: 75px;
+	}
+	${DivUserCard} & a:hover {
+		text-decoration: none;
+	}
+`;
+export const SpanUserLocation = styled.span`
+	${DivUserCard} ${DivUserDetails} & {
+		margin-bottom: 2px;
+		display: block;
+	}
+`;
+export const DivUserCountPost = styled.div`
+	${DivUserCard} ${DivUserDetails} & {
+		display: block;
+		margin-bottom: 4px;
+	}
+	${DivUserCard} ${DivUserDetails} & > span {
+		font-weight: bold;
+	}
+`;
+
+// Old styled
 export const AuthorHeader = styled.header`
 	display: flex;
 	justify-content: space-between;

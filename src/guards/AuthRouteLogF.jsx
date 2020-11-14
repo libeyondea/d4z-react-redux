@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
 });
 const AuthRouteLogF = (props) => {
 	const { login, component: Component, ...rest } = props;
+	console.log('gg');
 	return (
 		<Route
 			{...rest}

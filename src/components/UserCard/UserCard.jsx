@@ -1,52 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
 	DivUserCard,
-	AuthorHeader,
-	DivAuthorHeaderContent,
-	LinkAuthorName,
-	DivAuthorHeaderMeta,
-	AAuthorHeaderItem,
-	DivAuthorHeaderImage
+	DivUserGravatar,
+	DivUserGravatarWrapper,
+	DivUserDetails,
+	DivUserTags,
+	SpanUserLocation,
+	DivUserCountPost
 } from '../Styled/UserCard';
 
-const UserCard = ({ user, isProfile }) => {
+const UserCard = ({ user }) => {
 	return (
 		<DivUserCard>
-			<AuthorHeader>
-				<DivAuthorHeaderContent>
-					{isProfile ? (
-						<h1>
-							{user.first_name} {user.last_name}
-						</h1>
-					) : (
-						<h1>
-							<LinkAuthorName to={`/users/${user.id}/${user.user_name}`}>
-								{user.last_name} {user.first_name}
-							</LinkAuthorName>
-						</h1>
-					)}
-					{user.address && <p>{user.address}</p>}
-					<DivAuthorHeaderMeta>
-						{user && (
-							<AAuthorHeaderItem href={'/'} target="_blank" rel="noopener noreferrer">
-								Website
-							</AAuthorHeaderItem>
-						)}
-						{user && (
-							<AAuthorHeaderItem href={'/'} target="_blank" rel="noopener noreferrer">
-								Twitter
-							</AAuthorHeaderItem>
-						)}
-						{user && (
-							<AAuthorHeaderItem href={'/'} target="_blank" rel="noopener noreferrer">
-								Facebook
-							</AAuthorHeaderItem>
-						)}
-					</DivAuthorHeaderMeta>
-				</DivAuthorHeaderContent>
-				<DivAuthorHeaderImage>{user.image && <img src={user.image} alt={user.user_name} />}</DivAuthorHeaderImage>
-			</AuthorHeader>
+			<DivUserGravatar>
+				<Link to={`/users/${user.id}/${user.user_name}`}>
+					<DivUserGravatarWrapper>
+						{user.image && <img width={66} height={66} src={user.image} alt={user.user_name} />}
+					</DivUserGravatarWrapper>
+				</Link>
+			</DivUserGravatar>
+			<DivUserDetails>
+				<h2>
+					<Link to={`/users/${user.id}/${user.user_name}`}>
+						{user.last_name} {user.first_name}
+					</Link>
+				</h2>
+				{user.address && <SpanUserLocation>{user.address}</SpanUserLocation>}
+				<DivUserCountPost>
+					<span>666 posts</span>
+				</DivUserCountPost>
+			</DivUserDetails>
+			<DivUserTags>
+				<Link to="/tags/regex">c++</Link>
+				{', '}
+				<Link to="/tags/python">python</Link>
+				{', '}
+				<Link to="/tags/javascript">javascript</Link>
+			</DivUserTags>
 		</DivUserCard>
 	);
 };
@@ -55,11 +47,10 @@ UserCard.propTypes = {
 	user: PropTypes.shape({
 		first_name: PropTypes.string.isRequired,
 		last_name: PropTypes.string.isRequired,
-		address: PropTypes.string.isRequired,
+		address: PropTypes.string,
 		image: PropTypes.string.isRequired,
 		user_name: PropTypes.string.isRequired
-	}).isRequired,
-	isProfile: PropTypes.bool
+	}).isRequired
 };
 
 export default UserCard;

@@ -1,6 +1,6 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import RegisterFormContainer from '../../containers/RegisterFormContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import RegisterFormContainer from '../../containers/Auth/RegisterFormContainer';
 
 const Register = () => {
 	return (

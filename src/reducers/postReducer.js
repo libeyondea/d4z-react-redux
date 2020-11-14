@@ -82,9 +82,9 @@ const initialState = {
 	},
 	singlePost: {
 		post: {},
-		isLoading: false,
+		isLoading: true,
 		isError: false,
-		errorMessage: null
+		errorMessage: {}
 	},
 	editPost: {
 		post: {},
@@ -113,10 +113,11 @@ const postReducer = (state = initialState, action) =>
 				break;
 			case SORT_BY_TITLE_POST_SUCCEED:
 				let sortedAlphabetArr =
-					action.payload === 'asc'
-						? sortAsc(draft.fetchPost.filteredPost, 'title')
-						: sortDesc(draft.fetchPost.filteredPost, 'title');
-				draft.fetchPost.filteredPost = sortedAlphabetArr;
+					action.payload === 'asc' ? sortAsc(draft.fetchPost.post, 'title') : sortDesc(draft.fetchPost.post, 'title');
+				draft.fetchPost.filteredPost = sortedAlphabetArr.slice(
+					draft.fetchPost.currentCount - draft.fetchPost.countPerPage,
+					draft.fetchPost.currentCount
+				);
 				draft.fetchPost.appliedFilters = addFilterIfNotExists(
 					SORT_BY_TITLE_POST_SUCCEED,
 					draft.fetchPost.appliedFilters
@@ -126,9 +127,12 @@ const postReducer = (state = initialState, action) =>
 			case SORT_BY_CREATED_AT_POST_SUCCEED:
 				let sortedPriceArr =
 					action.payload === 'asc'
-						? sortAsc(draft.fetchPost.filteredPost, 'created_at')
-						: sortDesc(draft.fetchPost.filteredPost, 'created_at');
-				draft.fetchPost.filteredPost = sortedPriceArr;
+						? sortAsc(draft.fetchPost.post, 'created_at')
+						: sortDesc(draft.fetchPost.post, 'created_at');
+				draft.fetchPost.filteredPost = sortedPriceArr.slice(
+					draft.fetchPost.currentCount - draft.fetchPost.countPerPage,
+					draft.fetchPost.currentCount
+				);
 				draft.fetchPost.appliedFilters = addFilterIfNotExists(
 					SORT_BY_TITLE_POST_SUCCEED,
 					draft.fetchPost.appliedFilters
@@ -167,7 +171,7 @@ const postReducer = (state = initialState, action) =>
 				}
 				break;
 			case FETCH_POST_SUCCEED:
-				let post = action.payload.post;
+				let post = sortDesc(action.payload.post, 'created_at');
 				let countPerPage = action.payload.countPerPage || 6;
 				let count = Object.keys(post).length;
 				let totalPages = Math.ceil(count / countPerPage);
@@ -305,13 +309,13 @@ const postReducer = (state = initialState, action) =>
 				draft.singlePost.post = {};
 				draft.singlePost.isLoading = true;
 				draft.singlePost.isError = false;
-				draft.singlePost.errorMessage = null;
+				draft.singlePost.errorMessage = {};
 				break;
 			case SINGLE_POST_SUCCEED:
 				draft.singlePost.post = action.payload;
 				draft.singlePost.isLoading = false;
 				draft.singlePost.isError = false;
-				draft.singlePost.errorMessage = null;
+				draft.singlePost.errorMessage = {};
 				break;
 			case SINGLE_POST_FAILED:
 				draft.singlePost.post = {};
@@ -321,9 +325,9 @@ const postReducer = (state = initialState, action) =>
 				break;
 			case SINGLE_POST_RESETED:
 				draft.singlePost.post = {};
-				draft.singlePost.isLoading = false;
+				draft.singlePost.isLoading = true;
 				draft.singlePost.isError = false;
-				draft.singlePost.errorMessage = null;
+				draft.singlePost.errorMessage = {};
 				break;
 			//
 			case EDIT_POST_REQUESTED:

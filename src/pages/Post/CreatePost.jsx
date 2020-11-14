@@ -1,6 +1,6 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import CreatePostFormContainer from '../../containers/CreatePostFormContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import CreatePostFormContainer from '../../containers/Post/CreatePostFormContainer';
 
 const CreatePost = () => {
 	return (

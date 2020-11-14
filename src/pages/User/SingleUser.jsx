@@ -1,11 +1,11 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import DetailUserCardContainer from '../../containers/DetailUserCardContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import SingleUserContainer from '../../containers/User/SingleUserContainer';
 
 const SingleUser = () => {
 	return (
 		<LayoutContainer>
-			<DetailUserCardContainer />
+			<SingleUserContainer />
 		</LayoutContainer>
 	);
 };

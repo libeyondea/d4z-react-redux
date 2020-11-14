@@ -1,11 +1,11 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer.jsx';
-import ListPostCardContainer from '../../containers/ListPostCardContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer.jsx';
+import FetchPostContainer from '../../containers/Post/FetchPostContainer';
 
 const Home = () => {
 	return (
 		<LayoutContainer isHome={true}>
-			<ListPostCardContainer />
+			<FetchPostContainer />
 		</LayoutContainer>
 	);
 };

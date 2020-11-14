@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import InputForm from './InputForm';
-import { Container } from '../Styled/Wapper';
-import { ButtonBtnType } from '../Styled/Button';
+import InputForm from '../../components/Form/InputForm';
+import { Container } from '../../components/Styled/Wapper';
+import { ButtonBtnType } from '../../components/Styled/Button';
 import {
 	DivLg8Md10Center,
 	DivFormGroup,
@@ -18,9 +18,18 @@ import {
 	FormTitleHeader,
 	H1FormTileHeader,
 	PFormTileHeader
-} from '../Styled/LoginForm';
+} from '../../components/Styled/LoginForm';
+import { connect } from 'react-redux';
+import { loginThunk } from '../../thunks/authThunk';
 
-const LoginForm = ({ loginThunk, login }) => {
+const mapStateToProps = (state) => ({
+	login: state.auth.login
+});
+const mapDispatchToProps = {
+	loginThunk
+};
+
+const LoginFormContainer = ({ loginThunk, login }) => {
 	const initialValues = {
 		email: '',
 		password: ''
@@ -97,9 +106,9 @@ const LoginForm = ({ loginThunk, login }) => {
 	);
 };
 
-LoginForm.propTypes = {
+LoginFormContainer.propTypes = {
 	loginThunk: PropTypes.func.isRequired,
 	login: PropTypes.object.isRequired
 };
 
-export default LoginForm;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginFormContainer);

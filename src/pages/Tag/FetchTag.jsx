@@ -1,11 +1,11 @@
 import React from 'react';
-import LayoutContainer from '../../containers/LayoutContainer';
-import ListTagCardContainer from '../../containers/ListTagCardContainer';
+import LayoutContainer from '../../containers/Layout/LayoutContainer';
+import FetchTagContainer from '../../containers/Tag/FetchTagContainer';
 
 const FetchTag = () => {
 	return (
 		<LayoutContainer>
-			<ListTagCardContainer />
+			<FetchTagContainer />
 		</LayoutContainer>
 	);
 };
