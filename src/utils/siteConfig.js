@@ -19,7 +19,7 @@ module.exports = {
 		description: 'De4th Zone',
 		logo: '/images/logo.png',
 		icon: 'https://gatsby.ghost.io/content/images/2019/01/favicon.png',
-		cover_image: '/images/react.jpgg',
+		cover_image: '/images/react.jpg',
 		facebook: 'd4z.d4z.d4z.d4z',
 		twitter: '@NHT_445448',
 		lang: 'en',

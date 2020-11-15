@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from '../helpers/setAuthToken';
 import { loginSucceedAction, loginResetedAction } from '../actions/authAction';
 import Routes from '../routes/Routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 if (localStorage.getItem('jwtToken')) {
 	setAuthToken(localStorage.jwtToken);

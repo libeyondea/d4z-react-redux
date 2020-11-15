@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createRef } from 'react';
+import React, { useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Link, useHistory } from 'react-router-dom';
@@ -9,19 +9,19 @@ import {
 	DivViewPort,
 	DivViewPortTop,
 	HeaderSite,
-	DivSiteMast,
-	DivSiteMastRight,
-	DivSiteMastLeft,
-	ImgSiteNavIcon,
+	//DivSiteMast,
+	//DivSiteMastRight,
+	//DivSiteMastLeft,
+	//ImgSiteNavIcon,
 	ImgSiteLogo,
-	ASiteNavItem,
-	LinkSiteNavItem,
-	DivDropDown,
-	ADropDownToggleASiteNavItem,
-	DivDropDownMenu,
-	ADropDownItem,
-	LinkDropDownItem,
-	DivDropdownDivider,
+	//ASiteNavItem,
+	//LinkSiteNavItem,
+	//DivDropDown,
+	//ADropDownToggleASiteNavItem,
+	//DivDropDownMenu,
+	//ADropDownItem,
+	//LinkDropDownItem,
+	//DivDropdownDivider,
 	DivSiteBanner,
 	H1SiteBannerTitle,
 	PSiteBannerDesc,
@@ -44,7 +44,6 @@ import { connect } from 'react-redux';
 import { logoutThunk } from '../../thunks/authThunk';
 import { fetchCategoryThunk } from '../../thunks/categoryThunk';
 import './style.css';
-import './test.css';
 import { useDetectOutsideClick } from '../../helpers/useDetectOutsideClick';
 
 const mapStateToProps = (state) => ({
@@ -93,6 +92,7 @@ const Layout = ({ logoutThunk, login, children, isHome, fetchCategoryThunk, fetc
 			</li>
 		));
 	};
+
 	return (
 		<>
 			<GlobalStyle />
@@ -101,125 +101,6 @@ const Layout = ({ logoutThunk, login, children, isHome, fetchCategoryThunk, fetc
 			</Helmet>
 			<DivViewPort>
 				<DivViewPortTop>
-					<nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-						<div className="container">
-							<a className="navbar-brand" href="index.html">
-								Start Bootstrap
-							</a>
-							<button
-								className="navbar-toggler navbar-toggler-right"
-								type="button"
-								data-toggle="collapse"
-								data-target="#navbarResponsive"
-								aria-controls="navbarResponsive"
-								aria-expanded="false"
-								aria-label="Toggle navigation"
-							>
-								<span className="navbar-toggler-icon" />
-							</button>
-							<div className="collapse navbar-collapse" id="navbarResponsive">
-								<ul className="navbar-nav ml-auto">
-									<li className="nav-item">
-										<a className="nav-link" href="about.html">
-											About
-										</a>
-									</li>
-									<li className="nav-item">
-										<a className="nav-link" href="services.html">
-											Services
-										</a>
-									</li>
-									<li className="nav-item">
-										<a className="nav-link" href="contact.html">
-											Contact
-										</a>
-									</li>
-									<li className="nav-item dropdown">
-										<a
-											className="nav-link dropdown-toggle"
-											href="#"
-											id="navbarDropdownPortfolio"
-											data-toggle="dropdown"
-											aria-haspopup="true"
-											aria-expanded="false"
-										>
-											Portfolio
-										</a>
-										<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-											<a className="dropdown-item" href="portfolio-1-col.html">
-												1 Column Portfolio
-											</a>
-											<a className="dropdown-item" href="portfolio-2-col.html">
-												2 Column Portfolio
-											</a>
-											<a className="dropdown-item" href="portfolio-3-col.html">
-												3 Column Portfolio
-											</a>
-											<a className="dropdown-item" href="portfolio-4-col.html">
-												4 Column Portfolio
-											</a>
-											<a className="dropdown-item" href="portfolio-item.html">
-												Single Portfolio Item
-											</a>
-										</div>
-									</li>
-									<li className="nav-item dropdown">
-										<a
-											className="nav-link dropdown-toggle"
-											href="#"
-											id="navbarDropdownBlog"
-											data-toggle="dropdown"
-											aria-haspopup="true"
-											aria-expanded="false"
-										>
-											Blog
-										</a>
-										<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-											<a className="dropdown-item" href="blog-home-1.html">
-												Blog Home 1
-											</a>
-											<a className="dropdown-item" href="blog-home-2.html">
-												Blog Home 2
-											</a>
-											<a className="dropdown-item" href="blog-post.html">
-												Blog Post
-											</a>
-										</div>
-									</li>
-									<li className="nav-item dropdown">
-										<a
-											className="nav-link dropdown-toggle"
-											href="#"
-											id="navbarDropdownPages"
-											data-toggle="dropdown"
-											aria-haspopup="true"
-											aria-expanded="false"
-										>
-											Other Pages
-										</a>
-										<div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPages">
-											<a className="dropdown-item" href="full-width.html">
-												Full Width Page
-											</a>
-											<a className="dropdown-item" href="sidebar.html">
-												Sidebar Page
-											</a>
-											<a className="dropdown-item" href="faq.html">
-												FAQ
-											</a>
-											<a className="dropdown-item" href="404.html">
-												404
-											</a>
-											<a className="dropdown-item" href="pricing.html">
-												Pricing Table
-											</a>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</nav>
-
 					<section className="navigation">
 						<div className="nav-container">
 							<div className="brand">
@@ -246,9 +127,6 @@ const Layout = ({ logoutThunk, login, children, isHome, fetchCategoryThunk, fetc
 									</li>
 									<li>
 										<a href="#!">About</a>
-									</li>
-									<li>
-										<a href="#!">Users</a>
 									</li>
 									<li>
 										<a href="#!" onClick={handleClickMenu.bind(this, 'categories')}>
